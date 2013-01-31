@@ -20,6 +20,10 @@
         <put-attribute name="title" value="Checklist : Dashboard" />
         <put-attribute name="body" value="/WEB-INF/jsp/dashboard/dashboard.jsp" />
     </definition>
+    <definition name="logEntryForm" extends="base.full.definition">
+        <put-attribute name="title" value="Checklist : Create A LogEntry!" />
+        <put-attribute name="body" value="/WEB-INF/jsp/logentry/createLogEntry.jsp" />
+    </definition>
     <definition name="generalMessage" extends="base.full.definition">
         <put-attribute name="title" value="Checklist : Message" />
         <put-attribute name="body" value="/WEB-INF/jsp/general/generalMessage.jsp" />
