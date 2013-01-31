@@ -10,9 +10,9 @@ public class TestViewHelper implements ViewHelper {
     private String description;
     private int anInteger;
     private List<String> listOfStrings;
-    
+
     public void populate(Object object) {
-        
+
     }
 
     public String getName() {
@@ -31,10 +31,6 @@ public class TestViewHelper implements ViewHelper {
         this.description = description;
     }
 
-    public int getAnInteger() {
-        return anInteger;
-    }
-
     public void setAnInteger(int anInteger) {
         this.anInteger = anInteger;
     }
@@ -47,4 +43,7 @@ public class TestViewHelper implements ViewHelper {
         this.listOfStrings = listOfStrings;
     }
 
+    public int getAnInteger() {
+        return anInteger;
+    }
 }
