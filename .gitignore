@@ -1,7 +1,7 @@
-*.classpath 
+.classpath 
 .project 
 .settings
-*.checkstyle 
+.checkstyle 
 *.war
 *.ear
 *.jar
