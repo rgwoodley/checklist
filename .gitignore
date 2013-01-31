@@ -10,9 +10,6 @@ lib/
 classes/
 checklistDB/
 target/
-web/img/a*
-web/img/a*/**
-web/img/a*/**/*
 .idea
 *.iml
 *.log
