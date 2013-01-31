@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <definition name="base.full.definition"
+        template="/WEB-INF/jsp/template/page_template_full.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="header"
+            value="/WEB-INF/jsp/template/page_header.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer"
+            value="/WEB-INF/jsp/template/page_footer.jsp" />
+    </definition>
+    <definition name="login" extends="base.full.definition">
+        <put-attribute name="title" value="Checklist : Login" />
+        <put-attribute name="body" value="/WEB-INF/jsp/user/login.jsp" />
+    </definition>
+    <definition name="dashboard" extends="base.full.definition">
+        <put-attribute name="title" value="Checklist : Dashboard" />
+        <put-attribute name="body" value="/WEB-INF/jsp/dashboard/dashboard.jsp" />
+    </definition>
+    <definition name="generalMessage" extends="base.full.definition">
+        <put-attribute name="title" value="Checklist : Message" />
+        <put-attribute name="body" value="/WEB-INF/jsp/general/generalMessage.jsp" />
+    </definition>
+    <definition name="noAccess" extends="base.full.definition">
+        <put-attribute name="title" value="Checklist : No Access" />
+        <put-attribute name="body"
+            value="/WEB-INF/jsp/general/generalMessage.jsp" />
+    </definition>
+    <definition name="pageNotFound" extends="base.full.definition">
+        <put-attribute name="title" value="Checklist : Page Not Found" />
+        <put-attribute name="body"
+            value="/WEB-INF/jsp/general/generalMessage.jsp" />
+    </definition>
+</tiles-definitions>
