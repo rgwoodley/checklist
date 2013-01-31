@@ -1,11 +1,14 @@
-.classpath 
-.project 
+#Files
+.classpath
+.project
 .settings
-.checkstyle 
+.checkstyle
 *.war
 *.ear
 *.jar
 *.zip
+
+#Directories
 lib/
 classes/
 checklistDB/
