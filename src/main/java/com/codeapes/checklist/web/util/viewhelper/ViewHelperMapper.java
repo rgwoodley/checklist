@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.stereotype.Service;
 
 import com.codeapes.checklist.util.AppLogger;
@@ -52,18 +51,7 @@ public class ViewHelperMapper {
 
     private ViewHelper populateViewHelperAttributes(Object inputObject, ViewHelper viewHelper,
         ViewHelperMappingInfo mappingInfo) {
-System.out.println("START");
-        try {
-        Map data = PropertyUtils.describe(viewHelper);
-       Set keys = data.keySet();
-       for (Object obj : keys) {
-           System.out.println("KEY:"+obj);
-           System.out.println("VALUE:"+data.get(obj));
-       }
-        } catch (Exception nsme) {
-            nsme.printStackTrace();
-        }
-        System.out.println("END");
+
         final Map<Method, Method> methodsToInvoke = mappingInfo.getMethodsToInvoke();
         final Set<Method> allGetMethods = methodsToInvoke.keySet();
         for (Method getMethod : allGetMethods) {

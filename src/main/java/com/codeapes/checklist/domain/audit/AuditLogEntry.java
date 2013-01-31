@@ -24,12 +24,6 @@ public class AuditLogEntry extends PersistentImpl {
     @Column(name = "action", length = 200, nullable = false)
     public String getAction() {
 
-        final String two = "TWO";
-
-        if (action.equals(two)) {
-            System.out.println("here");
-        }
-
         return action;
     }
 

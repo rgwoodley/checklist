@@ -48,7 +48,7 @@ public class ViewHelperMapperTest {
     public void testValidMapping() {
         final TestClass testObject = createInputObject();
         viewHelperMapper.addMapping(TEST_MAPPING_NAME, TestClass.class, TestViewHelper.class, attributes);
-        final ViewHelper<TestClass> viewHelper = viewHelperMapper.convertToViewMapper(TEST_MAPPING_NAME, testObject);
+        final ViewHelper viewHelper = viewHelperMapper.convertToViewMapper(TEST_MAPPING_NAME, testObject);
         assertNotNull(viewHelper);
         assertTrue(viewHelper instanceof TestViewHelper);
         final TestViewHelper testViewHelper = (TestViewHelper) viewHelper;

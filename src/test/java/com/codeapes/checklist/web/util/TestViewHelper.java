@@ -2,23 +2,19 @@ package com.codeapes.checklist.web.util;
 
 import java.util.List;
 
-import com.codeapes.checklist.web.util.viewhelper.AbstractViewHelper;
-import com.codeapes.checklist.web.util.viewhelper.annotations.MappedProperty;
-import com.codeapes.checklist.web.util.viewhelper.annotations.MappedViewHelper;
+import com.codeapes.checklist.web.util.viewhelper.ViewHelper;
 
-@MappedViewHelper
-public class TestViewHelper extends AbstractViewHelper<TestClass> {
+public class TestViewHelper implements ViewHelper {
 
     private String name;
     private String description;
     private int anInteger;
     private List<String> listOfStrings;
     
-    public TestViewHelper(TestClass inputObject) {
-        super(inputObject);
+    public void populate(Object object) {
+        
     }
 
-    @MappedProperty (fieldName = "name")
     public String getName() {
         return name;
     }
@@ -27,7 +23,6 @@ public class TestViewHelper extends AbstractViewHelper<TestClass> {
         this.name = name;
     }
 
-    @MappedProperty (fieldName = "description")
     public String getDescription() {
         return description;
     }

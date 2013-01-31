@@ -4,4 +4,6 @@ public interface OwnerExecutor {
 
     String getName();
 
+    Long getObjectKey();
+
 }
