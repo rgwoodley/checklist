@@ -18,7 +18,7 @@ import com.codeapes.checklist.domain.template.Checklist;
 import com.codeapes.checklist.service.ChecklistService;
 import com.codeapes.checklist.util.AppLogger;
 import com.codeapes.checklist.web.util.WebUtility;
-import com.codeapes.checklist.web.util.viewhelper.ViewHelper;
+import com.codeapes.checklist.web.viewhelper.ViewHelper;
 import com.codeapes.checklist.web.viewhelper.checklist.ChecklistSummaryViewHelper;
 import com.codeapes.checklist.web.viewhelper.util.ViewHelperUtility;
 

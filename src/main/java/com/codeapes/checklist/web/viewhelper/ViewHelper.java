@@ -1,4 +1,4 @@
-package com.codeapes.checklist.web.util.viewhelper;
+package com.codeapes.checklist.web.viewhelper;
 
 public interface ViewHelper {
 

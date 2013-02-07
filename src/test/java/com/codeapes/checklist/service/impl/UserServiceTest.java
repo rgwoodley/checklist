@@ -10,7 +10,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.codeapes.checklist.domain.user.Role;
@@ -42,8 +41,7 @@ public class UserServiceTest {
     @Test
     public void createUserUsingAttributes() {
         final String testName = "userUsingAttributes";
-        final User aUser = userService.createUser(testName, FIRSTNAME, LASTNAME, ACTIVE, PASSWORD,
-            MODIFIED_BY);
+        final User aUser = userService.createUser(testName, FIRSTNAME, LASTNAME, ACTIVE, PASSWORD, MODIFIED_BY);
         assertNotNull(aUser);
         assertNotNull(aUser.getObjectKey());
         assertNotNull(aUser.getModifiedTimestamp());
@@ -55,21 +53,11 @@ public class UserServiceTest {
         userService.deleteUser(aUser);
     }
 
-    @Test(expected = DataIntegrityViolationException.class)
-    public void createDuplicateUser() {
-        final String testName = "createDuplicateUser";
-        final User user = userService.createUser(testName, FIRSTNAME, LASTNAME, ACTIVE, PASSWORD,
-            MODIFIED_BY);
-        userService.createUser(testName, FIRSTNAME, LASTNAME, ACTIVE, PASSWORD, MODIFIED_BY);
-        userService.deleteUser(user);
-    }
-
     @Test
     public void findUserById() {
 
         final String testName = "findById";
-        final User aUser = userService.createUser(testName, FIRSTNAME, LASTNAME, ACTIVE, PASSWORD,
-            MODIFIED_BY);
+        final User aUser = userService.createUser(testName, FIRSTNAME, LASTNAME, ACTIVE, PASSWORD, MODIFIED_BY);
         final Long userKey = aUser.getObjectKey();
         sessionUtility.flushAndClearSession();
         final User bUser = userService.findUserByObjectKey(userKey);
@@ -82,8 +70,7 @@ public class UserServiceTest {
     public void findUserByUsernameFound() {
 
         final String testName = "findByUnameFound";
-        final User aUser = userService.createUser(testName, FIRSTNAME, LASTNAME, ACTIVE, PASSWORD,
-            MODIFIED_BY);
+        final User aUser = userService.createUser(testName, FIRSTNAME, LASTNAME, ACTIVE, PASSWORD, MODIFIED_BY);
         sessionUtility.flushAndClearSession();
         final User bUser = userService.findUserByUsername(testName);
         assertNotNull(bUser);

@@ -10,8 +10,6 @@
    <meta http-equiv="Expires" content="-1">
    <meta http-equiv="Content-Type" content="text/html" charset="iso-8859-1">      
    <link rel="stylesheet" media="screen" href="css/template.css"/>  
-   <link rel="stylesheet" media="screen" href="css/menu.css"/> 
-   <link rel="stylesheet" media="screen" href="css/form.css"/>   
    <script src="js/jquery-1.9.0.min.js"></script>
 </head>
 <body>
@@ -21,26 +19,23 @@
 <tiles:insertAttribute name="header"/>
 </div>
 <div id="topmenu">
-<nav>
-<tiles:insertAttribute name="top_menu"/>
-</nav>
+Menu
 </div>
 </header>
 <div id="innerwrapper">
-<section id="topbar">
-<div id="topbartext">
-Some Text
-</div>
-<div id="topbarsearch">
-<input type="text" placeholder="Search">
-</div>
+<section id="searchbar">
+Search
 </section>
 <section id="middle">
 <div id="container">
-<div id="contentfull">
+<div id="content">
 <tiles:insertAttribute name="main"/>
 </div>
 </div>
+<aside id="sideLeft">
+<div id="container">
+</div>
+</aside>
 </section>
 </div>
 <br>

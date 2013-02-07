@@ -1,0 +1,13 @@
+Primary Colors:
+363475
+302F47
+070535
+9491DE
+B8B7DE
+
+Complementary Colors:
+A88E3A
+665C3D
+4C3B06
+EAD38B
+EADFBA
