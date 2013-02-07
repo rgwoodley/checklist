@@ -47,6 +47,7 @@ public class AuditLogEntryController {
         HttpServletResponse response, BindingResult result, Model model) {
 
         validator.validate(form, result);
+        
         performAdditionalValidation(form, result);
 
         if (!result.hasErrors()) {
@@ -62,7 +63,7 @@ public class AuditLogEntryController {
 
     private void performAdditionalValidation(AuditLogEntryForm form, BindingResult result) {
 
-        if ("TEST".equalsIgnoreCase(form.getAction())) {
+        if ("TESTINGTESTING".equalsIgnoreCase(form.getAction())) {
             final FieldError error = new FieldError(FORM_NAME, "action", "Action cannot be TEST");
             result.addError(error);
         }

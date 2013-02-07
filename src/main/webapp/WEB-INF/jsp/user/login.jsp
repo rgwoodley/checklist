@@ -21,7 +21,7 @@
   <input type="submit" tabIndex="3"/>
   </form>
   --> 
-  <form class="form">
+  <form class="form" action="j_spring_security_check" method="POST">
     <h1><span class="title">Log in</span></h1>
     <p class="float">
         <label for="login">Username</label>
