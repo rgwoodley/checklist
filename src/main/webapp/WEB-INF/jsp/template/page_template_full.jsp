@@ -33,7 +33,7 @@
 <div id="innerwrapper">
 <section id="topbar">
 <div id="topbartext">
-Some Text
+<tiles:getAsString name="title"/>
 </div>
 <div id="topbarsearch">
 <input type="text" placeholder="Search">
