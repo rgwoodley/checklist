@@ -15,7 +15,8 @@ public final class ViewHelperUtility {
         super();
     }
 
-    public static List<ViewHelper> convertList(List<?> originalList, Class<? extends ViewHelper> viewHelperClass) {
+    public static List<? extends ViewHelper> convertList(List<?> originalList,
+        Class<? extends ViewHelper> viewHelperClass) {
 
         final List<ViewHelper> newList = new ArrayList<ViewHelper>();
         if (originalList != null && viewHelperClass != null) {
@@ -27,7 +28,7 @@ public final class ViewHelperUtility {
         return newList;
     }
 
-    private static ViewHelper createAndPopulateViewHelper(Object inputObject,
+    public static ViewHelper createAndPopulateViewHelper(Object inputObject,
         Class<? extends ViewHelper> viewHelperClass) {
         ViewHelper viewHelper = null;
         try {

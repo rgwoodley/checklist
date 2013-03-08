@@ -6,20 +6,10 @@
     <definition name="base.full.definition"
         template="/WEB-INF/jsp/template/page_template_full.jsp">
         <put-attribute name="title" value="" />
+        <put-attribute name="jsFile" value="js/none.js" />
         <put-attribute name="header"
             value="/WEB-INF/jsp/template/page_header.jsp" />
         <put-attribute name="top_menu" value="/WEB-INF/jsp/menu/top_menu.jsp" />
-        <put-attribute name="main" value="" />
-        <put-attribute name="footer"
-            value="/WEB-INF/jsp/template/page_footer.jsp" />
-    </definition>
-    <definition name="base.twocolumn.definition"
-        template="/WEB-INF/jsp/template/page_template_twocolumn.jsp">
-        <put-attribute name="title" value="" />
-        <put-attribute name="header"
-            value="/WEB-INF/jsp/template/page_header.jsp" />
-        <put-attribute name="top_menu" value="/WEB-INF/jsp/menu/top_menu.jsp" />
-        <put-attribute name="sidebar" value="" />
         <put-attribute name="main" value="" />
         <put-attribute name="footer"
             value="/WEB-INF/jsp/template/page_footer.jsp" />
@@ -32,15 +22,16 @@
         <put-attribute name="title" value="Checklist : Dashboard" />
         <put-attribute name="main" value="/WEB-INF/jsp/dashboard/dashboard.jsp" />
     </definition>
-    <definition name="logEntryForm" extends="base.full.definition">
+    <definition name="addLogEntry" extends="base.full.definition">
         <put-attribute name="title" value="Checklist : Create A LogEntry!" />
         <put-attribute name="main" value="/WEB-INF/jsp/logentry/createLogEntry.jsp" />
     </definition>
-    <definition name="generalMessage" extends="base.full.definition">
-        <put-attribute name="title" value="Checklist : Message" />
-        <put-attribute name="main" value="/WEB-INF/jsp/general/generalMessage.jsp" />
+    <definition name="viewLogEntry" extends="base.full.definition">
+        <put-attribute name="title" value="Checklist : View A LogEntry!" />
+        <put-attribute name="jsFile" value="js/logentry/viewLogEntryBB2.js" />
+        <put-attribute name="main" value="/WEB-INF/jsp/logentry/viewLogEntry.jsp" />
     </definition>
-    <definition name="generalMessage2" extends="base.twocolumn.definition">
+    <definition name="generalMessage" extends="base.full.definition">
         <put-attribute name="title" value="Checklist : Message" />
         <put-attribute name="main" value="/WEB-INF/jsp/general/generalMessage.jsp" />
     </definition>

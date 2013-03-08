@@ -7,6 +7,7 @@ import com.codeapes.checklist.domain.group.ChecklistGroup;
 import com.codeapes.checklist.domain.template.Checklist;
 import com.codeapes.checklist.domain.template.Step;
 import com.codeapes.checklist.domain.user.OwnerExecutor;
+import com.codeapes.checklist.util.ChecklistException;
 import com.codeapes.checklist.web.viewhelper.ViewHelper;
 
 public class ChecklistSummaryViewHelper implements ViewHelper {
@@ -24,6 +25,10 @@ public class ChecklistSummaryViewHelper implements ViewHelper {
     private int numberOfSteps;
 
     public void populate(Object inputObject) {
+        if (!(inputObject instanceof Checklist)) {
+            throw new ChecklistException("Expecting type of Checklist.class, but got type %s", inputObject.getClass()
+                .getSimpleName());
+        }
         final Checklist checklist = (Checklist)inputObject;
         this.objectKey = checklist.getObjectKey();
         this.name = checklist.getName();
@@ -45,6 +50,10 @@ public class ChecklistSummaryViewHelper implements ViewHelper {
         if (steps != null) {
             this.numberOfSteps = checklist.getSteps().size();
         }
+    }
+
+    public Checklist convertToOriginalForm() {
+        return null;
     }
 
     public Long getObjectKey() {

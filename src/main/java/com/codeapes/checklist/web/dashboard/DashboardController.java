@@ -18,7 +18,6 @@ import com.codeapes.checklist.domain.template.Checklist;
 import com.codeapes.checklist.service.ChecklistService;
 import com.codeapes.checklist.util.AppLogger;
 import com.codeapes.checklist.web.util.WebUtility;
-import com.codeapes.checklist.web.viewhelper.ViewHelper;
 import com.codeapes.checklist.web.viewhelper.checklist.ChecklistSummaryViewHelper;
 import com.codeapes.checklist.web.viewhelper.util.ViewHelperUtility;
 
@@ -41,8 +40,9 @@ public class DashboardController {
         logger.debug("Display dashboard for user: %s", username);
         final List<Checklist> checklists = checklistService.getOwnedChecklistsForUser(webUtil
             .getLoggedInUserKey(request.getSession()));
-        final List<ViewHelper> ownedChecklists = ViewHelperUtility.convertList(checklists,
-            ChecklistSummaryViewHelper.class);
+        @SuppressWarnings("unchecked")
+        final List<ChecklistSummaryViewHelper> ownedChecklists = (List<ChecklistSummaryViewHelper>) ViewHelperUtility
+            .convertList(checklists, ChecklistSummaryViewHelper.class);
         model.addAttribute("ownedChecklists", ownedChecklists);
         logger.debug("Found %d checklists for user %s,", ownedChecklists.size(), username);
         return "dashboard";

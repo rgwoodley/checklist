@@ -3,7 +3,7 @@
      <form:form commandName="form" name="form" id="form" action="createLogEntry" method="POST">
      
      <spring:hasBindErrors name="form">
-     <span class="error">Hey!  There are error.  Fix Them!</span>
+     <span class="error">Hey!  There are errors.  Fix Them!</span>
      </spring:hasBindErrors>
      
      <form:errors path="action" cssClass="error"/>

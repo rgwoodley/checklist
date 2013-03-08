@@ -12,7 +12,11 @@
    <link rel="stylesheet" media="screen" href="css/template.css"/>  
    <link rel="stylesheet" media="screen" href="css/menu.css"/> 
    <link rel="stylesheet" media="screen" href="css/form.css"/>   
-   <script src="js/jquery-1.9.0.min.js"></script>
+   <script src="js/jquery-1.9.1.min.js"></script>
+   <script src="js/underscore-min.js"></script>
+   <script src="js/json2.js"></script>
+   <script src="js/backbone-min.js"></script>
+   <script src="<tiles:getAsString name="jsFile"/>"></script>
 </head>
 <body>
 <div id="wrapper">
