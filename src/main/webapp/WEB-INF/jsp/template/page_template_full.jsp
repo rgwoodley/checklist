@@ -16,7 +16,6 @@
    <script src="js/underscore-min.js"></script>
    <script src="js/json2.js"></script>
    <script src="js/backbone-min.js"></script>
-   <script src="<tiles:getAsString name="jsFile"/>"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -53,4 +52,5 @@
 </footer>
 </div>
 </body>
+<script src="<tiles:getAsString name="jsFile"/>"></script>
 </html>

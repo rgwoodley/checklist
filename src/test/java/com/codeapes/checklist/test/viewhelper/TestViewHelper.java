@@ -22,25 +22,24 @@ public class TestViewHelper extends AbstractViewHelper {
         return name;
     }
 
+    public void setAnObject(String anObject) {
+        this.anObject = anObject;
+    }
 
     public String getAnObject() {
         return anObject;
     }
     
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getAge() {
         return age;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+    
     public void setAge(int age) {
         this.age = age;
-    }
-
-    public void setAnObject(String anObject) {
-        this.anObject = anObject;
     }
 
     public String getExtra() {

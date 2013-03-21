@@ -24,10 +24,6 @@ public class TestObject {
         this.objectKey = objectKey;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -40,6 +36,10 @@ public class TestObject {
         this.age = age;
     }
 
+    public String getName() {
+        return name;
+    }
+    
     public Object getAnObject() {
         return anObject;
     }

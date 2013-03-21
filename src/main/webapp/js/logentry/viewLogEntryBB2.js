@@ -1,11 +1,11 @@
-// Models
+_.templateSettings = {
+    interpolate: /\<\@\=(.+?)\@\>/gim,
+    evaluate: /\<\@(.+?)\@\>/gim,
+    escape: /\<\@\-(.+?)\@\>/gim
+};
+
 var Entry = Backbone.Model.extend({
-    urlRoot:"auditLogEntries",
-    defaults:{
-        "name":"",
-        "type":"",
-        "details":""
-    }
+    idAttribute: "objectKey"
 });
  
 var EntryCollection = Backbone.Collection.extend({
@@ -13,37 +13,72 @@ var EntryCollection = Backbone.Collection.extend({
     url:"auditLogEntries"
 });
 
-var GetEntryView = Backbone.View.extend({
-    events: {
-        'submit form': 'getEntry'
-    },
-
-    initialize: function() {
-        //this.collection.on('request', this.clearInput, this);
-    },
-
-    getEntry: function(e) {
-        e.preventDefault();
-        console.log(JSON.stringify(Entry.get(1)));
-    },
-
-    clearInput: function() {
-        this.$('textarea').val('');
-    }
+var EntryView = Backbone.View.extend({
+   tagName: "li",  
+   entryTpl: _.template($('#entry-template').html()), 
+   events: {
+    'click #entry-delete': 'deleteEntry'
+   }, 
+   initialize: function(){
+      this.render();
+   },
+   render: function() {
+      this.$el.html(this.entryTpl(this.model.toJSON()));
+   },
+   deleteEntry: function(e) {
+      e.preventDefault();
+      this.model.destroy();
+   }
 });
 
-var EntriesView = Backbone.View.extend({
-    initialize: function() {
-        //this.collection.on('request', this.appendEntry, this);
+var GetEntryView = Backbone.View.extend({
+    events: {
+        'submit form': 'addEntry'
     },
+    initialize: function() {
+        this.collection.on('add', this.clearInput, this);
+    },
+    addEntry: function(e) {
+        e.preventDefault();
+        var txt = this.$('textarea').val();
+        var newEntry = new Entry({
+           action:txt,
+           detail:txt,
+           type:txt
+        });
+        this.collection.create(newEntry);
+    },
+    clearInput: function() {
+       this.$('textarea').val('');
+    } 
+});
 
+var EntryDisplayView = Backbone.View.extend({
+    initialize: function() {
+        this.render();
+        this.collection.on('add', this.appendEntry, this);
+        this.collection.on('destroy', this.removeEntry, this);
+        this.collection.bind('remove', this.render, this);
+    },
     appendEntry: function(entry) {
-        //this.$('ul').append('<li>' + entry.escape('action') + '</li>');
-    }
+        var entryView = new EntryView({model:entry});
+        this.$('ul').append(entryView.el);
+    },
+    removeEntry: function(entry) {
+        this.collection.remove(entry);
+    },
+    render: function() {
+      var view = this;
+      this.$('ul').empty();
+      this.collection.each(function(entry, index) {
+         view.appendEntry(entry);
+      });
+   },
 });
 
 $(document).ready(function() {
     var entries = new EntryCollection();
+    entries.fetch({async: false});   
     new GetEntryView({ el: $('#entry-form'), collection: entries });
-    new EntriesView({ el: $('#log-entries'), collection: entries });
+    new EntryDisplayView({ el: $('#log-entries'), collection: entries });
 });

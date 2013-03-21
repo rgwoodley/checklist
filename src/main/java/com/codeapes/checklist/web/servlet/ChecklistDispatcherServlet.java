@@ -36,15 +36,16 @@ public class ChecklistDispatcherServlet extends DispatcherServlet {
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException,
         IOException {
-
-        final Object obj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (obj instanceof org.springframework.security.core.userdetails.User) {
-            final String username = ((org.springframework.security.core.userdetails.User) obj).getUsername();
-            final User user = userService.findUserByUsername(username);
-            final HttpSession session = request.getSession();
-            session.setAttribute(WebConstants.LOGGED_IN_USER_KEY, user.getObjectKey());
-            logger.info("User %s with id of %d has logged in.", user.getUsername(), user.getObjectKey());
-
+        final HttpSession session = request.getSession();
+        final Long userObjectKey = (Long)session.getAttribute(WebConstants.LOGGED_IN_USER_KEY);
+        if (userObjectKey == null) {
+            final Object obj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (obj != null && obj instanceof org.springframework.security.core.userdetails.User) {
+                final String username = ((org.springframework.security.core.userdetails.User) obj).getUsername();
+                final User user = userService.findUserByUsername(username);     
+                session.setAttribute(WebConstants.LOGGED_IN_USER_KEY, user.getObjectKey());
+                logger.info("User %s with id of %d has logged in.", user.getUsername(), user.getObjectKey());
+            }
         }
         super.service(request, response);
     }

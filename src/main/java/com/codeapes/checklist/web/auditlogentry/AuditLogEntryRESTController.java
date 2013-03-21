@@ -1,6 +1,9 @@
 package com.codeapes.checklist.web.auditlogentry;
 
+import java.util.Enumeration;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +36,7 @@ public class AuditLogEntryRESTController {
     private WebUtility webUtility;
 
     @SuppressWarnings("unchecked")
-    @RequestMapping(method = RequestMethod.GET, value = "/auditLogEntries", produces = "application/json")
+    @RequestMapping(method = RequestMethod.GET, value = "/auditLogEntries")
     @ResponseBody
     @PreAuthorize("hasRole('USER')")
     public List<AuditLogEntryViewHelper> getAllAuditLogEntries(final Model model) {
@@ -45,8 +48,7 @@ public class AuditLogEntryRESTController {
         return entryList;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/auditLogEntries/search/{query}",
-        produces = "application/json")
+    @RequestMapping(method = RequestMethod.GET, value = "/auditLogEntries/search/{query}")
     @ResponseBody
     @PreAuthorize("hasRole('USER')")
     public AuditLogEntryViewHelper searchForLogEntry(@PathVariable final String query, final Model model) {
@@ -54,7 +56,7 @@ public class AuditLogEntryRESTController {
         return null;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/auditLogEntries/{id}", produces = "application/json")
+    @RequestMapping(method = RequestMethod.GET, value = "/auditLogEntries/{id}")
     @ResponseBody
     @PreAuthorize("hasRole('USER')")
     public AuditLogEntryViewHelper getAuditLogEntry(@PathVariable final Long id, final Model model) {
@@ -65,8 +67,7 @@ public class AuditLogEntryRESTController {
         return auditLogEntryViewHelper;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/auditLogEntries", consumes = "application/json",
-        produces = "application/json")
+    @RequestMapping(method = RequestMethod.POST, value = "/auditLogEntries")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     @PreAuthorize("hasRole('USER')")
@@ -79,7 +80,7 @@ public class AuditLogEntryRESTController {
         return savedEntryData;
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/auditLogEntries/{id}", consumes = "application/json")
+    @RequestMapping(method = RequestMethod.PUT, value = "/auditLogEntries/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     @PreAuthorize("hasRole('USER')")
@@ -90,7 +91,7 @@ public class AuditLogEntryRESTController {
         persistenceService.update(entry, webUtility.getLoggedInUsername());
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/auditLogEntries/{id}", consumes = "application/json")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/auditLogEntries/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     @PreAuthorize("hasRole('USER')")
