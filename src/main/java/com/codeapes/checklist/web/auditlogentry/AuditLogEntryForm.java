@@ -5,6 +5,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class AuditLogEntryForm {
 
+    private Long objectKey;
+
     @NotEmpty(message = "Action is required")
     @Length(max = 10, message = "Action cannot be more than 10 characters.")
     private String action;
@@ -16,6 +18,14 @@ public class AuditLogEntryForm {
     @NotEmpty(message = "Type is required")
     @Length(max = 10, message = "Type cannot be more than 10 characters.")
     private String type;
+
+    public Long getObjectKey() {
+        return objectKey;
+    }
+
+    public void setObjectKey(Long objectKey) {
+        this.objectKey = objectKey;
+    }
 
     public String getAction() {
         return action;

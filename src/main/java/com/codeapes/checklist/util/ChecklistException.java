@@ -7,7 +7,7 @@ public class ChecklistException extends RuntimeException {
     public ChecklistException(String message, Throwable cause) {
         super(message, cause);
     }
-    
+
     public ChecklistException(Throwable cause, String formatter, Object... args) {
         super(String.format(formatter, args), cause);
     }
@@ -15,7 +15,7 @@ public class ChecklistException extends RuntimeException {
     public ChecklistException(String formatter, Object... args) {
         super(String.format(formatter, args));
     }
-    
+
     public ChecklistException(String message) {
         super(message);
     }

@@ -8,9 +8,9 @@ import com.codeapes.checklist.domain.template.Checklist;
 import com.codeapes.checklist.domain.template.Step;
 import com.codeapes.checklist.domain.user.OwnerExecutor;
 import com.codeapes.checklist.util.ChecklistException;
-import com.codeapes.checklist.web.viewhelper.ViewHelper;
+import com.codeapes.checklist.web.viewhelper.AbstractViewHelper;
 
-public class ChecklistSummaryViewHelper implements ViewHelper {
+public class ChecklistSummaryViewHelper extends AbstractViewHelper {
 
     private Long objectKey;
     private String name;
@@ -24,12 +24,16 @@ public class ChecklistSummaryViewHelper implements ViewHelper {
     private Long ownerObjectKey;
     private int numberOfSteps;
 
+    public ChecklistSummaryViewHelper(Class<?> parameterizedType) {
+        super(parameterizedType);
+    }
+
     public void populate(Object inputObject) {
         if (!(inputObject instanceof Checklist)) {
             throw new ChecklistException("Expecting type of Checklist.class, but got type %s", inputObject.getClass()
                 .getSimpleName());
         }
-        final Checklist checklist = (Checklist)inputObject;
+        final Checklist checklist = (Checklist) inputObject;
         this.objectKey = checklist.getObjectKey();
         this.name = checklist.getName();
         this.description = checklist.getDescription();
@@ -50,10 +54,6 @@ public class ChecklistSummaryViewHelper implements ViewHelper {
         if (steps != null) {
             this.numberOfSteps = checklist.getSteps().size();
         }
-    }
-
-    public Checklist convertToOriginalForm() {
-        return null;
     }
 
     public Long getObjectKey() {

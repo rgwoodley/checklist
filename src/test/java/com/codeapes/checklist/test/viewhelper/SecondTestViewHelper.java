@@ -1,6 +1,7 @@
 package com.codeapes.checklist.test.viewhelper;
 
-import com.codeapes.checklist.web.viewhelper.util.AbstractViewHelper;
+import com.codeapes.checklist.web.viewhelper.AbstractViewHelper;
+import com.codeapes.checklist.web.viewhelper.annotation.Mapped;
 
 public class SecondTestViewHelper extends AbstractViewHelper {
 
@@ -10,10 +11,16 @@ public class SecondTestViewHelper extends AbstractViewHelper {
     private double extra;
     private int age;
 
+    public SecondTestViewHelper(Class<?> parameterizedType) {
+        super(parameterizedType);
+    }
+        
+    @Mapped
     public Long getObjectKey() {
         return objectKey;
     }
 
+    @Mapped
     public String getName() {
         return name;
     }
@@ -26,6 +33,7 @@ public class SecondTestViewHelper extends AbstractViewHelper {
         this.name = name;
     }
 
+    @Mapped
     public int getAge() {
         return age;
     }

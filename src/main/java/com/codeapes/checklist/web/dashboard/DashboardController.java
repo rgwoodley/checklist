@@ -18,8 +18,8 @@ import com.codeapes.checklist.domain.template.Checklist;
 import com.codeapes.checklist.service.ChecklistService;
 import com.codeapes.checklist.util.AppLogger;
 import com.codeapes.checklist.web.util.WebUtility;
+import com.codeapes.checklist.web.viewhelper.ViewHelperUtility;
 import com.codeapes.checklist.web.viewhelper.checklist.ChecklistSummaryViewHelper;
-import com.codeapes.checklist.web.viewhelper.util.ViewHelperUtility;
 
 @Controller
 public class DashboardController {
@@ -54,7 +54,7 @@ public class DashboardController {
     public ChecklistSummaryViewHelper getChecklist(@PathVariable final Long id, final Model model) {
         logger.debug("Get checklist id: %s", id);
         final Checklist checklist = checklistService.getChecklistByKey(id);
-        final ChecklistSummaryViewHelper checklistViewHelper = new ChecklistSummaryViewHelper();
+        final ChecklistSummaryViewHelper checklistViewHelper = new ChecklistSummaryViewHelper(Checklist.class);
         checklistViewHelper.populate(checklist);
         return checklistViewHelper;
     }

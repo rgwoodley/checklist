@@ -1,9 +1,6 @@
 package com.codeapes.checklist.web.auditlogentry;
 
-import java.util.Enumeration;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,9 +17,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.codeapes.checklist.domain.audit.AuditLogEntry;
 import com.codeapes.checklist.service.PersistenceService;
 import com.codeapes.checklist.util.AppLogger;
+import com.codeapes.checklist.web.form.util.FormUtility;
 import com.codeapes.checklist.web.util.WebUtility;
-import com.codeapes.checklist.web.viewhelper.audit.AuditLogEntryViewHelper;
-import com.codeapes.checklist.web.viewhelper.util.ViewHelperUtility;
+import com.codeapes.checklist.web.viewhelper.ViewHelperUtility;
 
 @Controller
 public class AuditLogEntryRESTController {
@@ -62,8 +59,8 @@ public class AuditLogEntryRESTController {
     public AuditLogEntryViewHelper getAuditLogEntry(@PathVariable final Long id, final Model model) {
         logger.debug("Get audit log entry via request parameter id: %s", id);
         final AuditLogEntry entry = (AuditLogEntry) persistenceService.findObjectByKey(AuditLogEntry.class, id);
-        final AuditLogEntryViewHelper auditLogEntryViewHelper = (AuditLogEntryViewHelper) ViewHelperUtility
-            .createAndPopulateViewHelper(entry, AuditLogEntryViewHelper.class);
+        final AuditLogEntryViewHelper auditLogEntryViewHelper = new AuditLogEntryViewHelper(
+            AuditLogEntry.class, entry);
         return auditLogEntryViewHelper;
     }
 
@@ -71,12 +68,12 @@ public class AuditLogEntryRESTController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     @PreAuthorize("hasRole('USER')")
-    public AuditLogEntryViewHelper createAuditLogEntry(@RequestBody AuditLogEntryViewHelper entryData) {
+    public AuditLogEntryViewHelper createAuditLogEntry(@RequestBody AuditLogEntryForm entryData) {
         logger.debug("Create new Audit Log Entry");
-        AuditLogEntry entry = createEntryObject(entryData);
+        AuditLogEntry entry = (AuditLogEntry) FormUtility.copyStateToNewInstance(entryData, AuditLogEntry.class);
         entry = (AuditLogEntry) persistenceService.saveObject(entry, webUtility.getLoggedInUsername());
-        final AuditLogEntryViewHelper savedEntryData = (AuditLogEntryViewHelper) ViewHelperUtility
-            .createAndPopulateViewHelper(entry, AuditLogEntryViewHelper.class);
+        final AuditLogEntryViewHelper savedEntryData = new AuditLogEntryViewHelper(
+            AuditLogEntry.class, entry);
         return savedEntryData;
     }
 
@@ -84,10 +81,10 @@ public class AuditLogEntryRESTController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     @PreAuthorize("hasRole('USER')")
-    public void updateAuditLogEntry(@RequestBody AuditLogEntryViewHelper entryData, @PathVariable final Long id) {
+    public void updateAuditLogEntry(@RequestBody AuditLogEntryForm entryData, @PathVariable final Long id) {
         logger.debug("Update Audit Log Entry %s:", entryData.getObjectKey());
-        final AuditLogEntry entry = (AuditLogEntry) persistenceService.findObjectByKey(AuditLogEntry.class, id);
-        setFields(entry, entryData);
+        AuditLogEntry entry = (AuditLogEntry) persistenceService.findObjectByKey(AuditLogEntry.class, id);
+        entry = (AuditLogEntry) FormUtility.copyStateToTargetInstance(entryData, entry);
         persistenceService.update(entry, webUtility.getLoggedInUsername());
     }
 
@@ -101,16 +98,4 @@ public class AuditLogEntryRESTController {
         persistenceService.delete(entry);
     }
 
-    private AuditLogEntry createEntryObject(AuditLogEntryViewHelper viewHelper) {
-        AuditLogEntry entry = new AuditLogEntry();
-        entry = setFields(entry, viewHelper);
-        return entry;
-    }
-
-    private AuditLogEntry setFields(AuditLogEntry entry, AuditLogEntryViewHelper viewHelper) {
-        entry.setAction(viewHelper.getAction());
-        entry.setDetail(viewHelper.getDetail());
-        entry.setType(viewHelper.getType());
-        return entry;
-    }
 }
