@@ -3,24 +3,46 @@
 	margin:0px;
 	padding:0px;	
 }
-#body {
-	background-color:#FFF;	
+body {
+	background:#5C697D;	
+	font-family: Tahoma, Geneva, sans-serif;
+	color:#000;
 }
-#page_container {
+#top_container {
 	max-width:978px;
 	margin-left:auto;
 	margin-right:auto;
 	margin-top:0px;
-	backgound-color:#FFF;
+	background-color:#5C697D;
+	padding:0px 5px;
+}
+#page_container {
+	background-color:#FFF;
+	padding-top:5px 5px 0px 5px;
 }
 #top_nav {
-	margin:5px 0px;
+	position:relative;
+	margin-top:5px;
 	height:34px;
 	background-color:#DEDEDE;
 	border-top-left-radius:10px;
 	border-top-right-radius:10px;
 	-moz-border-top-left-radius:10px;
 	-moz-border-top-right-radius:10px;
+}
+#welcome {
+	position:absolute;
+	top:0;
+	bottom:0;
+	margin:auto;
+	height:30px;
+	line-height:30px;
+	vertical-align:middle;
+	font-size:12px;
+	font-weight:bold;
+	float:left;
+	width:30%;
+	padding-left:10px;
 }
 #top_menu {
 	float:right;
@@ -40,10 +62,9 @@
 	line-height:30px;
 	margin-left:2px;
 	padding:2px 20px;
-	font-family: Tahoma, Geneva, sans-serif;
 	font-size:12px;
-	color:#000;
 	font-weight:bold;
+	color:#000;
 	text-transform:uppercase;
 	text-decoration:none;
 }
@@ -57,13 +78,45 @@
 #header {
 	width:100%;
 	height:80px;
-	vertical-align: middle;
+	
+	font-size:12px;
+	color:#000;
+	text-transform:uppercase;
+}
+#logo_container {
+	width:30%;
+	height:80px;
+	float:left;
+	position:relative;
+}
+#logo {
+	position:absolute;
+	top:0;
+	bottom:0;
+	margin:auto;
+}
+#info {
+	width:65%;
+	height:40px;
+	vertical-align:text-top;
+	line-height:40px;
+	text-align:right;
+	float:right;
+	padding-right:5px;
+}
+#search {
+	width:65%;
+	height:40px;
+	float:right;
+	vertical-align:text-bottom;
+	line-height:40px;
+	text-align:right;
+	padding-right:5px;
 }
 #breadcrumb {
 	width:100%;
 	height:30px;
 	background-color:#D9F1FC;
-	font-family: Tahoma, Geneva, sans-serif;
 	font-size:12px;
 	color:#F07B07;
 	font-weight:bold;

@@ -20,13 +20,13 @@ public class SecondTestViewHelper extends AbstractViewHelper {
         return objectKey;
     }
 
+    public void setObjectKey(Long objectKey) {
+        this.objectKey = objectKey;
+    }
+    
     @Mapped
     public String getName() {
         return name;
-    }
-
-    public void setObjectKey(Long objectKey) {
-        this.objectKey = objectKey;
     }
 
     public void setName(String name) {

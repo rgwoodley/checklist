@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,8 +15,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.CollectionOfElements;
 
 import com.codeapes.checklist.util.StringUtil;
 
@@ -77,7 +76,7 @@ public class User extends OwnerExecutorImpl {
         return groups;
     }
 
-    @CollectionOfElements
+    @ElementCollection
     @JoinTable(name = "cl_user_role", joinColumns = { @JoinColumn(name = "user_key") })
     @Column(name = "role", length = 25)
     @Enumerated(EnumType.STRING)

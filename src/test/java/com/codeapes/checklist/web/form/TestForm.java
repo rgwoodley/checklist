@@ -27,12 +27,12 @@ public class TestForm {
         return objectKey;
     }
 
-    public void setObjectKey(Long objectKey) {
-        this.objectKey = objectKey;
-    }
-
     public int getAge() {
         return age;
+    }
+    
+    public void setObjectKey(Long objectKey) {
+        this.objectKey = objectKey;
     }
 
     public void setAge(int age) {

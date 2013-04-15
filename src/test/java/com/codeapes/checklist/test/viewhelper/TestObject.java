@@ -31,12 +31,12 @@ public class TestObject {
         return age;
     }
 
-    public String getNotInViewHelper() {
-        return notInViewHelper;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public String getNotInViewHelper() {
+        return notInViewHelper;
     }
 
     public void setAge(int age) {

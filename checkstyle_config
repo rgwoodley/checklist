@@ -5,7 +5,7 @@
     This configuration file was written by the eclipse-cs plugin configuration editor
 -->
 <!--
-    Checkstyle-Configuration: Checklist Configuration
+    Checkstyle-Configuration: checkstyle_config
     Description: none
 -->
 <module name="Checker">
@@ -142,6 +142,6 @@
   <module name="FileTabCharacter"/>
   <module name="FileLength"/>
   <module name="SuppressionFilter">
-    <property name="file" value="C:/Software/Eclipse/suppressions.xml"/>
+    <property name="file" value="/Users/jkuryla/Software/projects/checklist/suppressions.xml"/>
   </module>
 </module>

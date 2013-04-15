@@ -46,6 +46,7 @@
                 <prop key="hibernate.show_sql">${hibernate.showSQL}</prop>
                 <prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
                 <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl}</prop>
+                <prop key="hibernate.bytecode.provider">javassist</prop>
             </props>
         </property>
         <property name="dataSource">
