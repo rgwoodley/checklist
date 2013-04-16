@@ -1,0 +1,146 @@
+.form {
+    width: 600px;
+    margin: 30px auto 30px;
+    padding: 15px;
+    position: relative;
+    background: #f3f3f3;
+    border-radius: 4px;
+    color: #070535;
+	-moz-box-shadow: 0 0 3px 3px #888;
+	-webkit-box-shadow: 0 0 3px 3px#888;
+	box-shadow: 0 0 3px 3px #888;
+}
+.form h1 {
+    font-size: 15px;
+    font-weight: bold;
+    color: #070535;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #EBE6E2;
+}
+ 
+.form h1 .title {
+    display: inline-block;
+    text-transform: uppercase;
+    padding-right: 2px;
+}
+ 
+.form .float {
+    width: 50%;
+    float: left;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255,255,255,1);
+}
+ 
+.form label {
+    display: block;
+    padding: 0 0 3px 2px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 400;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+    font-size: 11px;
+}
+ 
+.form input[type=text],
+.form input[type=password] {
+    font-family: 'Lato', Calibri, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    width: 80%;
+    display: block;
+    padding: 5px;
+    margin-bottom: 5px;
+    border: 3px solid #ebe6e2;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+.form select {
+    font-family: 'Lato', Calibri, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    width: 80%;
+    display: block;
+    padding: 5px;
+    margin-bottom: 5px;
+    border: 3px solid #ebe6e2;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+.form select {
+    width: 85%;
+}
+.form input[type=text]:hover,
+.form input[type=password]:hover {
+    border-color: #CCC;
+}
+.form label:hover ~ input {
+    border-color: #CCC;
+}
+.form input[type=text]:focus,
+.form input[type=password]:focus {
+    border-color: #BBB;
+    outline: none;
+}
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.form input[type=submit]
+ {
+    width: 50%;
+    height: 38px;
+    position: relative;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    cursor: pointer;
+    font-family: 'Lato', Calibri, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 38px;
+    text-align: center;
+    font-weight: bold;
+    background: #EAD38B;
+    border: 1px solid #A88E3A;
+    color: #996319;
+    text-shadow: 0 1px rgba(255,255,255,0.3);
+    margin-top:20px;
+}
+ 
+.form input[type=submit]:hover {
+    box-shadow: 
+        inset 0 1px rgba(255,255,255,0.50), 
+        inset 0 20px 40px rgba(255,255,255,0.50);
+    -moz-box-shadow: 
+        inset 0 1px rgba(255,255,255,0.50), 
+        inset 0 20px 40px rgba(255,255,255,0.50);
+    -webkit-box-shadow: 
+        inset 0 1px rgba(255,255,255,0.50), 
+        inset 0 20px 40px rgba(255,255,255,0.50);
+}
+.form input[type=text].error,
+.form input[type=password].error {
+	border: 3px solid #E60B0B;
+}
+.error-messages {
+	width: 95%;
+	border: 3px solid #E60B0B;
+	background-color: #FCE4E4;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	padding:5px 0px 5px 25px;
+}
+ul.error-messages li {
+	color:#E60B0B;
+	font-size: 12px;
+	font-weight: bold;
+}
+.button-area {
+	clear:both;
+	width:100%;
+	text-align:center;
+	align:center;
+}
