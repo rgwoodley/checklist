@@ -2,20 +2,20 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Untitled Document</title>
+<title>Checklist Design</title>
 <link href="css/cl-css3.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div id="top_container">
   <div id="top_nav">
     <div id="welcome">
-      <img src="img/checkmark.png" height="20" width="20"></img>&nbsp;Welcome Back, Joe Kuryla
+      Welcome Back, Joe Kuryla
     </div>
     <div id="top_menu">
       <ul>
-        <li><a href="item1">My Checklists</a></li>
+        <li><a href="item1" class="first">My Checklists</a></li>
         <li><a href="item2">Active Checklists</a></li>
-        <li><a href="item3" class="last">Create a Checklist</a></li>
+        <li class="last"><a href="item3" class="last">Create a Checklist</a></li>
       </ul>
     </div>
   </div>
@@ -31,7 +31,10 @@
       <form><input type="text"/></form>
       </div>
     </div>
-    <div id="breadcrumb">Test / Test / Test</div>
+    <div id="bc-outer">
+    	<div id="breadcrumb">Test / Test / Test</div>
+    	<div id="bc-settings"><img src="img/settings.png" height="20" width="20"></img></div>
+    </div>
     <div id="page_menu">&nbsp;</div>
     <div id="content">&nbsp;</div>
     <div id="footer">&nbsp;</div>
