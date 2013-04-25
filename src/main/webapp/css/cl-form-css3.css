@@ -42,19 +42,7 @@
 }
  
 .form input[type=text],
-.form input[type=password] {
-    font-family: 'Lato', Calibri, Arial, sans-serif;
-    font-size: 13px;
-    font-weight: 400;
-    width: 80%;
-    display: block;
-    padding: 5px;
-    margin-bottom: 5px;
-    border: 3px solid #ebe6e2;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-}
+.form input[type=password],
 .form select {
     font-family: 'Lato', Calibri, Arial, sans-serif;
     font-size: 13px;
@@ -70,16 +58,20 @@
 }
 .form select {
     width: 85%;
+    -webkit-appearance:none 
 }
 .form input[type=text]:hover,
-.form input[type=password]:hover {
+.form input[type=password]:hover,
+.form select:hover {
     border-color: #CCC;
 }
-.form label:hover ~ input {
+.form label:hover ~ input,
+.form label:hover ~ select {
     border-color: #CCC;
 }
 .form input[type=text]:focus,
-.form input[type=password]:focus {
+.form input[type=password]:focus,
+.form select:focus {
     border-color: #BBB;
     outline: none;
 }
@@ -121,8 +113,19 @@
         inset 0 20px 40px rgba(255,255,255,0.50);
 }
 .form input[type=text].error,
-.form input[type=password].error {
-	border: 3px solid #E60B0B;
+.form input[type=password].error,
+.form select.error {
+	border: 3px solid #F59D9D;
+}
+.form input[type=text]:hover.error,
+.form input[type=password]:hover.error,
+.form select:hover.error {
+	border-color: #EB3C3C;
+}
+.form input[type=text]:focus.error,
+.form input[type=password]:focus.error,
+.form select:focus.error {
+	border-color: #E60B0B;
 }
 .error-messages {
 	width: 95%;

@@ -68,9 +68,15 @@
         <input type="text" name="j_username" placeholder="Username" tabIndex="1">
     </p>
     <p class="float">
+        <label for="password">Password</label>
+        <input type="password" name="j_password" placeholder="Password" class="showpassword" tabIndex="2"> 
+    </p>
+    <p class="float">
     	<label for="login">State</label>
-    	<select>
+    	<select name = "state" id="state">
     	<option value="IL">Illinois</option>
+    	<option value="TX">Texas</option>
+    	<option value="OK">Oklahoma</option>
     	</select>
     </p>
     <p class="float">
@@ -80,6 +86,14 @@
     <p class="float">
     <label>&nbsp;</label>
     &nbsp;
+    </p>
+    <p class="float">
+    	<label for="login">State</label>
+    	<select name = "state2" id="state2" class="error">
+    	<option value="IL">Illinois</option>
+    	<option value="TX">Texas</option>
+    	<option value="OK">Oklahoma</option>
+    	</select>
     </p>
     <div class="button-area">
     <p class="clearfix">
