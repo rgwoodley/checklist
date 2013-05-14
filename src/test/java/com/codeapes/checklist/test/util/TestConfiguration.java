@@ -11,9 +11,9 @@ public final class TestConfiguration {
     private TestConfiguration() {
 
         final String[] configLocations = { "spring-config/checklist-config-test.xml",
-            "spring-config/checklist-jdbc.xml", "spring-config/checklist-data.xml",
-            "spring-config/checklist-service.xml", "spring-config/checklist-security.xml",
-            "spring-config/checklist-webutil-test.xml", };
+            "spring-config/checklist-props.xml", "spring-config/checklist-jdbc.xml",
+            "spring-config/checklist-data.xml", "spring-config/checklist-service.xml",
+            "spring-config/checklist-security.xml", "spring-config/checklist-webutil-test.xml", };
 
         appContext = new ClassPathXmlApplicationContext(configLocations);
     }

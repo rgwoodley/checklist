@@ -17,13 +17,17 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import com.codeapes.checklist.dao.PagingQueryCriteria;
 import com.codeapes.checklist.dao.PersistenceDAO;
 import com.codeapes.checklist.dao.ResultPage;
+import com.codeapes.checklist.dao.SearchDAO;
+import com.codeapes.checklist.domain.annotation.Searchable;
 import com.codeapes.checklist.domain.persistence.Persistent;
 import com.codeapes.checklist.util.ChecklistException;
 
 public class HibernateDAOImpl extends HibernateDaoSupport implements PersistenceDAO {
 
     private static final String FIND_METHOD_VALIDATION_ERROR_MSG = "Query/Parameters cannot be null, "
-        + "and parameters must not be empty.";
+            + "and parameters must not be empty.";
+
+    private SearchDAO searchDAO;
 
     public SessionFactory getHibernateSessionFactory() {
 
@@ -31,40 +35,43 @@ public class HibernateDAOImpl extends HibernateDaoSupport implements Persistence
     }
 
     public Persistent saveObject(Persistent persistentObj, final String createdBy) {
-
         persistentObj.setCreatedBy(createdBy);
         persistentObj.setCreatedTimestamp(new Timestamp(new Date().getTime()));
         persistentObj.setModifiedBy(createdBy);
         getHibernateTemplate().save(persistentObj);
+        final boolean searchable = persistentObj.getClass().isAnnotationPresent(Searchable.class);
+        if (searchable) {
+            searchDAO.addObjectToIndex(persistentObj);
+        }
         return persistentObj;
     }
 
     public Persistent update(Persistent persistentObj, final String modifiedBy) {
-
         persistentObj.setModifiedBy(modifiedBy);
         getHibernateTemplate().update(persistentObj);
+        final boolean searchable = persistentObj.getClass().isAnnotationPresent(Searchable.class);
+        if (searchable) {
+            searchDAO.updateObjectInIndex(persistentObj);
+        }
         return persistentObj;
     }
 
     public Persistent saveOrUpdate(Persistent persistentObj, String modifiedBy) {
-
         if (persistentObj.getObjectKey() == null) {
-
-            persistentObj.setCreatedBy(modifiedBy);
-            persistentObj.setCreatedTimestamp(new Timestamp(new Date().getTime()));
+            return saveObject(persistentObj, modifiedBy);
         }
-        persistentObj.setModifiedBy(modifiedBy);
-        getHibernateTemplate().saveOrUpdate(persistentObj);
-        return persistentObj;
+        return update(persistentObj, modifiedBy);
     }
 
     public void delete(Persistent persistentObj) {
-
         getHibernateTemplate().delete(persistentObj);
+        final boolean searchable = persistentObj.getClass().isAnnotationPresent(Searchable.class);
+        if (searchable) {
+            searchDAO.removeObjectFromIndex(persistentObj);
+        }
     }
 
     public Persistent findObjectByKey(Class<? extends Persistent> objectClass, Long key) {
-
         return getHibernateTemplate().get(objectClass, key);
     }
 
@@ -96,7 +103,7 @@ public class HibernateDAOImpl extends HibernateDaoSupport implements Persistence
         }
         final Object[] paramData = getParamNamesAndValues(parameters);
         List<?> results = getHibernateTemplate().findByNamedParam(query, (String[]) paramData[0],
-            (Object[]) paramData[1]);
+                (Object[]) paramData[1]);
         if (results == null) {
             results = new ArrayList<Persistent>();
         }
@@ -123,7 +130,7 @@ public class HibernateDAOImpl extends HibernateDaoSupport implements Persistence
         final long totalCnt = executeQueryForTotalRowCount(pageCriteria);
         final List<?> results = executeResultsPageQuery(pageCriteria);
         final ResultPage result = new ResultPageImpl(totalCnt, pageCriteria.getResultsPerPage(),
-            pageCriteria.getPageNumber(), results);
+                pageCriteria.getPageNumber(), results);
         return result;
     }
 
@@ -145,12 +152,13 @@ public class HibernateDAOImpl extends HibernateDaoSupport implements Persistence
     private void validatePageCriteriaNumberValues(PagingQueryCriteria pageCriteria) {
         if (pageCriteria.getPageNumber() < 0) {
             throw new ChecklistException(
-                "Invalid pageCriteria instance.  Attribute pageNumber = %d.  This value cannot be negative.",
-                pageCriteria.getPageNumber());
+                    "Invalid pageCriteria instance.  Attribute pageNumber = %d.  This value cannot be negative.",
+                    pageCriteria.getPageNumber());
         } else if (pageCriteria.getResultsPerPage() < 1) {
             throw new ChecklistException(
-                "Invalid pageCriteria instance.  Attribute resultsPerPage = %d.  This value must be greater than zero.",
-                pageCriteria.getResultsPerPage());
+                    "Invalid pageCriteria instance.  "
+                    + "Attribute resultsPerPage = %d.  This value must be greater than zero.",
+                    pageCriteria.getResultsPerPage());
         }
     }
 
@@ -165,13 +173,13 @@ public class HibernateDAOImpl extends HibernateDaoSupport implements Persistence
         validateCountQueryResults(queryResult);
         return ((Long) queryResult.get(0)).intValue();
     }
-    
+
     private void validateCountQueryResults(List<?> queryResult) {
         if (queryResult == null) {
-            throw new ChecklistException("result of count query for paging is null.");   
+            throw new ChecklistException("result of count query for paging is null.");
         } else if (queryResult.size() != 1) {
             throw new ChecklistException("result of count query for paging must contain one element.");
-        } else if (!(queryResult.get(0) instanceof Integer  || queryResult.get(0) instanceof Long)) {
+        } else if (!(queryResult.get(0) instanceof Integer || queryResult.get(0) instanceof Long)) {
             throw new ChecklistException("total count from count query for paging must be an integer.");
         }
     }
@@ -205,4 +213,13 @@ public class HibernateDAOImpl extends HibernateDaoSupport implements Persistence
         }
         return query;
     }
+
+    public SearchDAO getSearchDAO() {
+        return searchDAO;
+    }
+
+    public void setSearchDAO(SearchDAO searchDAO) {
+        this.searchDAO = searchDAO;
+    }
+
 }

@@ -16,7 +16,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.codeapes.checklist.util.StringUtil;
+import org.apache.commons.lang.StringUtils;
 
 @Entity
 @Table(name = "cl_user")
@@ -52,17 +52,17 @@ public class User extends OwnerExecutorImpl {
     private void formatName() {
         final StringBuilder name = new StringBuilder();
         boolean hasLastName = false;
-        if (StringUtil.isNotEmpty(lastName)) {
+        if (!StringUtils.isBlank(lastName)) {
             name.append(lastName);
             hasLastName = true;
         }
-        if (StringUtil.isNotEmpty(firstName)) {
+        if (!StringUtils.isBlank(firstName)) {
             if (hasLastName) {
                 name.append(", ");
             }
             name.append(firstName);
         }
-        if (StringUtil.isNotEmpty(name.toString())) {
+        if (!StringUtils.isBlank(name.toString())) {
             formattedName = name.toString();
         } else {
             formattedName = this.getUsername();

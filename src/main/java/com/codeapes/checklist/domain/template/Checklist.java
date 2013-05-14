@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.codeapes.checklist.domain.annotation.Searchable;
 import com.codeapes.checklist.domain.group.ChecklistGroup;
 import com.codeapes.checklist.domain.persistence.PersistentImpl;
 import com.codeapes.checklist.domain.user.OwnerExecutor;
@@ -16,6 +17,7 @@ import com.codeapes.checklist.domain.user.OwnerExecutorImpl;
 
 @Entity
 @Table(name = "cl_checklist")
+@Searchable(mapperClass = "com.codeapes.checklist.domain.search.lucene.mapper.ChecklistMapper")
 public class Checklist extends PersistentImpl {
 
     private static final long serialVersionUID = 4189418186231193325L;
@@ -53,7 +55,7 @@ public class Checklist extends PersistentImpl {
         return expectedDurationInMinutes;
     }
 
-    @ManyToOne (targetEntity = OwnerExecutorImpl.class)
+    @ManyToOne(targetEntity = OwnerExecutorImpl.class)
     @JoinColumn(name = "owner_key")
     public OwnerExecutor getOwner() {
         return owner;

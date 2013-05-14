@@ -9,13 +9,17 @@
      http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
      http://www.springframework.org/schema/aop 
      http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
-
     <bean id="persistenceDAO" class="com.codeapes.checklist.dao.impl.HibernateDAOImpl">
         <property name="sessionFactory">
             <ref local="sessionFactory" />
         </property>
+        <property name="searchDAO">
+            <ref local="searchDAO" />
+        </property>
     </bean>
-
+    <bean id="searchDAO" class="com.codeapes.checklist.dao.lucene.impl.LuceneSearchDAOImpl">
+        <property name="applicationProperties" ref="applicationProperties" />
+    </bean>
     <bean id="sessionFactory"
         class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="annotatedClasses">
@@ -53,14 +57,12 @@
             <ref bean="dataSource" />
         </property>
     </bean>
-
     <bean id="transactionManager"
         class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <property name="sessionFactory">
             <ref local="sessionFactory" />
         </property>
     </bean>
-
     <tx:annotation-driven />
 
 </beans>

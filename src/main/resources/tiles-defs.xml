@@ -28,7 +28,7 @@
     </definition>
     <definition name="viewLogEntry" extends="base.full.definition">
         <put-attribute name="title" value="Checklist : View A LogEntry!" />
-        <put-attribute name="jsFile" value="js/logentry/viewLogEntryBB2.js" />
+        <put-attribute name="jsFile" value="js/logentry/viewLogEntryBB3.js" />
         <put-attribute name="main" value="/WEB-INF/jsp/logentry/viewLogEntry.jsp" />
     </definition>
     <definition name="generalMessage" extends="base.full.definition">

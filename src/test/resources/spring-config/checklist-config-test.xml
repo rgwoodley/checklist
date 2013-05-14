@@ -14,9 +14,4 @@
         </property>
         <property name="ignoreUnresolvablePlaceholders" value="true" />
     </bean>
-    <bean id="applicationProperties" class="com.codeapes.checklist.util.ApplicationProperties">
-        <property name="testMode">
-            <value>${general.testMode}</value>
-        </property>
-    </bean>
 </beans>

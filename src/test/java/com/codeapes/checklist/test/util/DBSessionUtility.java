@@ -12,7 +12,6 @@ public class DBSessionUtility {
     private SessionFactory sessionFactory;
     
     public void configureSession(ApplicationContext appContext) {
-
         sessionFactory = (SessionFactory) appContext.getBean("sessionFactory");
         final Session s = sessionFactory.openSession();
         TransactionSynchronizationManager.bindResource(sessionFactory, new SessionHolder(s));

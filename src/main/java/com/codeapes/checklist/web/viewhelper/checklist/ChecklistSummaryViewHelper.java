@@ -59,11 +59,19 @@ public class ChecklistSummaryViewHelper extends AbstractViewHelper {
     public Long getObjectKey() {
         return objectKey;
     }
+    
+    public int getNumberOfSteps() {
+        return numberOfSteps;
+    }
 
     public void setObjectKey(Long objectKey) {
         this.objectKey = objectKey;
     }
 
+    public long getExpectedDurationInMinutes() {
+        return expectedDurationInMinutes;
+    }
+    
     public String getName() {
         return name;
     }
@@ -78,10 +86,6 @@ public class ChecklistSummaryViewHelper extends AbstractViewHelper {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public long getExpectedDurationInMinutes() {
-        return expectedDurationInMinutes;
     }
 
     public void setExpectedDurationInMinutes(long expectedDurationInMinutes) {
@@ -134,10 +138,6 @@ public class ChecklistSummaryViewHelper extends AbstractViewHelper {
 
     public void setOwnerObjectKey(Long ownerObjectKey) {
         this.ownerObjectKey = ownerObjectKey;
-    }
-
-    public int getNumberOfSteps() {
-        return numberOfSteps;
     }
 
     public void setNumberOfSteps(int numberOfSteps) {

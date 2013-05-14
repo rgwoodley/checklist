@@ -13,6 +13,7 @@ lib/
 classes/
 checklistDB/
 target/
+index-search/
 .idea
 *.iml
 *.log

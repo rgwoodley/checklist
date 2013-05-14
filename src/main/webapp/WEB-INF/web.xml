@@ -12,7 +12,7 @@
   </context-param>
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:spring-config/checklist-config.xml,classpath:spring-config/checklist-data.xml,classpath:spring-config/checklist-jdbc.xml,classpath:spring-config/checklist-service.xml,classpath:spring-config/checklist-security.xml</param-value>
+    <param-value>classpath:spring-config/checklist-config.xml,classpath:spring-config/checklist-props.xml,classpath:spring-config/checklist-data.xml,classpath:spring-config/checklist-jdbc.xml,classpath:spring-config/checklist-service.xml,classpath:spring-config/checklist-security.xml</param-value>
   </context-param>
   <filter>
     <filter-name>osivFilter</filter-name>

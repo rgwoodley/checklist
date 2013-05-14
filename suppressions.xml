@@ -7,6 +7,7 @@
 <suppressions>
     <suppress checks="MagicNumberCheck" files="[\\/]*Test.java"/>
     <suppress checks="StrictDuplicateCodeCheck" files="[\\/]domain[\\/]"/>
+	<suppress checks="StrictDuplicateCodeCheck" files="[\\/]viewhelper[\\/]"/>
     <suppress checks="StrictDuplicateCodeCheck" files="[\\/]spring-config[\\/]"/>
     <suppress checks="StrictDuplicateCodeCheck" files="[\\/]*.properties"/>
     <suppress checks="StrictDuplicateCodeCheck" files="[\\/]test[\\/]"/>
