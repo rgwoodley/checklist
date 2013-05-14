@@ -1,5 +1,6 @@
 package com.codeapes.checklist.dao.lucene.impl;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.DisposableBean;
@@ -20,7 +21,7 @@ public class LuceneSearchDAOImpl implements SearchDAO, InitializingBean, Disposa
     private IndexingContext indexingContext = new IndexingContext();
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() throws IOException {
         logger.info("initializing LuceneSearchDAO implementation.");
         indexingContext.initialize(applicationProperties);
         indexer.setContext(indexingContext);
@@ -29,7 +30,7 @@ public class LuceneSearchDAOImpl implements SearchDAO, InitializingBean, Disposa
     }
 
     @Override
-    public void destroy() throws Exception {
+    public void destroy() throws IOException {
         logger.info("LuceneSearchDAO being destroyed.  Closing indexing context.");
         indexingContext.close();
         logger.info("Indexing context closed.");

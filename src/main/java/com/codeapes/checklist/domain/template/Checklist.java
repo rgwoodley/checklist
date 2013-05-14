@@ -10,7 +10,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.codeapes.checklist.domain.annotation.Searchable;
-import com.codeapes.checklist.domain.group.ChecklistGroup;
 import com.codeapes.checklist.domain.persistence.PersistentImpl;
 import com.codeapes.checklist.domain.user.OwnerExecutor;
 import com.codeapes.checklist.domain.user.OwnerExecutorImpl;

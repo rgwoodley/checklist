@@ -1,4 +1,4 @@
-package com.codeapes.checklist.domain.group;
+package com.codeapes.checklist.domain.template;
 
 import java.util.List;
 
@@ -12,7 +12,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.codeapes.checklist.domain.persistence.PersistentImpl;
-import com.codeapes.checklist.domain.template.Checklist;
 import com.codeapes.checklist.domain.user.OwnerExecutor;
 import com.codeapes.checklist.domain.user.OwnerExecutorImpl;
 

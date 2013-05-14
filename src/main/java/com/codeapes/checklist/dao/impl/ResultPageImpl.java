@@ -6,7 +6,7 @@ import java.util.List;
 import com.codeapes.checklist.dao.ResultPage;
 import com.codeapes.checklist.domain.persistence.Persistent;
 
-public class ResultPageImpl implements ResultPage {
+public final class ResultPageImpl implements ResultPage {
 
     private long totalResults;
     private List<?> results;
@@ -61,14 +61,12 @@ public class ResultPageImpl implements ResultPage {
     }
 
     public int getTotalNumberOfPages() {
-        final int resultsPerPage = getResultsPerPage();
-        final long totalResults = getTotalResults();
 
-        if (resultsPerPage == 0) {
+        if (getResultsPerPage() == 0) {
             return 0;
         }
 
-        final double numberOfPages = (double) totalResults / (double) resultsPerPage;
+        final double numberOfPages = (double) getTotalResults() / (double) getResultsPerPage();
         return (int) Math.ceil(numberOfPages);
     }
 

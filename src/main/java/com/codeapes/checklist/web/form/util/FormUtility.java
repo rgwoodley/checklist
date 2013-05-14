@@ -33,8 +33,7 @@ public final class FormUtility {
 
     public static Object copyStateToTargetInstance(Object form, Object targetObject) {
         validateCopyInput(form, targetObject);
-        final Object object = copyProperties(form, targetObject);
-        return object;
+        return copyProperties(form, targetObject);
     }
 
     private static void validateNewInstanceInput(Object form, Class<?> targetType) {

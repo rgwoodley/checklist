@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.codeapes.checklist.dao.PersistenceDAO;
-import com.codeapes.checklist.domain.group.ChecklistGroup;
 import com.codeapes.checklist.domain.template.Checklist;
+import com.codeapes.checklist.domain.template.ChecklistGroup;
 import com.codeapes.checklist.service.ChecklistService;
 import com.codeapes.checklist.util.AppLogger;
 

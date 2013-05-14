@@ -2,8 +2,8 @@ package com.codeapes.checklist.service;
 
 import java.util.List;
 
-import com.codeapes.checklist.domain.group.ChecklistGroup;
 import com.codeapes.checklist.domain.template.Checklist;
+import com.codeapes.checklist.domain.template.ChecklistGroup;
 
 public interface ChecklistService {
 

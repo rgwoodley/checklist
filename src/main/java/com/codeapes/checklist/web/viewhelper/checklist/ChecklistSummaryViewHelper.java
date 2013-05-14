@@ -3,8 +3,8 @@ package com.codeapes.checklist.web.viewhelper.checklist;
 import java.sql.Timestamp;
 import java.util.List;
 
-import com.codeapes.checklist.domain.group.ChecklistGroup;
 import com.codeapes.checklist.domain.template.Checklist;
+import com.codeapes.checklist.domain.template.ChecklistGroup;
 import com.codeapes.checklist.domain.template.Step;
 import com.codeapes.checklist.domain.user.OwnerExecutor;
 import com.codeapes.checklist.util.ChecklistException;

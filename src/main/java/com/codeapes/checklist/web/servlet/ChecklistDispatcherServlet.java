@@ -40,7 +40,7 @@ public class ChecklistDispatcherServlet extends DispatcherServlet {
         final Long userObjectKey = (Long)session.getAttribute(WebConstants.LOGGED_IN_USER_KEY);
         if (userObjectKey == null) {
             final Object obj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            if (obj != null && obj instanceof org.springframework.security.core.userdetails.User) {
+            if (obj instanceof org.springframework.security.core.userdetails.User) {
                 final String username = ((org.springframework.security.core.userdetails.User) obj).getUsername();
                 final User user = userService.findUserByUsername(username);     
                 session.setAttribute(WebConstants.LOGGED_IN_USER_KEY, user.getObjectKey());

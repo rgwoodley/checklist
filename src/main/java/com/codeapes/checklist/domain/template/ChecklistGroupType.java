@@ -1,4 +1,4 @@
-package com.codeapes.checklist.domain.group;
+package com.codeapes.checklist.domain.template;
 
 public enum ChecklistGroupType {
     PUBLIC, PRIVATE

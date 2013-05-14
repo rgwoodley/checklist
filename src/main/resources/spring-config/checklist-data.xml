@@ -28,7 +28,7 @@
                 </value>
                 <value>com.codeapes.checklist.domain.execution.ExecutionStep
                 </value>
-                <value>com.codeapes.checklist.domain.group.ChecklistGroup
+                <value>com.codeapes.checklist.domain.template.ChecklistGroup
                 </value>
                 <value>com.codeapes.checklist.domain.template.Checklist
                 </value>

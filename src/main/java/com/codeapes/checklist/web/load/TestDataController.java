@@ -9,9 +9,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.codeapes.checklist.domain.group.ChecklistGroup;
-import com.codeapes.checklist.domain.group.ChecklistGroupType;
 import com.codeapes.checklist.domain.template.Checklist;
+import com.codeapes.checklist.domain.template.ChecklistGroup;
+import com.codeapes.checklist.domain.template.ChecklistGroupType;
 import com.codeapes.checklist.domain.user.Role;
 import com.codeapes.checklist.domain.user.User;
 import com.codeapes.checklist.service.ChecklistService;
@@ -76,7 +76,9 @@ public class TestDataController {
         checklistService.saveOrUpdateChecklistGroup(group1, owner.getUsername());
         checklistService.saveOrUpdateChecklistGroup(group2, owner.getUsername());
         logger.info("Checklist group test data generation complete.");
-        final ChecklistGroup[] groups = { group1, group2 };
+        final ChecklistGroup[] groups = new ChecklistGroup[2];
+        groups[0] = group1; 
+        groups[1] = group2;
         return groups;
     }
 

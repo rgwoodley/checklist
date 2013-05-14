@@ -32,7 +32,7 @@ public class IndexingContext {
         this.setSearcherManager(new SearcherManager(indexDirectory, new SearcherFactory()));
     }
     
-    public void close() throws Exception {
+    public void close() throws IOException {
         logger.info("Performing Lucene Cleanup.");
         if (indexWriter != null) {
             indexWriter.close();
