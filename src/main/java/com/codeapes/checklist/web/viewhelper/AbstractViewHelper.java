@@ -50,7 +50,9 @@ public class AbstractViewHelper implements ViewHelper {
         validateInputObject(inputObject);
         final List<PropertyDescriptor> descriptors = IntrospectionUtility.getPropertyDescriptors(this.getClass());
         for (PropertyDescriptor viewHelperDescriptor : descriptors) {
-            processViewHelperDescriptor(inputObject, viewHelperDescriptor);
+            if (!"class".equals(viewHelperDescriptor.getName())) {
+                processViewHelperDescriptor(inputObject, viewHelperDescriptor);
+            }
         }
     }
 
@@ -58,7 +60,12 @@ public class AbstractViewHelper implements ViewHelper {
         final Mapped mappingInfo = viewHelperDescriptor.getReadMethod().getAnnotation(Mapped.class);
         if (mappingInfo != null) {
             final String descriptorName = getOtherDescriptorName(viewHelperDescriptor, mappingInfo);
+            logger.debug("  Mapping descriptor: %s", descriptorName);
             copyProperty(inputObject, descriptorName, this, viewHelperDescriptor);
+        } else {
+            logger.error(
+                    "  Attempt to automatically map property, but the getter in the view helper is not annotated "
+                    + "with '@Mapped'.  Property: %s", viewHelperDescriptor.getName());
         }
     }
 
@@ -71,21 +78,22 @@ public class AbstractViewHelper implements ViewHelper {
     }
 
     private void copyProperty(Object sourceObject, String sourceDescriptorNames, Object targetObject,
-        PropertyDescriptor targetDescriptor) {
+            PropertyDescriptor targetDescriptor) {
 
         PropertyDescriptor otherDescriptor = null;
         final String[] propertyNames = sourceDescriptorNames.split("\\.");
         Class<?> descriptorType = sourceType;
         Object object = sourceObject;
         for (String propertyName : propertyNames) {
-            logger.debug("Property being processed: %s", propertyName);
+            logger.debug("  Property being processed: %s", propertyName);
             otherDescriptor = IntrospectionUtility.getPropertyDescriptor(propertyName, descriptorType);
             if (otherDescriptor != null) {
                 descriptorType = otherDescriptor.getPropertyType();
                 object = IntrospectionUtility.executeGetMethod(object, otherDescriptor.getReadMethod());
-                logger.debug("Property Value: %s", object);
+                logger.debug("  Property Value: %s", object);
             } else {
-                logger.error("Property of %s on type %s does not exist!", propertyName, descriptorType.getSimpleName());
+                logger.error("  Property of %s on type %s does not exist!", propertyName,
+                        descriptorType.getSimpleName());
                 return;
             }
         }
@@ -95,12 +103,12 @@ public class AbstractViewHelper implements ViewHelper {
     private void validateInputObject(Object inputObject) {
         if (inputObject == null) {
             throw new ChecklistException("inputObject passed to method of AbstractViewHelper is null. %s", this
-                .getClass().getSimpleName());
+                    .getClass().getSimpleName());
         } else if (sourceType == null) {
             throw new ChecklistException("sourceType in this ViewHelper is null. %s", this.getClass().getSimpleName());
         } else if (!sourceType.equals(inputObject.getClass())) {
             throw new ChecklistException("inputObject is of type %s, but expected it to be of type %s.", inputObject
-                .getClass().getSimpleName(), sourceType.getSimpleName());
+                    .getClass().getSimpleName(), sourceType.getSimpleName());
         }
     }
 

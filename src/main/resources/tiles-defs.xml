@@ -3,45 +3,57 @@
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
-    <definition name="base.full.definition"
+    <definition name="base.definition"
         template="/WEB-INF/jsp/template/page_template_full.jsp">
-        <put-attribute name="title" value="" />
+        <put-attribute name="title" value="Checklist" />
+        <put-attribute name="welcome_message" value="/WEB-INF/jsp/template/welcome_message.jsp" />
+        <put-attribute name="menu" value="/WEB-INF/jsp/menu/menu.jsp" />
+        <put-attribute name="logo" value="/WEB-INF/jsp/template/logo.jsp" />
+        <put-attribute name="submenu" value="/WEB-INF/jsp/menu/submenu.jsp" />
+        <put-attribute name="search" value="/WEB-INF/jsp/template/search.jsp" />
+        <put-attribute name="breadcrumb" value="/WEB-INF/jsp/breadcrumb/breadcrumb.jsp" />
+        <put-attribute name="settings" value="/WEB-INF/jsp/template/settings.jsp" />
+        <put-attribute name="heading" value="&#160;" />
+        <put-attribute name="main" value="/WEB-INF/jsp/template/blank.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/jsp/template/footer.jsp" />
         <put-attribute name="jsFile" value="js/none.js" />
-        <put-attribute name="header"
-            value="/WEB-INF/jsp/template/page_header.jsp" />
-        <put-attribute name="top_menu" value="/WEB-INF/jsp/menu/top_menu.jsp" />
-        <put-attribute name="main" value="" />
-        <put-attribute name="footer"
-            value="/WEB-INF/jsp/template/page_footer.jsp" />
     </definition>
-    <definition name="login" extends="base.full.definition">
-        <put-attribute name="title" value="Checklist : Login" />
+    <definition name="main" extends="base.definition">
+        <put-attribute name="title" value="Checklist" />
+        <put-attribute name="heading" value="Checklist" />
+        <put-attribute name="main" value="/WEB-INF/jsp/main/main.jsp" />
+    </definition>
+    <definition name="login" extends="base.definition">
+        <put-attribute name="title" value="Checklist : Log In" />
+        <put-attribute name="heading" value="Log In" />
         <put-attribute name="main" value="/WEB-INF/jsp/user/login.jsp" />
+        <put-attribute name="jsFile" value="js/user/login.js" />
     </definition>
-    <definition name="dashboard" extends="base.full.definition">
+    <definition name="searchresult" extends="base.definition">
+        <put-attribute name="title" value="Checklist : Search" />
+        <put-attribute name="heading" value="Search Results" />
+        <put-attribute name="main" value="/WEB-INF/jsp/search/search_result.jsp" />
+        <put-attribute name="jsFile" value="js/search/search_result.js" />
+    </definition>
+    <definition name="dashboard" extends="base.definition">
         <put-attribute name="title" value="Checklist : Dashboard" />
+        <put-attribute name="heading" value="Dashboard" />
         <put-attribute name="main" value="/WEB-INF/jsp/dashboard/dashboard.jsp" />
     </definition>
-    <definition name="addLogEntry" extends="base.full.definition">
-        <put-attribute name="title" value="Checklist : Create A LogEntry!" />
-        <put-attribute name="main" value="/WEB-INF/jsp/logentry/createLogEntry.jsp" />
-    </definition>
-    <definition name="viewLogEntry" extends="base.full.definition">
-        <put-attribute name="title" value="Checklist : View A LogEntry!" />
-        <put-attribute name="jsFile" value="js/logentry/viewLogEntryBB3.js" />
-        <put-attribute name="main" value="/WEB-INF/jsp/logentry/viewLogEntry.jsp" />
-    </definition>
-    <definition name="generalMessage" extends="base.full.definition">
+    <definition name="generalMessage" extends="base.definition">
         <put-attribute name="title" value="Checklist : Message" />
+        <put-attribute name="heading" value="Message" />
         <put-attribute name="main" value="/WEB-INF/jsp/general/generalMessage.jsp" />
     </definition>
-    <definition name="noAccess" extends="base.full.definition">
-        <put-attribute name="title" value="Checklist : No Access" />
+    <definition name="noAccess" extends="base.definition">
+        <put-attribute name="title" value="Checklist : Access Denied" />
+        <put-attribute name="heading" value="Access Denied" />
         <put-attribute name="main"
             value="/WEB-INF/jsp/general/generalMessage.jsp" />
     </definition>
-    <definition name="pageNotFound" extends="base.full.definition">
+    <definition name="pageNotFound" extends="base.definition">
         <put-attribute name="title" value="Checklist : Page Not Found" />
+        <put-attribute name="heading" value="Page Not Found" />
         <put-attribute name="main"
             value="/WEB-INF/jsp/general/generalMessage.jsp" />
     </definition>

@@ -15,6 +15,7 @@ import com.codeapes.checklist.domain.template.ChecklistGroupType;
 import com.codeapes.checklist.domain.user.Role;
 import com.codeapes.checklist.domain.user.User;
 import com.codeapes.checklist.service.ChecklistService;
+import com.codeapes.checklist.service.search.SearchService;
 import com.codeapes.checklist.service.user.UserService;
 import com.codeapes.checklist.util.AppLogger;
 import com.codeapes.checklist.util.ApplicationProperties;
@@ -38,6 +39,9 @@ public class TestDataController {
 
     @Autowired
     private ChecklistService checklistService;
+    
+    @Autowired
+    private SearchService searchService;
 
     @Autowired
     private ApplicationProperties applicationProperties;
@@ -48,6 +52,7 @@ public class TestDataController {
             final User user = createTestUsers();
             final ChecklistGroup[] groups = createTestChecklistGroups(user);
             createTestChecklists(user, groups[0], groups[1]);
+            searchService.refreshIndexSearcherBlocking();
             model.put(MODEL_MESSAGE, "Test Data Generated.  Have fun!");
         } else {
 

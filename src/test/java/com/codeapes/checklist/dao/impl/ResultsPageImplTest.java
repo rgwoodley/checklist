@@ -26,6 +26,12 @@ public class ResultsPageImplTest {
         assertEquals(1, page.getTotalNumberOfPages());
     }
     
+    @Test
+    public void resultsPerPageZero() {
+        final ResultPage page = createResultPage(5, 0, 0);
+        assertEquals(0, page.getTotalNumberOfPages());
+    }
+    
     private ResultPage createResultPage(int totalResults, int resultsPerPage, int currentPage) {
 
         return new ResultPageImpl(totalResults, resultsPerPage, currentPage, null);

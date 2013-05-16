@@ -26,6 +26,7 @@ public final class ViewHelperUtility {
         final List<ViewHelper> newList = new ArrayList<ViewHelper>();
         if (originalList != null && viewHelperClass != null) {
             for (Object object : originalList) {
+                logger.debug("Attempting to add to view helper list: %s", object);
                 final ViewHelper viewHelper = createAndPopulateViewHelper(object, viewHelperClass);
                 addToListIfNotNull(viewHelper, newList);
             }

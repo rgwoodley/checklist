@@ -44,6 +44,8 @@ public class ChecklistDispatcherServlet extends DispatcherServlet {
                 final String username = ((org.springframework.security.core.userdetails.User) obj).getUsername();
                 final User user = userService.findUserByUsername(username);     
                 session.setAttribute(WebConstants.LOGGED_IN_USER_KEY, user.getObjectKey());
+                session.setAttribute(WebConstants.LOGGED_IN_USER_NAME, user.getUsername());
+                session.setAttribute(WebConstants.LOGGED_IN_USER_FORMATTED_NAME, user.getName());
                 logger.info("User %s with id of %d has logged in.", user.getUsername(), user.getObjectKey());
             }
         }

@@ -9,19 +9,22 @@ public class UserFormattedNameTest {
 
     private static final String FIRST_NAME = "Roger";
     private static final String LAST_NAME = "Smith";
+    private static final String USERNAME = "rsmith";
     
     @Test
     public void testNameNullFirstName() {
         final User user = new User();
+        user.setUsername(USERNAME);
         user.setLastName(LAST_NAME);
-        assertEquals(LAST_NAME, user.getName());
+        assertEquals(USERNAME, user.getName());
     }
     
     @Test
     public void testNameNullLastName() {
         final User user = new User();
+        user.setUsername(USERNAME);
         user.setFirstName(FIRST_NAME);
-        assertEquals(FIRST_NAME, user.getName());
+        assertEquals(USERNAME, user.getName());
     }
     
     @Test
@@ -29,11 +32,19 @@ public class UserFormattedNameTest {
         final User user = new User();
         user.setFirstName(FIRST_NAME);
         user.setLastName(LAST_NAME);
-        assertEquals(LAST_NAME + ", " + FIRST_NAME, user.getName());
+        user.setUsername(USERNAME);
+        assertEquals(FIRST_NAME + " " + LAST_NAME, user.getName());
     }
     
     @Test
     public void testNameNullFirstAndLastName() {
+        final User user = new User();
+        user.setUsername(USERNAME);
+        assertEquals(USERNAME, user.getName());
+    }
+    
+    @Test
+    public void testNameNullFirstAndLastAndUserName() {
         final User user = new User();
         assertNull(user.getName());
     }

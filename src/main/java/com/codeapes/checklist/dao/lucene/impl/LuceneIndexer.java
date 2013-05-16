@@ -17,7 +17,7 @@ import com.codeapes.checklist.util.ChecklistException;
 
 public final class LuceneIndexer {
 
-    private static final AppLogger logger = new AppLogger(LuceneIndexer.class);
+    private static final AppLogger logger = new AppLogger(LuceneIndexer.class); //NOSONAR
     private IndexingContext context;
     private final DocumentMapperUtility mapperUtility = DocumentMapperUtility.getInstance();
 

@@ -32,6 +32,19 @@ public class AbstractViewHelperTest {
         final TestViewHelper testViewHelper = new TestViewHelper(TestObject.class);
         testViewHelper.populate(null);
     }
+    
+    @Test(expected = ChecklistException.class)
+    public void testSourceTypeNull() {
+        final TestViewHelper testViewHelper = new TestViewHelper(null);
+        testViewHelper.populate(null);
+    }
+    
+    @Test(expected = ChecklistException.class)
+    public void testTypeMismatch() {
+        final TestObject testObject = createAndPopulateTestObject();
+        final TestViewHelper testViewHelper = new TestViewHelper(String.class);
+        testViewHelper.populate(testObject);
+    }
 
     @Test
     public void testFullMapping() {

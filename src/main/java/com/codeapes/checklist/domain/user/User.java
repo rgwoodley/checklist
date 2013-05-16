@@ -50,22 +50,13 @@ public class User extends OwnerExecutorImpl {
     }
 
     private void formatName() {
-        final StringBuilder name = new StringBuilder();
-        boolean hasLastName = false;
-        if (!StringUtils.isBlank(lastName)) {
-            name.append(lastName);
-            hasLastName = true;
-        }
-        if (!StringUtils.isBlank(firstName)) {
-            if (hasLastName) {
-                name.append(", ");
-            }
-            name.append(firstName);
-        }
-        if (!StringUtils.isBlank(name.toString())) {
-            formattedName = name.toString();
+        if (!StringUtils.isBlank(firstName) && !StringUtils.isBlank(lastName)) {
+            final StringBuilder theName = new StringBuilder(firstName);
+            theName.append(" ");
+            theName.append(lastName);
+            formattedName = theName.toString();
         } else {
-            formattedName = this.getUsername();
+            formattedName = username;
         }
     }
 

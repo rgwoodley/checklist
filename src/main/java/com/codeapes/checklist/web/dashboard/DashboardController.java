@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.codeapes.checklist.domain.template.Checklist;
 import com.codeapes.checklist.service.ChecklistService;
 import com.codeapes.checklist.util.AppLogger;
+import com.codeapes.checklist.web.search.SearchForm;
 import com.codeapes.checklist.web.util.WebUtility;
 import com.codeapes.checklist.web.viewhelper.ViewHelperUtility;
 import com.codeapes.checklist.web.viewhelper.checklist.ChecklistSummaryViewHelper;
@@ -44,6 +45,7 @@ public class DashboardController {
         final List<ChecklistSummaryViewHelper> ownedChecklists = (List<ChecklistSummaryViewHelper>) ViewHelperUtility
             .convertList(checklists, ChecklistSummaryViewHelper.class);
         model.addAttribute("ownedChecklists", ownedChecklists);
+        model.addAttribute("searchForm", new SearchForm());
         logger.debug("Found %d checklists for user %s,", ownedChecklists.size(), username);
         return "dashboard";
     }

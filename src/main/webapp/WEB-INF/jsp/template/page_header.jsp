@@ -1,1 +1,0 @@
-<img src="img/checklist_logo_header.jpg" alt="Checklist!" height="37" width="169" border="0"/>
