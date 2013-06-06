@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.codeapes.checklist.domain.audit.AuditLogEntry;
 import com.codeapes.checklist.service.PersistenceService;
 import com.codeapes.checklist.util.AppLogger;
+import com.codeapes.checklist.web.util.WebSecurityConstants;
 import com.codeapes.checklist.web.util.WebUtility;
 
 @Controller
@@ -26,7 +27,7 @@ public class AuditLogEntryController {
     private static final String VIEW_LOG_ENTRY_VIEW = "viewLogEntry";
     private static final String FORM_NAME = "form";
 
-    private static final AppLogger logger = new AppLogger(AuditLogEntryController.class);
+    private static final AppLogger logger = new AppLogger(AuditLogEntryController.class); // NOSONAR
 
     @Autowired
     private Validator validator;
@@ -38,7 +39,7 @@ public class AuditLogEntryController {
     private WebUtility webUtility;
 
     @RequestMapping(method = RequestMethod.GET, value = "/createLogEntry")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize(WebSecurityConstants.USER_ROLE)
     public String initLogEntryForm(HttpServletRequest request, HttpServletResponse response, Model model) {
         final AuditLogEntryForm form = new AuditLogEntryForm();
         model.addAttribute(FORM_NAME, form);
@@ -47,7 +48,7 @@ public class AuditLogEntryController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/createLogEntry")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize(WebSecurityConstants.USER_ROLE)
     public String createLogEntry(@ModelAttribute("form") AuditLogEntryForm form, HttpServletRequest request,
         HttpServletResponse response, BindingResult result, Model model) {
 
@@ -77,7 +78,7 @@ public class AuditLogEntryController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/viewLogEntry")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize(WebSecurityConstants.USER_ROLE)
     public String initLogEntryView(HttpServletRequest request, HttpServletResponse response, Model model) {
         return VIEW_LOG_ENTRY_VIEW;
     }

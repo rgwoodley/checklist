@@ -12,7 +12,7 @@ import com.codeapes.checklist.util.AppLogger;
 @Controller
 public class LoginController {
 
-    private static final AppLogger logger = new AppLogger(LoginController.class);
+    private static final AppLogger logger = new AppLogger(LoginController.class); // NOSONAR
 
     @RequestMapping("/login")
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {

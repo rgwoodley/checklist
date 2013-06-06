@@ -14,7 +14,7 @@ import com.codeapes.checklist.util.ApplicationProperties;
 
 public class LuceneSearchDAOImpl implements SearchDAO, InitializingBean, DisposableBean {
 
-    private static final AppLogger logger = new AppLogger(LuceneSearchDAOImpl.class);
+    private static final AppLogger logger = new AppLogger(LuceneSearchDAOImpl.class); // NOSONAR
     private ApplicationProperties applicationProperties;
     private LuceneIndexer indexer = new LuceneIndexer();
     private LuceneSearcher searcher = new LuceneSearcher();
@@ -73,12 +73,16 @@ public class LuceneSearchDAOImpl implements SearchDAO, InitializingBean, Disposa
 
     @Override
     public void refreshIndexSearcher() {
+        logger.info("refreshing index searcher.");
         searcher.refreshIndexSearcher();
+        logger.info("index searcher refresh complete.");
     }
 
     @Override
     public void refreshIndexSearcherBlocking() {
+        logger.info("refreshing index searcher with blocking.");
         searcher.refreshIndexSearcherBlocking();
+        logger.info("index searcher refresh with blocking complete.");
     }
 
     public ApplicationProperties getApplicationProperties() {

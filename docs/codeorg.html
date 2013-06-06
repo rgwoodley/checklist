@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Checklist Documentation</title>
+<link href="css.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h1>Checklist : Code Organization</h1>
+<p>
+The Checklist codebase conforms to the <a href="http://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html">directory structure of a Maven web application</a>.
+</p>
+<ul>
+<li><a href="#root">Root-Level Directories and Files</a></li>
+<li><a href="#configuration">Configuration Files</a></li>
+<li><a href="#springconfig">Spring Configuration Files</a></li>
+<li><a href="#java">Key Java Packages</a></li>
+<li><a href="#web">Key Web Components and Directories</a></li>
+<li><a href="#jsp">Key JSP Directories and Files</a></li>
+<li><a href="#test">Key Testing Directories and Files</a></li>
+</ul>
+<ul>
+<li>
+    <p><a id="root"></a><b>Root-Level Directories and Files</b></p>
+	<dl>
+	<dt>database</dt><dd>Database scripts to create and populate database objects.</dd>
+	<dt>docs</dt><dd>Checklist project documentation in HTML format.</dd>  
+	<dt>src</dt><dd>Source code and related files (HTML, JSP, CSS, Javascript, etc).</dd>
+	<dt>checkstyle_config</dt><dd>Checkstyle rule configuration file.</dd>
+	<dt>pom.xml</dt><dd>Maven Project Object Model file.</dd>
+	<dt>suppressions.xml</dt><dd>Checkstyle rule suppression configuration.</dd> 
+	</dl>
+</li>
+</ul>
+<ul>
+<li>
+    <p><a id="configuration"></a><b>Configuration Files</b><br>Located in src/main/resources.</p>
+	<dl>
+	<dt>checklist.properties</dt><dd>General configuration for the application.  Only this file and password.properties need to be modified to get the application up and running.</dd>
+	<dt>log4j.properties</dt><dd>Logging configuration.  Set the logging level here!</dd>
+	<dt>password.properties</dt><dd>Database password.  Set the permissions of this file appropriately!</dd>
+	<dt>quartz.properties</dt><dd>Properties for the Quartz Job Scheduler.</dd>
+	<dt>tiles-defs.xml</dt><dd>Tiles configuration for application JSP pages.</dd>
+	</dl>
+</li>
+</ul>
+<ul>
+<li>
+    <p><a id="springconfig"></a><b>Spring Configuration Files</b><br>Located in src/main/resources/spring-config.</p>
+	<dl>
+	<dt>checklist-config.xml</dt><dd>Defines a PropertyPlaceholderConfigurer, which allows values in other Spring configuration files to be replaced by values defined in the checklist.properties and password.properties files.</dd>
+	<dt>checklist-data.xml</dt><dd>Hibernate and Data Access Object (DAO) configuration.</dd>
+	<dt>checklist-jdbc.xml</dt><dd>Database/datasource configuration.</dd>
+	<dt>checklist-props.xml</dt><dd>Configures the 'applicationProperties' bean, which provides properties that can be used in project's Java code.</dd>
+	<dt>checklist-security.xml</dt><dd>Spring security configuration.</dd>
+	<dt>checklist-service.xml</dt><dd>Spring configuration for service-tier and asynchronous job classes.  NOTE: Almost all Spring service/job behavior can be configured using annotations, so modifications to this file should be rare.</dd>
+	</dl>
+</li>
+</ul>
+<ul>
+<li>
+    <p><a id="java"></a><b>Key Java Packages</b>
+	<dl>
+	<dt>com.codeapes.checklist.dao</dt><dd>"Data Access Objects."  The classes in this package and subpackages are responsible for communication from/to a persistent data store.</dd>
+	<dt>com.codeapes.checklist.domain</dt><dd>This package and subpackages contain classes that define the domain model for the application.  You'll find classes like 'User', 'Checklist' and 'UserGroup' in here.</dd>
+	<dt>com.codeapes.checklist.job</dt><dd>This package and subpackages contain classes that define asynchronous scheduled jobs that are run according to some schedule.  An example is the process that refreshes the Lucene search index, making newly indexed objects searchable.</dd>
+	<dt>com.codeapes.checklist.service</dt><dd>The classes in this package and subpackages define the business logic of the application.  The presentation tier uses the methods/features provided by these classes.</dd>
+	<dt>com.codeapes.checklist.web</dt><dd>This package and subpackages contain Spring MVC controller classes, form classes, and REST services.</dd>
+	</dl>
+</li>
+</ul>
+<ul>
+<li>
+    <p><a id="web"></a><b>Key Web Components and Directories</b><br>Located in src/main/webapp.
+	<dl>
+	<dt>css</dt><dd>Cascading Style Sheets used by the web UI.  The application uses CSS 3.</dd>
+	<dt>img</dt><dd>Graphic images used on the web UI in jpeg, gif or png format.</dd>
+	<dt>index.jsp</dt><dd>The default/welcome page for the application.</dd>
+	<dt>js</dt><dd>Application javascript files.  The application's client-side javascript makes use of jquery and backbone.js where beneficial.</dd>
+	<dt>WEB-INF/jsp</dt><dd>Java Server Page (JSP) files live here.</dd>
+	<dt>WEB-INF/checklist-servlet.xml</dt><dd>Spring MVC configuration for the application. NOTE: Almost all Spring MVC behavior can be configured using annotations, so modifications to this file should be rare.</dd>
+	<dt>WEB-INF/web.xml</dt><dd>The web application deployment descriptor for the application.  This file defines the Spring MVC Dispatcher servlet as well as all required servlet filters, error pages, etc...</dd>
+	</dl>
+</li>
+</ul>
+<ul>
+<li>
+    <p><a id="jsp"></a><b>Key JSP Directories and Files</b><br>Located in src/main/webapp/WEB-INF/jsp.
+	<dl>
+	<dt>includes</dt><dd>The includes.jsp file in this directory defines commonly used JSP tag libraries.  This file should be included in other JSPs if tags from these libraries are needed.</dd>
+	<dt>menu</dt><dd>Contains the menus that are common throughout the application.</dd>
+	<dt>template</dt><dd>Commonly-used page components, assembled together using Tiles.</dd>
+	<dt>template/page_template_full.jsp</dt><dd>The primary Tiles-based template from which most application pages are defined.</dd>
+	<dt>user</dt><dd>Contains the login page, as well as pages related to user and user profile management.</dd>
+	</dl>
+</li>
+</ul>
+<ul>
+<li>
+    <p><a id="test"></a><b>Key Testing Directories and Files</b><br>Located in src/test.
+	<dl>
+	<dt>java</dt><dd>JUnit tests and supporting Java classes.</dd>
+	<dt>resources/checklist_test.properties</dt><dd>Testing configuration used in place of checklist.properties when running tests.</dd>
+	<dt>resources/spring-config/checklist-config-test.xml</dt><dd>Used instead of checklist-config.xml while running tests so that checklist_test.properties is used instead of checklist.properties.</dd>
+	<dt>resources/spring-config/checklist-webutil-test.xml</dt><dd>Enables Spring annotations to be defined in some web-tier classes without having to load the entire Spring MVC context with a servlet engine running.</dd>
+	<dt>java/com.codeapes.checklist.test.util.TestConfiguration</dt><dd>This class defines and loads the Spring context so that the test configuration gets used.</dd>
+	</dl>
+</li>
+</ul>
+<a href="index.html">Return</a>
+<br>
+<h3>&copy; 2013, Codeapes</h3>
+</body>
+</html>

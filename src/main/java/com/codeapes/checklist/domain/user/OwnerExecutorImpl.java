@@ -10,7 +10,7 @@ import com.codeapes.checklist.domain.persistence.PersistentImpl;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "cl_owner_executor")
+@Table(name = "cl_owner_executor") // NOSONAR
 public abstract class OwnerExecutorImpl extends PersistentImpl implements OwnerExecutor {
 
     private static final long serialVersionUID = 8378835944648575788L;

@@ -15,7 +15,7 @@ import com.codeapes.checklist.domain.user.OwnerExecutor;
 import com.codeapes.checklist.domain.user.OwnerExecutorImpl;
 
 @Entity
-@Table(name = "cl_step")
+@Table(name = "cl_step") // NOSONAR
 public class Step extends PersistentImpl {
 
     private static final long serialVersionUID = -6032664071847503025L;
@@ -27,36 +27,36 @@ public class Step extends PersistentImpl {
     private OwnerExecutor defaultExecutor;
     private Checklist checklist;
 
-    @Column(name = "name", length = 50, nullable = false)
+    @Column(name = "name", length = 50, nullable = false) // NOSONAR
     public String getName() {
         return name;
     }
 
-    @Column(name = "description", length = 500, nullable = true)
+    @Column(name = "description", length = 500, nullable = true) // NOSONAR
     public String getDescription() {
         return description;
     }
 
     @ManyToOne
-    @JoinColumn(name = "checklist_key")
+    @JoinColumn(name = "checklist_key") // NOSONAR
     public Checklist getChecklist() {
         return checklist;
     }
 
-    @Column(name = "exp_duration_min", nullable = false)
+    @Column(name = "exp_duration_min", nullable = false) // NOSONAR
     public long getExpectedDurationInMinutes() {
         return expectedDurationInMinutes;
     }
 
     @ManyToMany
     @JoinTable(name = "cl_step_precondition", joinColumns = { @JoinColumn(name = "step_key") },
-            inverseJoinColumns = { @JoinColumn(name = "step_precondition_key") })
+            inverseJoinColumns = { @JoinColumn(name = "step_precondition_key") }) // NOSONAR
     public List<Step> getPreConditions() {
         return preConditions;
     }
 
     @ManyToOne (targetEntity = OwnerExecutorImpl.class)
-    @JoinColumn(name = "default_executor_key")
+    @JoinColumn(name = "default_executor_key") // NOSONAR
     public OwnerExecutor getDefaultExecutor() {
         return defaultExecutor;
     }

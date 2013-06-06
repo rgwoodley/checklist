@@ -17,7 +17,7 @@ import com.codeapes.checklist.util.AppLogger;
 @Transactional
 public class ChecklistServiceImpl implements ChecklistService {
 
-    private static final AppLogger logger = new AppLogger(ChecklistServiceImpl.class);
+    private static final AppLogger logger = new AppLogger(ChecklistServiceImpl.class); // NOSONAR
 
     @Autowired
     private PersistenceDAO persistenceDAO;

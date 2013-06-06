@@ -21,7 +21,7 @@ import com.codeapes.checklist.web.util.WebConstants;
 public class ChecklistDispatcherServlet extends DispatcherServlet {
 
     private static final long serialVersionUID = 6003897565098681389L;
-    private static final AppLogger logger = new AppLogger(ChecklistDispatcherServlet.class);
+    private static final AppLogger logger = new AppLogger(ChecklistDispatcherServlet.class); // NOSONAR
     private UserService userService;
 
     @Override

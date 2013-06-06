@@ -10,7 +10,7 @@ import com.codeapes.checklist.util.ChecklistException;
 
 public final class DocumentMapperUtility {
 
-    private static final DocumentMapperUtility instance = new DocumentMapperUtility();
+    private static final DocumentMapperUtility instance = new DocumentMapperUtility(); // NOSONAR
     private Map<String, Mapper> documentMappers = new HashMap<String, Mapper>();
 
     private DocumentMapperUtility() {

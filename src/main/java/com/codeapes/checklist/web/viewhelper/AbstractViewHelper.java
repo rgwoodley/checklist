@@ -28,9 +28,10 @@ import com.codeapes.checklist.web.viewhelper.annotation.Mapped;
  */
 public class AbstractViewHelper implements ViewHelper {
 
-    private static final AppLogger logger = new AppLogger(AbstractViewHelper.class);
+    private static final AppLogger logger = new AppLogger(AbstractViewHelper.class); // NOSONAR
 
     private Class<?> sourceType;
+    private Object inputObject;
 
     public AbstractViewHelper(Class<?> sourceType) {
         this.sourceType = sourceType;
@@ -38,11 +39,17 @@ public class AbstractViewHelper implements ViewHelper {
 
     public AbstractViewHelper(Class<?> sourceType, Object inputObject) {
         this.sourceType = sourceType;
-        this.populate(inputObject);
+        this.inputObject = inputObject;
     }
-
+    
     @Override
     public void populate(Object inputObject) {
+        this.inputObject = inputObject;
+        populate();
+    }
+    
+    @Override
+    public void populate() {
         copyProperties(inputObject);
     }
 

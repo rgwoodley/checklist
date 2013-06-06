@@ -6,14 +6,14 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class IntrospectionUtility {
 
-    private static final AppLogger logger = new AppLogger(IntrospectionUtility.class);
+    private static final AppLogger logger = new AppLogger(IntrospectionUtility.class); // NOSONAR
     private static Map<String, Map<String, PropertyDescriptor>> descriptorsByNameByType;
     private static Map<String, List<PropertyDescriptor>> descriptorsByType;
 
@@ -28,17 +28,19 @@ public final class IntrospectionUtility {
 
     public static List<PropertyDescriptor> getPropertyDescriptors(Class<?> clazz) {
         List<PropertyDescriptor> descriptors = descriptorsByType.get(clazz.getName());
-        if (descriptors == null) {
-            descriptors = new Vector<PropertyDescriptor>();
-            try {
-                final BeanInfo beanInfo = Introspector.getBeanInfo(clazz);
-                final PropertyDescriptor[] properties = beanInfo.getPropertyDescriptors();
-                for (PropertyDescriptor descriptor : properties) {
-                    descriptors.add(descriptor);
+        synchronized (clazz) {
+            if (descriptors == null) {
+                descriptors = new ArrayList<PropertyDescriptor>();
+                try {
+                    final BeanInfo beanInfo = Introspector.getBeanInfo(clazz);
+                    final PropertyDescriptor[] properties = beanInfo.getPropertyDescriptors();
+                    for (PropertyDescriptor descriptor : properties) {
+                        descriptors.add(descriptor);
+                    }
+                    descriptorsByType.put(clazz.getName(), descriptors);
+                } catch (IntrospectionException ie) {
+                    throw new ChecklistException(ie.getMessage(), ie);
                 }
-                descriptorsByType.put(clazz.getName(), descriptors);
-            } catch (IntrospectionException ie) {
-                throw new ChecklistException(ie.getMessage(), ie);
             }
         }
         return descriptors;

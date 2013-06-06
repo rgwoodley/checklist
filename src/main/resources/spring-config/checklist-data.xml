@@ -42,6 +42,8 @@
                 </value>
                 <value>com.codeapes.checklist.domain.user.User
                 </value>
+                <value>com.codeapes.checklist.domain.job.ScheduledJob
+                </value>
             </list>
         </property>
         <property name="hibernateProperties">

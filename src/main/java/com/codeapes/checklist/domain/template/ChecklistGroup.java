@@ -16,7 +16,7 @@ import com.codeapes.checklist.domain.user.OwnerExecutor;
 import com.codeapes.checklist.domain.user.OwnerExecutorImpl;
 
 @Entity
-@Table(name = "cl_checklist_group")
+@Table(name = "cl_checklist_group") // NOSONAR
 public class ChecklistGroup extends PersistentImpl {
 
     private static final long serialVersionUID = -6532998511081609672L;
@@ -27,29 +27,29 @@ public class ChecklistGroup extends PersistentImpl {
     private OwnerExecutor owner;
     private List<Checklist> checklists;
 
-    @Column(name = "name", length = 50, nullable = false, unique = true)
+    @Column(name = "name", length = 50, nullable = false, unique = true) // NOSONAR
     public String getName() {
         return this.name;
     }
 
-    @Column(name = "type", length = 25, nullable = false)
+    @Column(name = "type", length = 25, nullable = false) // NOSONAR
     @Enumerated(EnumType.STRING)
     public ChecklistGroupType getType() {
         return this.type;
     }
 
-    @Column(name = "description", length = 500)
+    @Column(name = "description", length = 500) // NOSONAR
     public String getDescription() {
         return this.description;
     }
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group") // NOSONAR
     public List<Checklist> getChecklists() {
         return this.checklists;
     }
 
     @ManyToOne (targetEntity = OwnerExecutorImpl.class)
-    @JoinColumn(name = "owner_key")
+    @JoinColumn(name = "owner_key") // NOSONAR
     public OwnerExecutor getOwner() {
         return owner;
     }

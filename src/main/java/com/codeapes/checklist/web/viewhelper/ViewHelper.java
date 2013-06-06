@@ -4,4 +4,6 @@ public interface ViewHelper {
 
     void populate(Object inputObject);
 
+    void populate();
+
 }

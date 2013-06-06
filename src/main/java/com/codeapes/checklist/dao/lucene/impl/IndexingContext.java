@@ -17,7 +17,7 @@ import com.codeapes.checklist.util.ApplicationProperties;
 public class IndexingContext {
 
     public static final Version LUCENE_VERSION = Version.LUCENE_42;
-    private static final AppLogger logger = new AppLogger(IndexingContext.class);
+    private static final AppLogger logger = new AppLogger(IndexingContext.class); // NOSONAR
     
     private Analyzer analyzer = new StandardAnalyzer(LUCENE_VERSION);
     private Directory indexDirectory;

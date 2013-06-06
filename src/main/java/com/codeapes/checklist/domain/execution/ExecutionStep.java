@@ -20,7 +20,7 @@ import com.codeapes.checklist.domain.user.OwnerExecutorImpl;
 import com.codeapes.checklist.domain.user.User;
 
 @Entity
-@Table(name = "cl_execution_step")
+@Table(name = "cl_execution_step") // NOSONAR
 public class ExecutionStep extends PersistentImpl {
 
     private static final long serialVersionUID = 8031885454795882054L;
@@ -37,57 +37,57 @@ public class ExecutionStep extends PersistentImpl {
     private User executedBy;
     private List<ExecutionStep> preConditions;
 
-    @Column(name = "name", length = 50, nullable = false)
+    @Column(name = "name", length = 50, nullable = false) // NOSONAR
     public String getName() {
         return name;
     }
 
     @ManyToMany
     @JoinTable(name = "cl_exec_step_precondition", joinColumns = { @JoinColumn(name = "exec_step_key") },
-        inverseJoinColumns = { @JoinColumn(name = "exec_step_precondition_key") })
+        inverseJoinColumns = { @JoinColumn(name = "exec_step_precondition_key") }) // NOSONAR
     public List<ExecutionStep> getPreConditions() {
         return preConditions;
     }
 
-    @Column(name = "description", length = 500, nullable = true)
+    @Column(name = "description", length = 500, nullable = true) // NOSONAR
     public String getDescription() {
         return description;
     }
 
-    @Column(name = "status", length = 25, nullable = false)
+    @Column(name = "status", length = 25, nullable = false) // NOSONAR
     @Enumerated(EnumType.STRING)
     public StepExecutionStatus getStatus() {
         return status;
     }
 
-    @Column(name = "exp_duration_min", nullable = false)
+    @Column(name = "exp_duration_min", nullable = false) // NOSONAR
     public long getExpectedDurationInMinutes() {
         return expectedDurationInMinutes;
     }
 
-    @Column(name = "execution_end")
+    @Column(name = "execution_end") // NOSONAR
     public Date getExecutionEnd() {
         return executionEnd;
     }
 
-    @Column(name = "comments", length = 1500)
+    @Column(name = "comments", length = 1500) // NOSONAR
     public String getComments() {
         return comments;
     }
 
-    @Column(name = "execution_start")
+    @Column(name = "execution_start") // NOSONAR
     public Date getExecutionStart() {
         return executionStart;
     }
 
     @OneToOne
-    @JoinColumn(name = "executed_by_key")
+    @JoinColumn(name = "executed_by_key") // NOSONAR
     public User getExecutedBy() {
         return executedBy;
     }
 
     @ManyToOne
-    @JoinColumn(name = "execution_checklist_key")
+    @JoinColumn(name = "execution_checklist_key") // NOSONAR
     public ExecutionChecklist getExecutionChecklist() {
         return executionChecklist;
     }

@@ -18,7 +18,7 @@ import com.codeapes.checklist.util.AppLogger;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    private static final AppLogger logger = new AppLogger(UserServiceImpl.class);
+    private static final AppLogger logger = new AppLogger(UserServiceImpl.class); // NOSONAR
 
     @Autowired
     private PersistenceDAO persistenceDAO;

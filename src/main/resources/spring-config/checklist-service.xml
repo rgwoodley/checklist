@@ -10,5 +10,5 @@
        http://www.springframework.org/schema/security/spring-security.xsd">
        
     <context:annotation-config />
-    <context:component-scan base-package="com.codeapes.checklist.service" />
+    <context:component-scan base-package="com.codeapes.checklist.service, com.codeapes.checklist.job, com.codeapes.checklist.util" />
 </beans>

@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Checklist Documentation</title>
+<link href="css.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h1>Checklist : How-To Add a web page to the application</h1>
+<ul>
+<li><a href="#controller">Create a Controller</a></li>
+<li><a href="#tiles">Add an entry to the tiles definition for the page</a></li>
+<li><a href="#jsp">Create a JSP page</a></li>
+</ul>
+<p>For additional information, refer to the <a href="http://www.springsource.org/documentation">Spring Framework documentation.</a></p>
+<ol>
+<li>
+	<dl>
+	<dt><a id="controller"></a>Create a Controller</dt>
+	<dd>Create a class in a subpackage of com.codeapes.checklist.web,
+	and annotate it with @Controller.  Add a method, and annotate it with
+	@RequestMapping.  Add the @PreAuthorize annotation if a user must be logged
+	in and in a specific role in order to invoke the method.  Use the @Autowire 
+	annotation to include any services the Controller needs.  Use a ModelMap 
+	instance to hold objects/data to be used or displayed on the page.  Return a 
+	String that corresponds to a Tiles Definition.  The next step describes 
+	adding a Tiles definition.</dd>
+	<dt>Example</dt>
+	<dd><pre><code>
+package com.codeapes.checklist.web.something;
+		
+@Controller
+public class Controller {
+
+    private static final String TARGET_VIEW = "doSomethingTilesDefinition";
+	
+    @Autowired
+    private UserService userService;
+	
+    @RequestMapping(method = RequestMethod.GET, value = "/doSomething")
+    @PreAuthorize(WebSecurityConstants.USER_ROLE)
+    public String doSomething(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        User theUser = userService.findUserByUsername(WebUtility.getLoggedInUsername());
+        model.addAttribute("user", theUser);
+        return TARGET_VIEW;
+    }
+}
+	</code></pre></dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>Controller classes do not need to extend a superclass or implement an interface, 
+	but the @Controller annotation is required.</li>
+	<li>No additional Spring configuration is needed.</li>
+	<li>The method attribute in the @RequestMapping annotation specifies the HTTP request type.  
+	Common choices include GET and POST.</li>
+	<li>The value attribute in the @RequestMapping annotation specifies the URL this method
+	will respond to.  In this example, the doSomething method would be invoked when a user
+	navigates to http://yourserver:yourport/checklist-app/doSomething.</li>
+	<li>The value attribute in the @RequestMapping annotation specifies the URL this method
+	will respond to.  In this example, the doSomething method would be invoked when a user
+	navigates to http://yourserver:yourport/checklist-app/doSomething.</li>
+	<li>The @PreAuthorize annotation can be omitted</li>
+	</ul>
+	</dd>
+	</dl>
+</li>
+<li>
+	<dl>
+	<dt><a id="tiles"></a>Add an entry to the tiles definition for the page</dt>
+	<dd>The tiles definition is configured in the src/main/resources/tiles-defs.xml file.
+	</dd>
+	<dt>Example</dt>
+	<dd><pre><code>
+&lt;definition name="doSomethingTilesDefinition" extends="base.definition"&gt;
+    &lt;put-attribute name="title" value="Checklist : Do Something" /&gt;
+    &lt;put-attribute name="heading" value="Do Something Page" /&gt;
+    &lt;put-attribute name="main" value="/WEB-INF/jsp/dosomething/dosomething.jsp" /&gt;
+&lt;/definition&gt;
+	</code></pre></dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>The title will be displayed in the browser title bar, and the heading will
+	be displayed at the top of the page.</li>
+	<li>This Tiles definition extends base.definition and overrides some of its
+	attributes.  Take a look at base.definition in tiles-defs.xml to see what template files and
+	page components are used when the page is eventually rendered.</li>
+	<li>You can override any of the attributes in base.definition.</li>
+	</ul>
+	</dd>	
+	</dl>
+</li>
+<li>
+	<dl>
+	<dt><a id="jsp"></a>Create a JSP page</dt>
+	<dd>Add the JSP page to a subdirectory of src/main/webapp/WEB-INF/jsp.  If the page
+	will utilize any common tag libraries, include the include.jsp page.  Use JSTL.
+	</dd>
+	<dt>Example</dt>
+	<dd><pre><code>
+&lt;%@ include file="/WEB-INF/jsp/includes/include.jsp" %&gt;
+&lt;c:out value="${user.firstName}" /&gt; &lt;c:out value="${user.lastName}" /&gt;
+	</code></pre></dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>The tag libraries defined in include.jsp include tags for Spring Security,
+	Spring MVC, JSTL and Tiles.</li>
+	<li>Avoid scriptlets at all costs.</li>
+	<li>Maintain Javascript and CSS in separate files.</li>
+	</ul>
+	</dd>
+	</dl>
+</li>
+</ol>
+<a href="index.html">Return</a>
+<br>
+<h3>&copy; 2013, Codeapes</h3>
+</body>
+</html>

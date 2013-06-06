@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Checklist Documentation</title>
+<link href="css.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h1>Checklist : Purpose</h1>
+<p>A group of us work as software developers in an environment where the majority of
+our production code deployment and testing work happens on weekends.  A weekend implementation
+can involve multiple systems being tested by multiple groups at different times throughout
+the day, with the schedule being managed by a "test coordinator" using an Excel spreadsheet.
+It can be challenging for the test coordinator to keep the spreadsheet updated in real time, 
+not to mention provide access to everyone who is interested in the status of work on a Saturday. 
+"Where are we at?" is a question we hear asked dozens of times by multiple people on a Saturday.
+Depending on who is asking, this can result in a time-wasting scramble for the team to provide 
+status.
+</p>
+<p>The primary purpose of the Checklist application is to build a system that replaces the
+spreadsheet used by the test coordinator during a weekend system implementation.  A Checklist
+"template" is created in the application, with steps and step owners defined in the template.
+When it's time to do some work, a person can "execute" a checklist, and the step owners
+can use the checklist application to confirm that they've completed the work that
+comprises their step(s) in the checklist.  Interested parties can view the checklist in
+real time and see what's been completed, what's left to complete, what steps depend on
+other steps, what the expected duration of the remaining work is, etc...
+</p>
+<p>
+A secondary purpose of the Checklist application is learning.  Checklist is a
+Hibernate/Spring/Spring MVC application that uses Lucene, jquery and backbone.js.
+It is serving as a way for a group of us to hone our software design and development
+skills.
+</p>
+<a href="index.html">Return</a>
+<br>
+<h3>&copy; 2013, Codeapes</h3>
+</body>
+</html>

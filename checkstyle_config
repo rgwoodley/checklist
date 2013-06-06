@@ -146,4 +146,7 @@
     <property name="file" value="/Users/jkuryla/Software/Projects/Java/checklist/suppressions.xml"/>
   </module>
   <module name="SuppressionCommentFilter"/>
+  <module name="SuppressWithNearbyCommentFilter">
+    <property name="commentFormat" value="NOSONAR"/>
+  </module>
 </module>

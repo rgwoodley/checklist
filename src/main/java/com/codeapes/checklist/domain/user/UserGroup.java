@@ -10,8 +10,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cl_user_group")
-@PrimaryKeyJoinColumn(name = "owner_executor_key")
+@Table(name = "cl_user_group") // NOSONAR
+@PrimaryKeyJoinColumn(name = "owner_executor_key") // NOSONAR
 public class UserGroup extends OwnerExecutorImpl {
 
     private static final long serialVersionUID = 8632057779355106276L;
@@ -20,17 +20,17 @@ public class UserGroup extends OwnerExecutorImpl {
     private String name;
     private String description;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "groups")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "groups") // NOSONAR
     public List<User> getUsers() {
         return users;
     }
 
-    @Column(name = "description", length = 500, nullable = true)
+    @Column(name = "description", length = 500, nullable = true) // NOSONAR
     public String getDescription() {
         return description;
     }
 
-    @Column(name = "name", length = 50, nullable = false, unique = true)
+    @Column(name = "name", length = 50, nullable = false, unique = true) // NOSONAR
     public String getName() {
         return name;
     }

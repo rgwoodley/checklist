@@ -18,13 +18,14 @@ import com.codeapes.checklist.domain.audit.AuditLogEntry;
 import com.codeapes.checklist.service.PersistenceService;
 import com.codeapes.checklist.util.AppLogger;
 import com.codeapes.checklist.web.form.util.FormUtility;
+import com.codeapes.checklist.web.util.WebSecurityConstants;
 import com.codeapes.checklist.web.util.WebUtility;
 import com.codeapes.checklist.web.viewhelper.ViewHelperUtility;
 
 @Controller
 public class AuditLogEntryRESTController {
 
-    private static final AppLogger logger = new AppLogger(AuditLogEntryRESTController.class);
+    private static final AppLogger logger = new AppLogger(AuditLogEntryRESTController.class); // NOSONAR
 
     @Autowired
     private PersistenceService persistenceService;
@@ -35,7 +36,7 @@ public class AuditLogEntryRESTController {
     @SuppressWarnings("unchecked")
     @RequestMapping(method = RequestMethod.GET, value = "/auditLogEntries")
     @ResponseBody
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize(WebSecurityConstants.USER_ROLE)
     public List<AuditLogEntryViewHelper> getAllAuditLogEntries(final Model model) {
         logger.debug("Get all audit log entries");
         final List<AuditLogEntry> entries = (List<AuditLogEntry>) persistenceService
@@ -47,7 +48,7 @@ public class AuditLogEntryRESTController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/auditLogEntries/search/{query}")
     @ResponseBody
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize(WebSecurityConstants.USER_ROLE)
     public AuditLogEntryViewHelper searchForLogEntry(@PathVariable final String query, final Model model) {
         logger.debug("Search for audit log entry using query: %s", query);
         return null;
@@ -55,32 +56,34 @@ public class AuditLogEntryRESTController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/auditLogEntries/{id}")
     @ResponseBody
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize(WebSecurityConstants.USER_ROLE)
     public AuditLogEntryViewHelper getAuditLogEntry(@PathVariable final Long id, final Model model) {
         logger.debug("Get audit log entry via request parameter id: %s", id);
         final AuditLogEntry entry = (AuditLogEntry) persistenceService.findObjectByKey(AuditLogEntry.class, id);
         final AuditLogEntryViewHelper auditLogEntryViewHelper = new AuditLogEntryViewHelper(
             AuditLogEntry.class, entry);
+        auditLogEntryViewHelper.populate();
         return auditLogEntryViewHelper;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/auditLogEntries")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize(WebSecurityConstants.USER_ROLE)
     public AuditLogEntryViewHelper createAuditLogEntry(@RequestBody AuditLogEntryForm entryData) {
         logger.debug("Create new Audit Log Entry");
         AuditLogEntry entry = (AuditLogEntry) FormUtility.copyStateToNewInstance(entryData, AuditLogEntry.class);
         entry = (AuditLogEntry) persistenceService.saveObject(entry, webUtility.getLoggedInUsername());
         final AuditLogEntryViewHelper savedEntryData = new AuditLogEntryViewHelper(
             AuditLogEntry.class, entry);
+        savedEntryData.populate();
         return savedEntryData;
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/auditLogEntries/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize(WebSecurityConstants.USER_ROLE)
     public void updateAuditLogEntry(@RequestBody AuditLogEntryForm entryData, @PathVariable final Long id) {
         logger.debug("Update Audit Log Entry %s:", entryData.getObjectKey());
         AuditLogEntry entry = (AuditLogEntry) persistenceService.findObjectByKey(AuditLogEntry.class, id);
@@ -91,7 +94,7 @@ public class AuditLogEntryRESTController {
     @RequestMapping(method = RequestMethod.DELETE, value = "/auditLogEntries/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize(WebSecurityConstants.USER_ROLE)
     public void deleteAuditLogEntry(@PathVariable final Long id) {
         logger.debug("Deleting Audit Log Entry %s:", id);
         final AuditLogEntry entry = (AuditLogEntry) persistenceService.findObjectByKey(AuditLogEntry.class, id);

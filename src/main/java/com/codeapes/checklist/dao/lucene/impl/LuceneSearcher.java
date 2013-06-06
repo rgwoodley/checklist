@@ -22,7 +22,7 @@ import com.codeapes.checklist.util.ChecklistException;
 
 public class LuceneSearcher {
 
-    private static final AppLogger logger = new AppLogger(LuceneSearcher.class);
+    private static final AppLogger logger = new AppLogger(LuceneSearcher.class); // NOSONAR
     private static final String[] SEARCH_FIELDS = { SearchFields.NAME.toString(), SearchFields.DESCRIPTION.toString(),
         SearchFields.CREATED_BY.toString(), SearchFields.MODIFIED_BY.toString(), };
     private IndexingContext context;
@@ -62,10 +62,10 @@ public class LuceneSearcher {
             IndexSearcher indexSearcher, List<SearchResult> searchResult) throws ParseException, IOException {
         Query query = null;
         if (matchAll) {
-            query = new MultiFieldQueryParser(IndexingContext.LUCENE_VERSION, SEARCH_FIELDS, context.getAnalyzer())
-                    .parse(searchText);
-        } else {
             query = new MatchAllDocsQuery();
+        } else {
+            query = new MultiFieldQueryParser(IndexingContext.LUCENE_VERSION, SEARCH_FIELDS, context.getAnalyzer())
+                .parse(searchText);
         }
         final TopScoreDocCollector collector = TopScoreDocCollector.create(maxResults, true);
         indexSearcher.search(query, collector);

@@ -19,8 +19,8 @@ import javax.persistence.Transient;
 import org.apache.commons.lang.StringUtils;
 
 @Entity
-@Table(name = "cl_user")
-@PrimaryKeyJoinColumn(name = "owner_executor_key")
+@Table(name = "cl_user") // NOSONAR
+@PrimaryKeyJoinColumn(name = "owner_executor_key") // NOSONAR
 public class User extends OwnerExecutorImpl {
 
     private static final long serialVersionUID = 3262325786490797832L;
@@ -62,40 +62,40 @@ public class User extends OwnerExecutorImpl {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "cl_user_group_rel", joinColumns = { @JoinColumn(name = "user_key") },
-            inverseJoinColumns = { @JoinColumn(name = "group_key") })
+            inverseJoinColumns = { @JoinColumn(name = "group_key") }) // NOSONAR
     public List<UserGroup> getGroups() {
         return groups;
     }
 
     @ElementCollection
-    @JoinTable(name = "cl_user_role", joinColumns = { @JoinColumn(name = "user_key") })
-    @Column(name = "role", length = 25)
+    @JoinTable(name = "cl_user_role", joinColumns = { @JoinColumn(name = "user_key") }) // NOSONAR
+    @Column(name = "role", length = 25) // NOSONAR
     @Enumerated(EnumType.STRING)
     public List<Role> getRoles() {
         return roles;
     }
 
-    @Column(name = "password", length = 64, nullable = false)
+    @Column(name = "password", length = 64, nullable = false) // NOSONAR
     public String getPassword() {
         return password;
     }
 
-    @Column(name = "username", length = 20, nullable = false, unique = true)
+    @Column(name = "username", length = 20, nullable = false, unique = true) // NOSONAR
     public String getUsername() {
         return username;
     }
 
-    @Column(name = "first_name", length = 50, nullable = true)
+    @Column(name = "first_name", length = 50, nullable = true) // NOSONAR
     public String getFirstName() {
         return firstName;
     }
 
-    @Column(name = "last_name", length = 50, nullable = true)
+    @Column(name = "last_name", length = 50, nullable = true) // NOSONAR
     public String getLastName() {
         return lastName;
     }
 
-    @Column(name = "active", nullable = false)
+    @Column(name = "active", nullable = false) // NOSONAR
     public boolean isActive() {
         return active;
     }

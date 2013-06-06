@@ -16,7 +16,7 @@ import com.codeapes.checklist.util.ChecklistException;
  */
 public final class ViewHelperUtility {
 
-    private static final AppLogger logger = new AppLogger(ViewHelperUtility.class);
+    private static final AppLogger logger = new AppLogger(ViewHelperUtility.class); // NOSONAR
     
     private ViewHelperUtility() {
         super();

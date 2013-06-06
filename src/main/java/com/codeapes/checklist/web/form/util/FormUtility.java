@@ -9,7 +9,7 @@ import com.codeapes.checklist.util.IntrospectionUtility;
 
 public final class FormUtility {
 
-    private static final AppLogger logger = new AppLogger(FormUtility.class);
+    private static final AppLogger logger = new AppLogger(FormUtility.class); // NOSONAR
 
     private FormUtility() {
         super();

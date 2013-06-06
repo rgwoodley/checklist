@@ -1,0 +1,436 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Checklist Documentation</title>
+<link href="css.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h1>Checklist : How-To Add a web form to the application</h1>
+<ul>
+<li><a href="#formclass">Create a Form class</a></li>
+<li><a href="#controllerget">Create a Controller with a method responding to HTTP GET</a></li>
+<li><a href="#controllerput">Create a Controller with a method responding to HTTP PUT</a></li>
+<li><a href="#additionalvalidation">Add additional validation</a></li>
+<li><a href="#tiles">Add an entry to the tiles definition for the page</a></li>
+<li><a href="#jsp">Create an HTML form on JSP page</a></li>
+<li><a href="#javascript">Add client-side javascript</a></li>
+</ul>
+<p>For additional information regarding Spring MVC, refer to the <a href="http://www.springsource.org/documentation">Spring Framework documentation.</a></p>
+<p>For additional information regarding validation annotations, refer to the <a href="http://docs.jboss.org/hibernate/validator/4.0.1/reference/en-US/html_single/#table-builtin-constraints">Hibernate Validator documentation.</a></p>
+<ol>
+<li>
+	<dl>
+	<dt><a id="formclass"></a>Create a Form class</dt>
+	<dd>A form class is a Plain Old Java Object (POJO) in a subdirectory of com.codeapes.checklist.web.
+	A POJO simply defines attributes and getter/setter methods for those attributes.  The attributes
+	will be used to capture the information entered by users on the form presented by the web form.
+	For example, an 'update user' form on the website that allows a user to update the user name, first name and
+	last name in their user profile would be a POJO with three String attributes.  Note the annotations
+	used for field validation.
+	</dd>
+	<dt>Example</dt>
+	<dd><pre><code>
+package com.codeapes.checklist.web.user;
+		
+public class UserForm {
+
+    @NotNull(message = "An object key must be supplied")
+    private Long objectKey;
+  
+    @NotEmpty(message = "Username is required")
+    @Length(max = 15, message = "The Username field cannot contain more than 15 characters.") // NOSONAR
+    private String username;
+    
+    @NotEmpty(message = "First Name is required")
+    @Length(max = 25, message = "The First Name field cannot contain more than 25 characters.") // NOSONAR
+    private String firstName;
+
+    @NotEmpty(message = "Last Name is required")
+    @Length(max = 25, message = "The Last Name field cannot contain more than 25 characters.") // NOSONAR
+    private String lastName;
+	
+    public Long getObjectKey() {
+        return objectKey;
+    }
+	
+    public void setObjectKey(Long objectKey) {
+        this.objectKey = objectKey;
+    }
+	
+    public String getUsername() {
+        return username;
+    }
+    
+    public void setUsername(String username) {
+        this.username = username;
+    }
+	
+    public String getFirstName() {
+        return firstName;
+    }
+    
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    
+    public String getLastName() {
+        return lastName;
+    }
+    
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+}
+	</code></pre></dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>A table describing the available field validation annotations is located in the 
+	<a href="http://docs.jboss.org/hibernate/validator/4.0.1/reference/en-US/html_single/#table-builtin-constraints">Hibernate Validator documentation.</a></li>
+	<li>A field named 'objectKey' is included on this form, but will not be displayed on the page.
+	This field will be used to pass the identity of the object being updated between controller
+	code and HTML markup on the web form/JSP.</li>
+	<li>The objectKey attribute will be used to keep track of the identity of the user object being updated.</li>
+	<li>The // NOSONAR inline comment is added to prevent the code from being flagged for code rule violations.
+	The numbers and text strings in the validation annotations are flagged as magic number and String constant violations
+	if the comment is omitted.</li>
+	</ul>
+	</dd>
+	</dl>
+</li>
+<li>
+	<dl>
+	<dt><a id="controllerget"></a>Create a Controller with a method responding to HTTP GET</dt>
+	<dd>Familiarize yourself with the instructions on <a href="howto-webpage.html">how 
+	to create a web page </a>in the application.  A form controller is similar and usually requires
+	at least two public methods: one that responds to a 'GET' HTTP request, and one
+	that responds to a 'POST' HTTP request.  This example outlines the method responding
+	to an HTTP 'GET' request.</dd>
+	<dt>Example</dt>
+	<dd><pre><code>
+package com.codeapes.checklist.web.something;
+		
+@Controller
+public class Controller {
+
+    private static final String FORM_VIEW = "updateUserFormTilesDefinition";
+    private static final String FORM_NAME = "form";
+	
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private WebUtility webUtility;
+	
+    @RequestMapping(method = RequestMethod.GET, value = "/updateProfile")
+    @PreAuthorize(WebSecurityConstants.USER_ROLE)
+    public String updateUser(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        
+        final User theUser = userService.findUserByUsername(WebUtility.getLoggedInUsername());
+        final UserForm userForm = new UserForm();
+        userForm.setUsername(theUser.getUsername());
+        userForm.setFirstName(theUser.getFirstName());
+        userForm.setLastName(theUser.getLastName());
+        model.addAttribute(FORM_NAME, userForm);
+        return FORM_VIEW;
+    }
+    
+}
+	</code></pre></dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>The @PreAuthorize annotation restricts access to this method to only authenticated users.</li>
+	<li>The WebUtility class has some useful methods, including one that will return the username of the currently logged in user.</li>
+	<li>The user service is used to find the user object from the persistent datastore/database.</li>
+	<li>A new UserForm instance is created, and populated from the user data retrieved from the user service in the previous step.</li>
+	<li>The form is added to the Spring Model instance.  This will make the form data available on
+	the view/JSP page.</li>
+	<li>The FORM_VIEW being returned references a Tiles page definition.</li>
+	</ul>
+	</dd>
+	</dl>
+</li>
+<li>
+	<dl>
+	<dt><a id="controllerpost"></a>Create a Controller with a method responding to HTTP POST</dt>
+	<dd>This example outlines the method responding to an HTTP 'POST' request.  The code added from the previous example is 
+	displayed in <font color="red">red</font>.</dd>
+	<dt>Example</dt>
+	<dd><pre><code>
+package com.codeapes.checklist.web.something;
+		
+@Controller
+public class Controller {
+
+    private static final String FORM_VIEW = "updateUserFormTilesDefinition";
+    private static final String MESSAGE = "message";
+    private static final String FORM_NAME = "form";
+	
+    @Autowired
+    private UserService userService;
+    
+    @Autowired
+    private WebUtility webUtility;
+   <font color="red"> 
+    @Autowired
+    private Validator validator;
+    </font>
+    @RequestMapping(method = RequestMethod.GET, value = "/updateProfile")
+    @PreAuthorize(WebSecurityConstants.USER_ROLE)
+    public String updateUser(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        
+        final User theUser = userService.findUserByUsername(WebUtility.getLoggedInUsername());
+        final UserForm userForm = new UserForm();
+        userForm.setUsername(theUser.getUsername());
+        userForm.setFirstName(theUser.getFirstName());
+        userForm.setLastName(theUser.getLastName());
+        model.addAttribute(FORM_NAME, userForm);
+        return FORM_VIEW;
+    }
+<font color="red">   
+    @RequestMapping(method = RequestMethod.POST, value = "/updateProfile")
+    @PreAuthorize(WebSecurityConstants.USER_ROLE)
+    public String updateUser(@ModelAttribute(FORM_NAME) UserFormForm form, HttpServletRequest request, 
+        HttpServletResponse response, BindingResult result, ModelMap model) {
+        
+        validator.validate(form, result);
+        if (!result.hasErrors()) {
+            User user = userService.findUserByObjectKey(form.getObjectKey());
+            user.setFirstName(form.getFirstName());
+            user.setLastName(form.getLastName());
+            user.setUsername(form.getUsername())
+            persistenceService.updateObject(theUser, webUtility.getLoggedInUsername());
+            model.addAttribute(MESSAGE, "User profile updated successfully.");
+        }
+        return FORM_VIEW;
+    }
+</font>
+}
+	</code></pre></dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>Note that a Validator object is autowired into the controller.</li>
+	<li>A couple of new parameters are added to the new method.  The @ModelAttribute annotation
+	maps the form data sent in the HTTP request to a UserForm object that can be used in the method.
+	The BindingResult object will be used to contain error information, if any form validation fails.
+	<li>The first thing this method does is call the validate() method on the
+	Validator.  This will use the Hibernate field annotations to validate the form
+	data and writes any validation errors to the BindingResult object.</li>
+	<li>If there are no validation errors, a User object is retrieved by the User Service using the
+	objectKey passed in with the form.  An objectKey attribute is defined in the UserForm class,
+	and a hidden form field on the JSP page will be used to capture and send the objectKey.</li>
+	<li>The user object is updated with information from the submitted HTML form, and the
+	object is updated in the persistent datastore/database.</li>
+	<li>An attribute named "message" is added to the model so that the page can display a message
+	notifying the user that the user profile update was successful.</li>
+	<li>The method returns a String object corresponding to the Tiles definition of the form.  This
+	could alternatively direct the user to a completely different page/page layout, if desired.</li>
+	</ul>
+	</dd>
+	</dl>
+</li>
+<li>
+	<dl>
+	<dt><a id="additionalvalidation"></a>Add additional validation</dt>
+	<dd>In some cases, the Hibernate validator is not sufficient to handle the validation of incoming form data.
+	This example shows how to add additional validation to catch a situation where the username is already in
+	use.  The code added from the previous example is 
+	displayed in <font color="red">red</font>.</dd>
+	<dt>Example</dt>
+	<dd><pre><code>
+package com.codeapes.checklist.web.something;
+		
+@Controller
+public class Controller {
+
+    private static final String FORM_VIEW = "updateUserFormTilesDefinition";
+    private static final String MESSAGE = "message";
+    private static final String FORM_NAME = "form";
+	
+    @Autowired
+    private UserService userService;
+    
+    @Autowired
+    private WebUtility webUtility;
+
+    @Autowired
+    private Validator validator;
+	
+    @RequestMapping(method = RequestMethod.GET, value = "/updateProfile")
+    @PreAuthorize(WebSecurityConstants.USER_ROLE)
+    public String updateUser(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+        
+        final User theUser = userService.findUserByUsername(WebUtility.getLoggedInUsername());
+        final UserForm userForm = new UserForm();
+        userForm.setUsername(theUser.getUsername());
+        userForm.setFirstName(theUser.getFirstName());
+        userForm.setLastName(theUser.getLastName());
+        model.addAttribute(FORM_NAME, userForm);
+        return FORM_VIEW;
+    }
+ 
+    @RequestMapping(method = RequestMethod.POST, value = "/updateProfile")
+    @PreAuthorize(WebSecurityConstants.USER_ROLE)
+    public String updateUser(@ModelAttribute(FORM_NAME) UserFormForm form, HttpServletRequest request, 
+        HttpServletResponse response, BindingResult result, ModelMap model) {
+        
+        validator.validate(form, result);
+        <font color="red">  
+        performAdditionalValidation(form, result);
+        </font>
+        if (!result.hasErrors()) {
+            User user = userService.findUserByObjectKey(form.getObjectKey());
+            user.setFirstName(form.getFirstName());
+            user.setLastName(form.getLastName());
+            user.setUsername(form.getUsername())
+            persistenceService.updateObject(theUser, webUtility.getLoggedInUsername());
+            model.addAttribute(MESSAGE, "User profile updated successfully.");
+        }
+        return FORM_VIEW;
+    }
+<font color="red">      
+    private void performAdditionalValidation(UserForm userForm, BindingResult result) {
+
+        if (userService.isUsernameTaken(userForm.getUsername)) {
+            final FieldError error = new FieldError(FORM_NAME, "username", "The username selected is already in use.");
+            result.addError(error);
+        }
+    }
+</font>
+}
+	</code></pre></dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>A new method, performAdditionalValidation, is added.  The method takes in UserForm and BindingResult objects.
+	The UserForm object contains the submitted form data, and the BindingResult object holds validation errors.</li>
+	<li>The User Service has a method to see if a username is already in use.  If it is, the form fails validation.</li>
+	<li>If the form fails validation, a FieldError object is created and added to the BindingResult object.  The first
+	parameter of the FieldError constructor is the form name, followed by the attribute name, and finally a message
+	that can be used for display.</li>
+	<li>In this example, the additional validation could also be used to validate the objectKey being passed into the
+	form.  This was left out of this example to simplify things a bit.</li>
+	</ul>
+	</dd>
+	</dl>
+</li>
+<li>
+	<dl>
+	<dt><a id="tiles"></a>Add an entry to the tiles definition for the page</dt>
+	<dd>The tiles definition is configured in the src/main/resources/tiles-defs.xml file.
+	</dd>
+	<dt>Example</dt>
+	<dd><pre><code>
+&lt;definition name="updateUserFormTilesDefinition" extends="base.definition"&gt;
+    &lt;put-attribute name="title" value="Checklist : Update User Profile" /&gt;
+    &lt;put-attribute name="heading" value="Update User Profile" /&gt;
+    &lt;put-attribute name="main" value="/WEB-INF/jsp/user/update_profile.jsp" /&gt;
+&lt;/definition&gt;
+	</code></pre></dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>The title will be displayed in the browser title bar, and the heading will
+	be displayed at the top of the page.</li>
+	<li>This Tiles definition extends base.definition and overrides some of its
+	attributes.  Take a look at base.definition in tiles-defs.xml to see what template files and
+	page components are used when the page is eventually rendered.</li>
+	<li>You can override any of the attributes in base.definition.</li>
+	</ul>
+	</dd>	
+	</dl>
+</li>
+<li>
+	<dl>
+	<dt><a id="jsp"></a>Create an HTML form on JSP page</dt>
+	<dd>Add the JSP page to a subdirectory of src/main/webapp/WEB-INF/jsp.  If the page
+	will utilize any common tag libraries, include the include.jsp page.  Use Spring form tags and JSTL.
+	</dd>
+	<dt>Example</dt>
+	<dd><pre><code>
+&lt;%@ include file="/WEB-INF/jsp/includes/include.jsp" %&gt;
+&lt;form:form commandName="form" name="form" id="form" action="updateProfile" method="POST"&gt;
+    &lt;form:hidden id="objectKey" path="objectKey"/&gt;
+    &lt;h1&gt;&lt;span class="title"&gt;User Profile Form&lt;/span&gt;&lt;/h1&gt;
+    &lt;spring:hasBindErrors name="form"&gt;
+        &lt;ul class="error-messages"&gt;
+            &lt;c:forEach var="error" items="${errors.allErrors}"&gt;
+                &lt;li&gt;&lt;c:out value="${error.defaultMessage}"&gt;&lt;/li&gt;
+            &lt;/c:forEach&gt;
+        &lt;/ul&gt;
+    &lt;/spring:hasBindErrors&gt;
+
+    &lt;p class="float"&gt;
+        &lt;label for="username"&gt;Username&lt;/label&gt;
+        &lt;form:input id="username" path="username" tabIndex="1" maxLength="15"/&gt;
+    &lt;/p&gt;
+    &lt;p class="float"&gt;
+        &lt;label for="firstName"&gt;First Name&lt;/label&gt;
+        &lt;form:input id="firstName" path="firstName" tabIndex="2" maxLength="25"/&gt;
+    &lt;/p&gt;
+    &lt;p class="float"&gt;
+        &lt;label for="lastName"&gt;Last Name&lt;/label&gt;
+        &lt;form:input id="lastName" path="lastName" tabIndex="3" maxLength="25"/&gt;
+    &lt;/p&gt;
+    &lt;div class="button-area"&gt;
+    &lt;p class="clearfix"&gt;
+    	&lt;input type="submit" name="submit" value="Submit" tabIndex="4"&gt;
+    &lt;/p&gt;     
+    &lt;/div&gt;       
+&lt;/form:form&gt;
+	</code></pre></dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>The tag libraries defined in include.jsp include tags for Spring Security,
+	Spring MVC, JSTL and Tiles.</li>
+	<li>The Spring form tags (form:input, etc) automatically bind form object values to form elements.</li>
+	<li>Maintain Javascript and CSS in separate files.</li>
+	</ul>
+	</dd>
+	</dl>
+</li>
+<li>
+	<dl>
+	<dt><a id="javascript"></a>Add client-side javascript</dt>
+	<dd>Javascript files are created in the appropriate subdirectory of the /src/main/webapp/js directory.
+	For this example, a file named update_profile.js is added to the /src/main/webapp/js/user directory.
+	</dd>
+	<dt>Example</dt>
+	<dd><pre><code>
+Content of update_profile.js:
+
+$(function() {
+    $(':input:enabled:visible:first').focus();
+});
+
+------------
+
+Add the following line to the tiles definition to use the javascript file:
+&lt;definition name="updateUserFormTilesDefinition" extends="base.definition"&gt;
+    &lt;put-attribute name="title" value="Checklist : Update User Profile" /&gt;
+    &lt;put-attribute name="heading" value="Update User Profile" /&gt;
+    &lt;put-attribute name="main" value="/WEB-INF/jsp/user/update_profile.jsp" /&gt;
+    <font color="red">&lt;put-attribute name="jsFile" value="js/user/update_profile.js" /&gt;</font>
+&lt;/definition&gt;
+	</code></pre></dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>This javascript code uses jquery to place the focus on the first input field on the page.
+	You can add any additional javascript you want.</li>
+	<li>jquery and backbone.js are automatically included in the base tiles definition, so you don't need
+	to do anything extra to use them.</li>
+	</ul>
+	</dd>
+	</dl>
+</li>
+</ol>
+<a href="index.html">Return</a>
+<br>
+<h3>&copy; 2013, Codeapes</h3>
+</body>
+</html>

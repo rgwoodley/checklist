@@ -9,12 +9,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.codeapes.checklist.domain.job.ScheduledJob;
 import com.codeapes.checklist.domain.template.Checklist;
 import com.codeapes.checklist.domain.template.ChecklistGroup;
 import com.codeapes.checklist.domain.template.ChecklistGroupType;
 import com.codeapes.checklist.domain.user.Role;
 import com.codeapes.checklist.domain.user.User;
+import com.codeapes.checklist.job.JobConstants;
 import com.codeapes.checklist.service.ChecklistService;
+import com.codeapes.checklist.service.PersistenceService;
 import com.codeapes.checklist.service.search.SearchService;
 import com.codeapes.checklist.service.user.UserService;
 import com.codeapes.checklist.util.AppLogger;
@@ -23,7 +26,7 @@ import com.codeapes.checklist.util.ApplicationProperties;
 @Controller
 public class TestDataController {
 
-    private static final AppLogger logger = new AppLogger(TestDataController.class);
+    private static final AppLogger logger = new AppLogger(TestDataController.class); // NOSONAR
 
     private static final String TARGET_VIEW = "generalMessage";
     private static final String MODIFIED_BY = "tester";
@@ -33,6 +36,8 @@ public class TestDataController {
     private static final String DESCRIPTION_PREFIX = "Test Checklist #";
     private static final int DEFAULT_CHECKLIST_DURATION = 60;
     private static final int NUMBER_OF_CHECKLISTS_TO_GENERATE = 30;
+    private static final String REFRESH_JOB_CRON_INFO = "0 0/5 * * * ?";
+    private static final String REFRESH_JOB_GROUP = "Search";
 
     @Autowired
     private UserService userService;
@@ -44,6 +49,9 @@ public class TestDataController {
     private SearchService searchService;
 
     @Autowired
+    private PersistenceService persistenceService;
+    
+    @Autowired
     private ApplicationProperties applicationProperties;
 
     @RequestMapping(method = RequestMethod.GET, value = "/generateTestData")
@@ -53,6 +61,7 @@ public class TestDataController {
             final ChecklistGroup[] groups = createTestChecklistGroups(user);
             createTestChecklists(user, groups[0], groups[1]);
             searchService.refreshIndexSearcherBlocking();
+            createSearchCacheRefreshJob();
             model.put(MODEL_MESSAGE, "Test Data Generated.  Have fun!");
         } else {
 
@@ -121,5 +130,18 @@ public class TestDataController {
         checklist.setSteps(null);
         checklist.setExpectedDurationInMinutes(duration);
         return checklist;
+    }
+    
+    private ScheduledJob createSearchCacheRefreshJob() {
+        final ScheduledJob refreshJob = new ScheduledJob();
+        refreshJob.setName("Lucene IndexSearcher Refresh Job");
+        refreshJob.setDescription("This job refreshes the Lucene IndexSearcher "
+            + "on a periodic basis in a separate thread.");
+        refreshJob.setCronInfo(REFRESH_JOB_CRON_INFO);
+        refreshJob.setGroup(REFRESH_JOB_GROUP);
+        refreshJob.setJobBeanName(JobConstants.SEARCH_INDEX_REFRESH_JOB);
+        refreshJob.setActive(true);
+        persistenceService.saveObject(refreshJob, MODIFIED_BY);
+        return refreshJob;
     }
 }

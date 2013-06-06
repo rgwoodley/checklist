@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.codeapes.checklist.domain.template.Checklist;
 import com.codeapes.checklist.service.ChecklistService;
 import com.codeapes.checklist.util.AppLogger;
-import com.codeapes.checklist.web.search.SearchForm;
+import com.codeapes.checklist.web.util.WebSecurityConstants;
 import com.codeapes.checklist.web.util.WebUtility;
 import com.codeapes.checklist.web.viewhelper.ViewHelperUtility;
 import com.codeapes.checklist.web.viewhelper.checklist.ChecklistSummaryViewHelper;
@@ -25,7 +25,7 @@ import com.codeapes.checklist.web.viewhelper.checklist.ChecklistSummaryViewHelpe
 @Controller
 public class DashboardController {
 
-    private static final AppLogger logger = new AppLogger(DashboardController.class);
+    private static final AppLogger logger = new AppLogger(DashboardController.class); // NOSONAR
 
     @Autowired
     private ChecklistService checklistService;
@@ -34,7 +34,7 @@ public class DashboardController {
     private WebUtility webUtil;
 
     @RequestMapping(method = RequestMethod.GET, value = "/dashboard")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize(WebSecurityConstants.USER_ROLE)
     public String displayDashboard(HttpServletRequest request, HttpServletResponse response, Model model) {
 
         final String username = webUtil.getLoggedInUsername();
@@ -45,13 +45,12 @@ public class DashboardController {
         final List<ChecklistSummaryViewHelper> ownedChecklists = (List<ChecklistSummaryViewHelper>) ViewHelperUtility
             .convertList(checklists, ChecklistSummaryViewHelper.class);
         model.addAttribute("ownedChecklists", ownedChecklists);
-        model.addAttribute("searchForm", new SearchForm());
         logger.debug("Found %d checklists for user %s,", ownedChecklists.size(), username);
         return "dashboard";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/getChecklist/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize(WebSecurityConstants.USER_ROLE)
     @ResponseBody
     public ChecklistSummaryViewHelper getChecklist(@PathVariable final Long id, final Model model) {
         logger.debug("Get checklist id: %s", id);

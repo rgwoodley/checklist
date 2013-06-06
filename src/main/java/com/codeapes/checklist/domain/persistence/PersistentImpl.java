@@ -22,28 +22,28 @@ public class PersistentImpl implements Persistent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "object_key", updatable = false, nullable = false)
+    @Column(name = "object_key", updatable = false, nullable = false) // NOSONAR
     public Long getObjectKey() {
         return objectKey;
     }
 
     @Version
-    @Column(name = "modified_ts", nullable = false)
+    @Column(name = "modified_ts", nullable = false) // NOSONAR
     public Timestamp getModifiedTimestamp() {
         return modifiedTimestamp;
     }
 
-    @Column(name = "modified_by", length = 50, nullable = false)
+    @Column(name = "modified_by", length = 50, nullable = false) // NOSONAR
     public String getModifiedBy() {
         return modifiedBy;
     }
 
-    @Column(name = "created_ts", nullable = false)
+    @Column(name = "created_ts", nullable = false) // NOSONAR
     public Timestamp getCreatedTimestamp() {
         return createdTimestamp;
     }
 
-    @Column(name = "created_by", length = 50, nullable = false)
+    @Column(name = "created_by", length = 50, nullable = false) // NOSONAR
     public String getCreatedBy() {
         return createdBy;
     }

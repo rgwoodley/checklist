@@ -14,7 +14,7 @@ import com.codeapes.checklist.util.ChecklistException;
 
 public final class LuceneContextInitializer {
 
-    private static final AppLogger logger = new AppLogger(LuceneContextInitializer.class);
+    private static final AppLogger logger = new AppLogger(LuceneContextInitializer.class); // NOSONAR
     
     private LuceneContextInitializer() {
         super();

@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Checklist Documentation</title>
+<link href="css.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h1>Checklist : Team Development Standards</h1>
+<ul>
+<li>Small classes with few methods are far better than large classes with lots of methods.</li>
+<li>Small methods are far better than large methods.</li>
+<li>Use meaningful names for classes, methods and variables.</li>
+<li>Use javadoc comments on classes and public methods.  If you feel you need to add comments to private methods or within the body of a method, consider refactoring.
+Comments are not necessary for POJO accessors/mutators (getters/setters).</li>
+<li>Keep comments short, simple, and to the point.</li>
+<li>When you update code, update any relevant comments</li>
+<li>Anything that can be unit tested should be pushed/merged with automated unit test(s).</li>
+<li>Test code should be developed with the same attention to detail and care as any other code.</li>
+<li>If you have to refactor code in order to test it, by all means refactor the code!</li>
+<li>Abide by the <a href="http://en.wikipedia.org/wiki/Single_responsibility_principle">
+Single Responsibility Principle</a>.  Every class and method you write should have one responsibility.</li>
+<li><b><i>Never push or merge code that has not been thoroughly tested.</i></b> Your 
+code is your reputation.</li>
+<li>Use checkstyle with the included configuration, and validate your code 
+with it before pushing/merging</li>
+<li>Use findbugs and validate your code with it before pushing/merging.</li>
+<li>Check your code out in Sonar before pushing/merging, and make sure it does not introduce
+any rule violations or other quality issues.</li>
+<li>Cutting &amp; pasting code is evil.  Write small, reusable methods and reuse them where possible!</li>
+<li>Avoid reinventing the wheel.  Gain some familiarity with existing code as well as the project dependencies, and
+consider using existing code before writing redundant code.  For example, familiarize yourself with commons-lang and commons-beanutils.
+</ul>
+<ul>
+<li><b>Most Importantly - Follow the Golden Rule.</b>  Treat others the way you'd like to be treated.  Remember that
+your code will likely be maintained and extended by others.  Don't make it hard for them.</li>
+</ul>
+<a href="index.html">Return</a>
+<br>
+<h3>&copy; 2013, Codeapes</h3>
+</body>
+</html>
