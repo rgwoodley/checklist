@@ -10,8 +10,23 @@ import com.codeapes.checklist.domain.persistence.Persistent;
 import com.codeapes.checklist.domain.search.SearchFields;
 import com.codeapes.checklist.util.ChecklistException;
 
+/**
+ * This abstract class maps fields that are common to all Persistent objects.
+ * 
+ * @author Joe Kuryla
+ */
 public abstract class AbstractMapper implements Mapper {
 
+    /**
+     * This methods maps fields that are common to all Persistent objects.
+     * Note that the validateAndMap method calls the mapObjectToDocument method,
+     * which must be implemented by any class that extends this abstract class.  The
+     * mapObjectToDocument method should map the SearchFields.NAME and SearchFields.DESCRIPTION
+     * fields, at a minimum.
+     * 
+     * @param object        The object being mapped
+     * @return Document     An indexable document
+     */
     public Document validateAndMap(Persistent object) {
         if (validObject(object)) {
             final Document document = new Document();

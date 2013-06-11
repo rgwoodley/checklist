@@ -7,7 +7,111 @@
 </head>
 <body>
 <h1>Checklist : How-To index something and make it searchable</h1>
-<p>Coming Soon</p>
+<ul>
+<li><a href="#search">To enable search for a class, add the @Searchable annotation</a></li>
+<li><a href="#mapper">Create a MapperClass</a></li>
+<li><a href="#doit">Index and Search</a></li>
+<li><a href="#config">Search Configuration</a></li>
+</ul><ol>
+<li>
+	<dl>
+	<dt><a id="search"></a>To enable search for a class, add the @Searchable annotation</dt>
+	<dd>Add the @Searchable annotation to the domain class you want to be able to search on.  The
+	@Searchable annotation requires you to specify a value for the mapperClass attribute.  The MapperClass
+	is used to tell the search index what fields to use for indexing and searches.</dd>
+	<dt>Example</dt>
+	<dd><pre><code>
+@Searchable(mapperClass = "com.codeapes.checklist.domain.search.lucene.mapper.ChecklistMapper") // NOSONAR
+public class Checklist extends PersistentImpl {
+    ...
+	</code></pre></dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>The // NOSONAR inline comment is added to prevent the code from being flagged for code rule violations.
+	The mapperClass literal in the annotation gets flagged as a code rule violation if the comment is ommitted.
+	Creating a constant for the value seems like overkill in this instance.</li>
+	<li>See the next section for information about MapperClasses.</li>
+	</ul>
+	</dd>
+	</dl>
+</li>
+<li>
+	<dl>
+	<dt><a id="mapper"></a>Create a MapperClass</dt>
+	<dd>The @Searchable annotation requires you to include a value for the mapperClass attribute.  The MapperClass
+	is used to tell the search index what fields to use for indexing and searches.</dd>
+	<dt>Example</dt>
+	<dd><pre><code>
+package com.codeapes.checklist.domain.search.lucene.mapper;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.TextField;
+
+import com.codeapes.checklist.domain.persistence.Persistent;
+import com.codeapes.checklist.domain.search.SearchFields;
+import com.codeapes.checklist.domain.template.Checklist;
+
+public class ChecklistMapper extends AbstractMapper {
+
+    public static final String FIELD_OWNER = "owner";
+
+    public Document mapObjectToDocument(Persistent object, Document document) {
+        final Checklist checklist = (Checklist) object;
+        document.add(new TextField(SearchFields.NAME.toString(), checklist.getName(), Field.Store.YES));
+        document.add(new TextField(SearchFields.DESCRIPTION.toString(), StringUtils.defaultString(checklist
+                .getDescription()), Field.Store.YES));
+        document.add(new TextField(FIELD_OWNER, checklist.getOwner().getName(), Field.Store.YES));
+        return document;
+    }
+}
+	</code></pre></dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>The SearchFields enumeration lists the fields that are expected to be available for searching.  Take a look
+	at the source code for more information.</li>
+	<li>The purpose of the MapperClass is to map items in the SearchFields enumeration to fields in the searchable
+	domain class.</li>
+	<li>This class extends AbstractMapper, which implements the Mapper interface.  See the Mapper interface
+	source code for more information.</li>
+	<li>The AbstractMapper class already maps several SearchFields values, but does not map the SearchFields.NAME
+	or SearchFields.DESCRIPTION values.  This class, ChecklistMapper, maps those fields.</li>
+	<li>Any MapperClass you create must map SearchFields.NAME and SearchFields.DESCRIPTION.</li>
+	<li>This class maps an additional fields, FIELD_OWNER, which is not specified in the SearchFields enumeration.
+	FIELD_OWNER is a field that is not available to all searchable objects, but could be useful when trying to find
+	Checklists.</li>
+	</ul>
+	</dd>
+	</dl>
+</li>
+<li>
+	<dl>
+	<dt><a id="doit"></a>Index and Search</dt>
+	<dd>DAO methods contain code to detect the @Searchable annotation and automatically
+	add/remove/update indexed objects when database operations are executed.  The SearchService
+	contains methods that provide the ability to search the document index.</dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>The application already supplies a search field on most pages, so you shouldn't need to implement
+	your own search capability.</li>
+	<li>An IndexSearchRefreshJob is configured to run at regular intervals.  Indexed objects may
+	not be available for searching until this job has executed.</li>
+	</ul>
+	</dd>
+	</dl>
+</li>
+<li>
+	<dl>
+	<dt><a id="config"></a>Search Configuration</dt>
+	<dd>See <a href="configuration.html">the configuration page</a> for more information.</dd>
+	</dl>
+</li>
+</ol>
+
 <a href="index.html">Return</a>
 <br>
 <h3>&copy; 2013, Codeapes</h3>

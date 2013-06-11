@@ -18,8 +18,16 @@ public class ChecklistMapper extends AbstractMapper {
         document.add(new TextField(SearchFields.NAME.toString(), checklist.getName(), Field.Store.YES));
         document.add(new TextField(SearchFields.DESCRIPTION.toString(), StringUtils.defaultString(checklist
                 .getDescription()), Field.Store.YES));
-        document.add(new TextField(FIELD_OWNER, checklist.getOwner().getName(), Field.Store.YES));
+        document.add(new TextField(FIELD_OWNER, findOwnerName(checklist), Field.Store.YES));
         return document;
+    }
+    
+    private String findOwnerName(Checklist checklist) {
+        if (checklist != null) {
+            return checklist.getOwner().getName();
+        } else {
+            return "";
+        }
     }
 
 }

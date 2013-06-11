@@ -1,5 +1,11 @@
 package com.codeapes.checklist.domain.search;
 
+/**
+ * This enumeration defines the fields required for adding objects
+ * to the search index, and searching on indexed objects.
+ * 
+ * @author Joe Kuryla
+ */
 public enum SearchFields {
     OBJECT_KEY ("objectKey"),
     OBJECT_TYPE ("objectType"),
