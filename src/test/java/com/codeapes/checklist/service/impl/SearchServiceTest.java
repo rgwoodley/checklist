@@ -60,7 +60,7 @@ public class SearchServiceTest {
         final SearchResult result = results.get(0);
         assertEquals(objectKey, result.getObjectKey());
         assertEquals(checklist.getClass().getName(), result.getObjectType());
-        persistenceService.delete(checklist);
+        persistenceService.delete(checklist, CREATOR_USERNAME);
     }
 
     @Test
@@ -71,7 +71,7 @@ public class SearchServiceTest {
         searchService.refreshIndexSearcherBlocking();
         List<SearchResult> results = searchService.search(checklist2Id, 1);
         assertEquals(1, results.size());
-        persistenceService.delete(checklist);
+        persistenceService.delete(checklist, CREATOR_USERNAME);
         searchService.refreshIndexSearcherBlocking();
         results = searchService.search(checklist2Id, 1);
         assertEquals(0, results.size());

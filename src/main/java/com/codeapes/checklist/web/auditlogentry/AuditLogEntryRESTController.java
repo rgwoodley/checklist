@@ -98,7 +98,7 @@ public class AuditLogEntryRESTController {
     public void deleteAuditLogEntry(@PathVariable final Long id) {
         logger.debug("Deleting Audit Log Entry %s:", id);
         final AuditLogEntry entry = (AuditLogEntry) persistenceService.findObjectByKey(AuditLogEntry.class, id);
-        persistenceService.delete(entry);
+        persistenceService.delete(entry, webUtility.getLoggedInUsername());
     }
 
 }

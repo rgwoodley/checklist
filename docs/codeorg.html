@@ -49,11 +49,11 @@ The Checklist codebase conforms to the <a href="http://maven.apache.org/guides/i
     <p><a id="springconfig"></a><b>Spring Configuration Files</b><br>Located in src/main/resources/spring-config.</p>
 	<dl>
 	<dt>checklist-config.xml</dt><dd>Defines a PropertyPlaceholderConfigurer, which allows values in other Spring configuration files to be replaced by values defined in the checklist.properties and password.properties files.</dd>
-	<dt>checklist-data.xml</dt><dd>Hibernate and Data Access Object (DAO) configuration.</dd>
+	<dt>checklist-data.xml</dt><dd>Hibernate configuration.</dd>
 	<dt>checklist-jdbc.xml</dt><dd>Database/datasource configuration.</dd>
 	<dt>checklist-props.xml</dt><dd>Configures the 'applicationProperties' bean, which provides properties that can be used in project's Java code.</dd>
 	<dt>checklist-security.xml</dt><dd>Spring security configuration.</dd>
-	<dt>checklist-service.xml</dt><dd>Spring configuration for service-tier and asynchronous job classes.  NOTE: Almost all Spring service/job behavior can be configured using annotations, so modifications to this file should be rare.</dd>
+	<dt>checklist-service.xml</dt><dd>Spring configuration for dao, service-tier and asynchronous job classes.  NOTE: Almost all Spring service/job behavior can be configured using annotations, so modifications to this file should be rare.</dd>
 	</dl>
 </li>
 </ul>

@@ -50,7 +50,7 @@ public class UserServiceTest {
         assertNotNull(aUser.getPassword());
         assertNotSame(PASSWORD, aUser.getPassword());
         assertTrue(aUser.getRoles().contains(Role.USER));
-        userService.deleteUser(aUser);
+        userService.deleteUser(aUser, MODIFIED_BY);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class UserServiceTest {
         final User bUser = userService.findUserByObjectKey(userKey);
         assertEquals(userKey, bUser.getObjectKey());
         assertEquals(aUser.getUsername(), bUser.getUsername());
-        userService.deleteUser(bUser);
+        userService.deleteUser(bUser, MODIFIED_BY);
     }
 
     @Test
@@ -76,7 +76,7 @@ public class UserServiceTest {
         assertNotNull(bUser);
         assertEquals(aUser.getObjectKey(), bUser.getObjectKey());
         assertEquals(aUser.getUsername(), bUser.getUsername());
-        userService.deleteUser(bUser);
+        userService.deleteUser(bUser, MODIFIED_BY);
     }
 
     @Test
@@ -95,7 +95,7 @@ public class UserServiceTest {
         assertNotNull(aUser.getObjectKey());
         final Long objectKey = aUser.getObjectKey();
         sessionUtility.flushAndClearSession();
-        userService.deleteUser(aUser);
+        userService.deleteUser(aUser, MODIFIED_BY);
         final User bUser = userService.findUserByObjectKey(objectKey);
         assertNull(bUser);
     }
@@ -118,7 +118,7 @@ public class UserServiceTest {
         assertEquals(updatedUsername, bUser.getUsername());
         assertEquals(updatedFirstname, bUser.getFirstName());
         assertTrue(bUser.getRoles().contains(Role.ADMIN));
-        userService.deleteUser(bUser);
+        userService.deleteUser(bUser, MODIFIED_BY);
     }
 
     @After

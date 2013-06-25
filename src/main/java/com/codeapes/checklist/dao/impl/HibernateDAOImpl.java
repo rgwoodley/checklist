@@ -12,22 +12,20 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.codeapes.checklist.dao.PagingQueryCriteria;
 import com.codeapes.checklist.dao.PersistenceDAO;
 import com.codeapes.checklist.dao.ResultPage;
-import com.codeapes.checklist.dao.SearchDAO;
-import com.codeapes.checklist.domain.annotation.Searchable;
 import com.codeapes.checklist.domain.persistence.Persistent;
 import com.codeapes.checklist.util.ChecklistException;
 
-public class HibernateDAOImpl extends HibernateDaoSupport implements PersistenceDAO {
+@Repository("hibernateDAO")
+public class HibernateDAOImpl extends AbstractHibernateDAO implements PersistenceDAO {
 
     private static final String FIND_METHOD_VALIDATION_ERROR_MSG = "Query/Parameters cannot be null, "
             + "and parameters must not be empty.";
-
-    private SearchDAO searchDAO;
 
     public SessionFactory getHibernateSessionFactory() {
 
@@ -38,21 +36,15 @@ public class HibernateDAOImpl extends HibernateDaoSupport implements Persistence
         persistentObj.setCreatedBy(createdBy);
         persistentObj.setCreatedTimestamp(new Timestamp(new Date().getTime()));
         persistentObj.setModifiedBy(createdBy);
-        getHibernateTemplate().save(persistentObj);
-        final boolean searchable = persistentObj.getClass().isAnnotationPresent(Searchable.class);
-        if (searchable) {
-            searchDAO.addObjectToIndex(persistentObj);
-        }
+        final HibernateTemplate hibernateTemplate = getHibernateTemplate();
+        hibernateTemplate.save(persistentObj);
         return persistentObj;
     }
 
     public Persistent update(Persistent persistentObj, final String modifiedBy) {
         persistentObj.setModifiedBy(modifiedBy);
-        getHibernateTemplate().update(persistentObj);
-        final boolean searchable = persistentObj.getClass().isAnnotationPresent(Searchable.class);
-        if (searchable) {
-            searchDAO.updateObjectInIndex(persistentObj);
-        }
+        final HibernateTemplate hibernateTemplate = getHibernateTemplate();
+        hibernateTemplate.update(persistentObj);
         return persistentObj;
     }
 
@@ -63,12 +55,9 @@ public class HibernateDAOImpl extends HibernateDaoSupport implements Persistence
         return update(persistentObj, modifiedBy);
     }
 
-    public void delete(Persistent persistentObj) {
-        getHibernateTemplate().delete(persistentObj);
-        final boolean searchable = persistentObj.getClass().isAnnotationPresent(Searchable.class);
-        if (searchable) {
-            searchDAO.removeObjectFromIndex(persistentObj);
-        }
+    public void delete(Persistent persistentObj, String deletedBy) {
+        final HibernateTemplate hibernateTemplate = getHibernateTemplate();
+        hibernateTemplate.delete(persistentObj);
     }
 
     public Persistent findObjectByKey(Class<? extends Persistent> objectClass, Long key) {
@@ -155,8 +144,7 @@ public class HibernateDAOImpl extends HibernateDaoSupport implements Persistence
                     "Invalid pageCriteria instance.  Attribute pageNumber = %d.  This value cannot be negative.",
                     pageCriteria.getPageNumber());
         } else if (pageCriteria.getResultsPerPage() < 1) {
-            throw new ChecklistException(
-                    "Invalid pageCriteria instance.  "
+            throw new ChecklistException("Invalid pageCriteria instance.  "
                     + "Attribute resultsPerPage = %d.  This value must be greater than zero.",
                     pageCriteria.getResultsPerPage());
         }
@@ -213,13 +201,4 @@ public class HibernateDAOImpl extends HibernateDaoSupport implements Persistence
         }
         return query;
     }
-
-    public SearchDAO getSearchDAO() {
-        return searchDAO;
-    }
-
-    public void setSearchDAO(SearchDAO searchDAO) {
-        this.searchDAO = searchDAO;
-    }
-
 }

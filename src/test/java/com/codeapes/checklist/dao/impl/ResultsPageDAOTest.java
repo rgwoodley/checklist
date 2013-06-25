@@ -143,7 +143,7 @@ public class ResultsPageDAOTest {
 
     private void removeTestData(List<AuditLogEntry> logEntries) {
         for (AuditLogEntry entry : logEntries) {
-            persistenceDAO.delete(entry);
+            persistenceDAO.delete(entry, DEFAULT_CREATED_BY);
         }
     }
 }

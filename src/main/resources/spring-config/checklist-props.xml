@@ -15,5 +15,8 @@
         <property name="searchIndexDirectoryLocation">
             <value>${search.index.directory.location}</value>
         </property>
+        <property name="auditLogEnabled">
+            <value>${auditlog.enabled}</value>
+        </property>
     </bean>
 </beans>

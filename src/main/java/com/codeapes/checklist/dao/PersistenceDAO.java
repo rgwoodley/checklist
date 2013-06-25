@@ -17,7 +17,7 @@ public interface PersistenceDAO {
 
     Persistent saveOrUpdate(Persistent persistentObj, String modifiedBy);
 
-    void delete(Persistent persistentObj);
+    void delete(Persistent persistentObj, String deletedBy);
 
     Persistent findObjectByKey(Class<? extends Persistent> objectClass, Long key);
 

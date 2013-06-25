@@ -100,9 +100,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteUser(User user) {
+    public void deleteUser(User user, String deletedBy) {
 
-        persistenceDAO.delete(user);
+        persistenceDAO.delete(user, deletedBy);
     }
 
 }

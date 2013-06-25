@@ -7,7 +7,93 @@
 </head>
 <body>
 <h1>Checklist : How-To Add a Data Access Object (DAO)</h1>
-<p>Coming Soon</p>
+<p>The purpose of a DAO is to provide access to a database or external/3rd party API or service.
+DAOs operate on domain classes and are used by Service classes.</p>
+<ul>
+<li><a href="#dao">Create a DAO interface and class</a></li>
+<li><a href="#hibernate">Create a DAO class that uses Hibernate for database access</a></li>
+<li><a href="#transaction">Transaction configuration</a></li>
+</ul><ol>
+<li>
+	<dl>
+	<dt><a id="dao"></a>Create a DAO interface and class</dt>
+	<dd>Create an interface that defines the methods in your DAO, and create a class that implements
+	that interface.  Annotate that class with @Repository, and make sure the implementation is in
+	a subpackage of com.codeapes.checklist.dao.</dd>
+	<dt>Example</dt>
+	<dd><pre><code>
+public interface MyDataAccessObject {
+
+    void doSomething();
+}
+
+@Repository("myDataAccessObject")
+public class MyDataAccessObjectImpl implements MyDataAccessObject {
+
+    @Override
+    public void doSomething() {
+        ....
+    }
+}
+
+---
+
+public class UsesMyDataAccessObject {
+
+    @Autowired
+    private MyDataAccessObject myDataAccessObject;
+
+}
+
+	</code></pre></dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>No additional XML configuration is needed to add a DAO.</li>
+	<li>To use the DAO from another class (like a service), use the
+	@Autowired annotation.  The @Autowired annotation can be paired with the @Qualifier annotation in case two DAOs
+	implement the same interface and spring does not select the correct bean.  See the PersistenceDAOImpl.java source
+	code for an example of this.</li>
+	</ul>
+	</dd>
+	</dl>
+</li>
+<li>
+	<dl>
+	<dt><a id="hibernate"></a>Create a DAO class that uses Hibernate for database access</dt>
+	<dd>You shouldn't do this directly.  Services should use the persistenceDAO.
+	If you are creating a DAO that needs to use Hibernate, autowire the persistenceDAO into your
+	DAO instead of extending HibernateDaoSupport.</dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>The reason to autowire in the persistenceDAO bean instead of extending HibernateDaoSupport directly is so
+	features like search and audit logging will work.  The methods are also fairly generic.</li>
+	<li>If you only need access to hibernate and do not require search or audit logging, you can autowire 
+	a PersistenceDAO instance with @Qualifier("hibernateDAO").  See the AuditLogger.java class for an
+	example.</li>
+	</ul>
+	</dd>
+	</dl>
+</li>
+<li>
+	<dl>
+	<dt><a id="transaction"></a>Transaction Configuration</dt>
+	<dd>Transaction boundaries are defined through annotation supplied in the service tier of the 
+	application architecture.  Defining transactions/transaction boundaries within a DAO is strongly
+	discouraged.</dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>DAO methods are like building blocks that the service tier assembles into a higher-level
+	feature.  Transaction semantics might differ based on the context in which a service uses
+	the DAO method.</li>
+	</ul>
+	</dd>
+	</dl>
+</li>
+</ol>
+
 <a href="index.html">Return</a>
 <br>
 <h3>&copy; 2013, Codeapes</h3>

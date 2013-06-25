@@ -68,4 +68,9 @@ public class PersistentImpl implements Persistent {
         this.createdBy = createdBy;
     }
 
+    @Override
+    public String toString() {
+        return String.format("Object Type: %s, Object Key: %s", this.getClass().getSimpleName(), this.getObjectKey());
+    }
+
 }

@@ -29,8 +29,8 @@ public class PersistenceServiceImpl implements PersistenceService {
         return persistenceDAO.saveOrUpdate(persistentObj, modifiedBy);
     }
 
-    public void delete(Persistent persistentObj) {
-        persistenceDAO.delete(persistentObj);
+    public void delete(Persistent persistentObj, String deletedBy) {
+        persistenceDAO.delete(persistentObj, deletedBy);
     }
 
     public Persistent findObjectByKey(Class<? extends Persistent> objectClass, Long key) {
