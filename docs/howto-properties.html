@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Checklist Documentation</title>
+<link href="css.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h1>Checklist : How-To Add Configuration Properties</h1>
+<p>This section explains how to add configuration properties to the checklist.properties that
+can then be accessed by classes in the Application.</p>
+<ul>
+<li>Add the property to checklist.properties.</li>
+<li>Add the property to the ApplicationProperties class in the com.codeapes.checklist.util package, along with getter/setter methods.</li>
+<li>Add the property to the applicationProperties bean definition in the src/main/resources/checklist-props.xml file.</li>
+<li>Use the property through the accessor method in the ApplicationProperties class; use it as a Spring-managed bean 
+(don't create a new instance of it).
+</ul>
+<a href="index.html">Return</a>
+<br>
+<h3>&copy; 2013, Codeapes</h3>
+</body>
+</html>

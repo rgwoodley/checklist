@@ -7,7 +7,73 @@
 </head>
 <body>
 <h1>Checklist : Configuration</h1>
-<p>Coming Soon</p>
+<p>
+This page describes the configuration options available in the checklist.properties file.  Additional
+configuration can be changed in the log4j.properties and quartz.properties files.  See the project
+documentation for log4j and the quartz job scheduler for more information about how those components
+are configured.
+</p>
+<ul>
+<li><a href="#general">general</a></li>
+<li><a href="#database">database</a></li>
+<li><a href="#hibernate">hibernate</a></li>
+<li><a href="#search">search</a></li>
+<li><a href="#startup">startup</a></li>
+<li><a href="#auditlog">auditlog</a></li>
+</ul>
+<ul>
+<li>
+    <p><a id="general"></a><b>general</b></p>
+	<dl>
+	<dt>general.testMode</dt><dd>Value can be true or false.  Enables features that should never be running in a production environment.</dd>
+	</dl>
+</li>
+<li>
+    <p><a id="database"></a><b>database</b></p>
+	<dl>
+	<dt>database.driver</dt><dd>The JDBC driver name used by the application.</dd>
+	<dt>database.url</dt><dd>The JDBC URL the application will use to connect to its database.</dd>
+	<dt>database.user</dt><dd>The username of the user used to connect to the database.</dd>
+	<dt>database.maxIdleConnections</dt><dd>The maximum number of database connections that can be idle and ready to accept user requests.</dd>
+	<dt>database.maxActiveConnections</dt><dd>The maximum number of database connections that can be concurrently processing user requests.</dd>
+	<dt>database.validationQuery</dt><dd>A query to run on a connection to ensure it is still connected to the database.  If it is not connected, it will be automatically refreshed.</dd>
+	</dl>	
+</li>
+<li>
+    <p><a id="hibernate"></a><b>hibernate</b></p>
+	<dl>
+	<dt>hibernate.showSQL</dt><dd>Value can be true or false.  If set to true, all SQL executed by Hibernate will be sent to the log.</dd>
+	<dt>hibernate.dialect</dt><dd>The database dialect to use depending on the underlying database, for example MySQLDialect.</dd>
+	<dt>hibernate.hbm2ddl</dt><dd>Value can be validate, update, create, or create-drop.
+	<ul>
+	<li>validate: validate the schema, makes no changes to the database.</li>
+	<li>update: update the database schema if there are hibernate mapping changes.</li>
+	<li>create: create the database schema, destroying previous data.</li>
+	<li>create-drop: same as create, but drops the schema when the application is stopped.</li>
+	</ul>
+	</dd>
+	</dl>	
+</li>
+<li>
+    <p><a id="search"></a><b>search</b></p>
+	<dl>
+	<dt>search.index.inmemory</dt><dd>Value can be true or false.  If true, the search index is kept in memory-- suitable for testing.  If false, the search.index.directory.location property must be set.</dd>
+	<dt>search.index.directory.location</dt><dd>The path where the search index will be stored.  If this directory does not already exist, it will be created.</dd>
+	</dl>	
+</li>
+<li>
+    <p><a id="startup"></a><b>startup</b></p>
+	<dl>
+	<dt>startup.scheduledjobs.enabled</dt><dd>Value can be true or false.  If true, any jobs that run on a schedule will be enabled with the application starts.</dd>
+	</dl>	
+</li>
+<li>
+    <p><a id="auditlog"></a><b>auditlog</b></p>
+	<dl>
+	<dt>auditlog.enabled</dt><dd>Value can be true or false.  If true, all Hibernate write operations will be logged to the audit log.</dd>
+	</dl>	
+</li>
+</ul>
 <a href="index.html">Return</a>
 <br>
 <h3>&copy; 2013, Codeapes</h3>

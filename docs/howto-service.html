@@ -7,7 +7,114 @@
 </head>
 <body>
 <h1>Checklist : How-To Add a Service class</h1>
-<p>Coming Soon</p>
+<p>The Service Tier of the Checklist application implements its business logic.</p>
+<ul>
+<li><a href="#service">Create a Service interface and class</a></li>
+<li><a href="#transaction">Transaction configuration</a></li>
+<li><a href="#query">Services that query for data</a></li>
+</ul><ol>
+<li>
+	<dl>
+	<dt><a id="service"></a>Create a Service interface and class</dt>
+	<dd>Create an interface that defines the methods in your Service, and create a class that implements
+	that interface.  Annotate that class with @Service, and make sure the implementation is in
+	a subpackage of com.codeapes.checklist.service.</dd>
+	<dt>Example</dt>
+	<dd><pre><code>
+public interface MyService {
+
+    void doSomething();
+}
+
+@Service("myService")
+public class MyServiceImpl implements MyService {
+
+    @Autowired
+    private PersistenceDAO persistenceDAO;
+
+    @Override
+    public void doSomething() {
+        ....
+    }
+}
+
+---
+
+public class UsesMyService {
+
+    @Autowired
+    private MyService myService;
+
+}
+	</code></pre></dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>No additional XML configuration is needed to add a Service.</li>
+	<li>To use a DAO or other Spring-managed component, use the
+	@Autowired annotation.  The @Autowired annotation can be paired with the @Qualifier annotation in case two DAOs
+	implement the same interface and spring does not select the correct bean.  See the PersistenceDAOImpl.java source
+	code for an example of this.</li>
+	</ul>
+	</dd>
+	</dl>
+</li>
+<li>
+	<dl>
+	<dt><a id="transaction"></a>Transaction Configuration</dt>
+	<dd>If a Service is going to access a transactional persistent data store
+	(such as a database), transaction information can be included in annotations.</dd>
+		<dt>Example</dt>
+	<dd><pre><code>
+public interface MyService {
+
+    void doSomething();
+}
+
+@Service("myService")
+<font color="red">@Transactional</font>
+public class MyServiceImpl implements MyService {
+
+    @Autowired
+    private PersistenceDAO persistenceDAO;
+
+    @Override
+    <font color="red">@Transactional(propagation = Propagation.REQUIRED)</font>
+    public void doSomething() {
+        ....
+    }
+}
+	</code></pre></dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>See the Spring Framework documentation for more information about the @Transactional annotation.  In
+	addition to the transaction propagation, other properties can be set such as the transaction isolation
+	and timeout.</li>
+	<li>These annotations are unnecessary if the service is not interacting with a transactional component.</li>
+	</ul>
+	</dd>
+	</dl>
+</li>
+<li>
+	<dl>
+	<dt><a id="query"></a>Services that query for data</dt>
+	<dd>The Checklist application uses Hibernate extensively, and Hibernate queries are
+	stored alongside Services.  Services are intended to use a common 'PersistenceDAO' that 
+	utilizes Hibernate operations to create, update, find and delete persistent objects.  If
+	Hibernate or some other ORM is not being used, a DAO should probably be added to shield
+	the service tier from data access details.</dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>See the classes and interfaces in the com.codeapes.checklist.service.job and com.codeapes.checklist.service.job.impl 
+	packages.  The JobService interface, QuartzJobServiceImpl class and JobServiceQueries class provide an
+	illustration of how this works.</li>
+	</ul>
+	</dd>
+	</dl>
+</li>
+</ol>
 <a href="index.html">Return</a>
 <br>
 <h3>&copy; 2013, Codeapes</h3>

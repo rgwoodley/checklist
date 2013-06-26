@@ -7,7 +7,42 @@
 </head>
 <body>
 <h1>Checklist : How to add a miscellaneous Spring component</h1>
-<p>Coming Soon</p>
+<p>It might be useful to add classes that are managed by Spring that don't fall into the
+category of a DAO, Service or Controller.</p>
+	<dl>
+	<dt>Use the @Component annotation</dt>
+	<dd>Annotate the class with @Component, and make sure the its containing Java package
+	is covered in the base-package property of the context defined in src/main/resources/spring-config/checklist-service.xml.</dd>
+	<dt>Example</dt>
+	<dd><pre><code>
+@Component("myComponent")
+public class MyComponent {
+
+    public void doSomething() {
+        ....
+    }
+}
+
+---
+
+public class UsesMyComponent {
+
+    @Autowired
+    private MyComponent myComponent;
+
+}
+	</code></pre></dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>No additional XML configuration is needed to add a Component.</li>
+	<li>To use another Spring-managed component, use the
+	@Autowired annotation.  The @Autowired annotation can be paired with the @Qualifier annotation in case two components
+	implement the same interface and spring does not select the correct bean.  See the PersistenceDAOImpl.java source
+	code for an example of this.</li>
+	</ul>
+	</dd>
+	</dl>
 <a href="index.html">Return</a>
 <br>
 <h3>&copy; 2013, Codeapes</h3>

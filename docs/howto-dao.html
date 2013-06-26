@@ -50,7 +50,7 @@ public class UsesMyDataAccessObject {
 	<dd>
 	<ul>
 	<li>No additional XML configuration is needed to add a DAO.</li>
-	<li>To use the DAO from another class (like a service), use the
+	<li>To use another DAO or other Spring-managed component, use the
 	@Autowired annotation.  The @Autowired annotation can be paired with the @Qualifier annotation in case two DAOs
 	implement the same interface and spring does not select the correct bean.  See the PersistenceDAOImpl.java source
 	code for an example of this.</li>

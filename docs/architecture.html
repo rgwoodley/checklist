@@ -7,7 +7,118 @@
 </head>
 <body>
 <h1>Checklist : Architecture</h1>
-<p>Coming Soon</p>
+<p>
+The checklist application utilizes a multi-tier web application architecture, as show in the diagram
+below.  The various tiers/layers serve as incremental building blocks of the application, with each tier
+only having knowledge of the tier immediately below it.
+</p>
+<table>
+<tr>
+<td width="50%">
+<img src="arch.png" height="328" width="278"/>
+</td>
+<td width="50%" valign="top">
+<ul>
+<li><a href="#database">Database</a></li>
+<li><a href="#search">Search Index</a></li>
+<li><a href="#hibernate">Hibernate</a></li>
+<li><a href="#lucene">Lucene</a></li>
+<li><a href="#spring">Spring Framework</a></li>
+<li><a href="#dao">DAOs</a></li>
+<li><a href="#service">Services</a></li>
+<li><a href="#controllers">Spring Controllers</a></li>
+<li><a href="#rest">REST Services</a></li>
+<li><a href="#jsp">JSP</a></li>
+<li><a href="#jquery">JQuery/Backbone.js</a></li>
+</ul>
+</td>
+</tr>
+</table>
+<ul>
+<li>
+    <p><a id="database"></a><b>Database</b></p>
+	<dl>
+	<dd>Any relational database supported by Hibernate can be used.</dd>
+	</dl>
+</li>
+<li>
+    <p><a id="search"></a><b>Search Index</b></p>
+	<dl>
+	<dd>The application uses Lucene, and can either store Lucene's search index on disk or in memory.
+	The in-memory option is primarily used for testing.</dd>
+	</dl>
+</li>
+<li>
+    <p><a id="hibernate"></a><b>Lucene</b></p>
+	<dl>
+	<dd>Lucene is an open source search engine that provides document/object indexing and
+	ranked index searches.</dd>
+	</dl>
+</li>
+<li>
+    <p><a id="lucene"></a><b>Hibernate</b></p>
+	<dl>
+	<dd>Hibernate is an ORM (Object-to-Relational Database Mapper) that serves as the interface between the DAO layer and the database.</dd>
+	</dl>
+</li>
+<li>
+    <p><a id="spring"></a><b>Spring Framework</b></p>
+	<dl>
+	<dd>The Spring Framework provides a lightweight container in which Spring-managed beans exist and execute.
+	Most application DAOs, Service classes and view controllers are managed by the Spring Framework.</dd>
+	</dl>
+</li>
+<li>
+    <p><a id="dao"></a><b>DAOs</b></p>
+	<dl>
+	<dd>The purpose of Data Access Objects (DAOs) is to serve as a layer between persistent data sources and
+	the application's service layer.  The DAO layer contains Hibernate and Lucene-specific logic so that
+	higher layers can be implementation-agnostic.  Interfaces are defined for DAOs so that implementations
+	can be conveniently changed later (if Hibernate or Lucene were to be replaced, for example).</dd>
+	</dl>
+</li>
+<li>
+    <p><a id="service"></a><b>Services</b></p>
+	<dl>
+	<dd>Service classes contain the core business logic of the application.  The features a service provides
+	are consumed by view controllers, and a service accesses persistent data through DAO classes.  Interfaces
+	are defined for service classes so that implementations can be conveniently changed later.</dd>
+	</dl>
+</li>
+<li>
+    <p><a id="controllers"></a><b>Spring Controllers</b></p>
+	<dl>
+	<dd>The application uses the Spring MVC web framework, which is an implementation of the Model-View-Controller
+	web application concept.  The model is defined by domain classes and business logic/features provided by service classes.
+	The view is defined using Java Server Pages (JSP) or Javascript that consumes data through REST interfaces.  The controllers
+	are the classes in this tier that are responsible for accepting user requests, executing the appropriate business logic,
+	and send the desired output to the view.</dd>
+	</dl>
+</li>
+<li>
+    <p><a id="rest"></a><b>REST Services</b></p>
+	<dl>
+	<dd>Some client-side Javascript components make calls to the application via its 
+	REST (Representational State Transfer) interface over HTTP.  The REST interface takes requests 
+	in JSON format and returns the result in JSON.  The Backbone.js Javascript framework makes use
+	of the REST interface.</dd>
+	</dl>
+</li>
+<li>
+    <p><a id="jsp"></a><b>JSP</b></p>
+	<dl>
+	<dd>Java Server Pages (JSPs) make up the majority of the view for the application's user interface.
+	Pages are separated into components using the Apache Tiles templating framework.</dd>
+	</dl>
+</li>
+<li>
+    <p><a id="jquery"></a><b>JQuery/Backbone.js</b></p>
+	<dl>
+	<dd>Most JSPs contain client-side Javascript, and the application makes heavy use of JQuery.  The Backbone.js
+	framework is used on pages where very dynamic behavior is desired.</dd>
+	</dl>
+</li>
+</ul>
 <a href="index.html">Return</a>
 <br>
 <h3>&copy; 2013, Codeapes</h3>

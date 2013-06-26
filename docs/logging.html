@@ -7,7 +7,35 @@
 </head>
 <body>
 <h1>Checklist : Logging</h1>
-<p>Coming Soon</p>
+<p>
+A convenience class, com.codeapes.checklist.util.AppLogger, is available to provide logging capability
+for the Checklist application.  The AppLogger class is a log4j wrapper that supports the format method
+of the String class.  Here is a small example of how to use the logger:
+</p>
+<dl><dt>Example</dt><dd><pre><code>
+package com.codeapes.checklist.web.something;
+		
+public class SomeRandomClass {
+
+    private static final AppLogger logger = new AppLogger(SomeRandomClass.class); // NOSONAR
+
+    public void someRandomMethod(String value1, Integer value2) {
+        
+        logger.debug("Value 1: %s, Value 2: %s", value1, value2);
+    }
+    
+}
+	</code></pre></dd>
+	<dt>Notes</dt>
+	<dd>
+	<ul>
+	<li>Valid logging levels are DEBUG, INFO, ERROR and FATAL</li>
+	<li>The //NOSONAR comment keeps the logger definition from causing a rule violation for the name, since the name is not
+	capitalized.  The name is not capitalized because the logger is utility and not a constant.</li>
+	<li>See the String.format method documentation for information about replacement tokens (the %s in the example).</li>
+	</ul>
+	</dd>
+	</dl>
 <a href="index.html">Return</a>
 <br>
 <h3>&copy; 2013, Codeapes</h3>
