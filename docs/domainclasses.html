@@ -7,7 +7,113 @@
 </head>
 <body>
 <h1>Checklist : Domain Classes</h1>
-<p>Coming Soon</p>
+<p>
+The following class diagram shows all of the domain classes 
+</p>
+<table>
+<tr>
+<td width="80%">
+<img src="checklist_class_diagram.png" width="807" height="526"/>
+</td>
+<td width="20%" valign="top">
+<ul>
+<li><a href="#user">User</a></li>
+<li><a href="#userGroup">UserGroup</a></li>
+<li><a href="#ownerExecutor">OwnerExecutor</a></li>
+<li><a href="#checklist">Checklist</a></li>
+<li><a href="#checklistGroup">ChecklistGroup</a></li>
+<li><a href="#step">Step</a></li>
+<li><a href="#executionChecklist">ExecutionChecklist</a></li>
+<li><a href="#executionStep">ExecutionStep</a></li>
+</ul>
+</td>
+</tr>
+</table>
+<ul>
+<li>
+    <p><a id="user"></a><b>User</b></p>
+	<dl>
+	<dd>Users have one to many roles, and can belong to zero to many UserGroups.  Both Users and
+	UserGroups implement the OwnerExecutor interface so that Users and UserGroups can be the
+	owner and/or executor of a Checklist.</dd>
+	</dl>
+</li>
+<li>
+    <p><a id="userGroup"></a><b>UserGroup</b></p>
+	<dl>
+	<dd>A UserGroup serves to group a set of users so that any user in that group can be an
+	owner or executor of a checklist.  A User can belong to zero or more UserGroups.</dd>
+	</dl>
+</li>
+<li>
+    <p><a id="ownerExecutor"></a><b>OwnerExecutor</b></p>
+	<dl>
+	<dd>The OwnerExecutor interface is implemented by both the User and UserGroup classes so
+	that either Users or UserGroups can be the Owner or Executor of a Checklist.</dd>
+	</dl>
+</li>
+<li>
+    <p><a id="checklist"></a><b>Checklist</b></p>
+	<dl>
+	<dd>The Checklist class defines a set of steps used to accomplish some sort of goal
+	or complete a complex task.  An example would be a Saturday test.  There could be a Checklist
+	that defines the Saturday test, and the Checklist would include Step objects that define
+	the Steps necessary to complete the Saturday test.  Steps can be dependent upon one another, as
+	described in the section about the Step class.
+	<br><br>
+	It may be useful to think about the Checklist class as defining the template for a Checklist.
+	When a Checklist is going to be used to track work, an ExecutionChecklist is created that is
+	effectively a clone of the Checklist.  A Checklist is related to an ExecutionChecklist like
+	a Java class is related to an object.
+	<br><br>
+	Here's a quick use case:  Suppose you want to define a checklist that you are going to use when
+	you go on a campout.  You would create a Checklist that defines all of the steps
+	needed to prepare for the campout.  You might do this several weeks before the campout.  When you are
+	ready to use your checklist to start tracking your progress, you would execute the Checklist, which
+	would create an ExecutionChecklist.  The ExecutionChecklist is a copy of the Checklist, and has additional
+	attributes like executionStart and executionEnd.  The original Checklist could be reused at any point
+	later when you want to prepare for another campout.  You would just execute it again.
+	</dd>
+	</dl>
+</li>
+<li>
+    <p><a id="checklistGroup"></a><b>Checklist Group</b></p>
+	<dl>
+	<dd>A ChecklistGroup serves to group and categorize checklists.  Each ChecklistGroup can have a type
+	of public or private.  The checklists in a public group can be viewed by all users of the Checklist
+	application.  Checklists in a private group can only be viewed by the owner, executor and
+	defaultExecutor of a Checklist or ExecutionChecklist.</dd>
+	</dl>
+</li>
+<li>
+    <p><a id="step"></a><b>Step</b></p>
+	<dl>
+	<dd>A Step defines a task to be done as part of a Checklist.  Steps can be dependent upon
+	other tasks through the preconditions relationship.  If a Step has another Step defined as
+	a precondition, that Step cannot be executed until the precondition has been executed.  If
+	none of the steps in a Checklist have preconditions, all Steps can be executed in parallel.</dd>
+	</dl>
+</li>
+<li>
+    <p><a id="executionChecklist"></a><b>Execution Checklist</b></p>
+	<dl>
+	<dd>An ExecutionChecklist is created when a Checklist is executed, and is effectively a copy
+	of the Checklist.  The ExecutionChecklist and ExecutionStep classes contain additional fields 
+	such as executionStart and executionEnd which are used to track the actual execution of
+	the checklist and can be used to view progress.  Once an ExecutionChecklist is created,
+	the ExecutionChecklist and ExecutionSteps can be changed without affecting the Checklist
+	from which the ExecutionChecklist was created.  The ExecutionChecklist will also not change
+	if the Checklist from which it was created is modified.</dd>
+	</dl>
+</li>
+<li>
+    <p><a id="executionStep"></a><b>Execution Step</b></p>
+	<dl>
+	<dd>When a Checklist is executed and an ExecutionChecklist is created, all of the Checklist
+	Steps are also copied into ExecutionStep instances.</dd>
+	</dl>
+</li>
+</ul>
 <a href="index.html">Return</a>
 <br>
 <h3>&copy; 2013, Codeapes</h3>
