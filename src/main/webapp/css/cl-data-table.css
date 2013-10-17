@@ -1,0 +1,83 @@
+div.data-table {
+	width:47%;
+	padding:0px;
+	border:none;
+	margin:10px 5px 10px 17px;
+	float: left;
+	border-radius: 4px;
+	-moz-box-shadow: 0 0 2px 2px #330099;
+	-webkit-box-shadow: 0 0 2px 2px #330099;
+	box-shadow: 0 0 2px 2px #330099;
+}
+div.data-table h1 {
+    font-size: 14px;
+    font-weight: bold;
+    color: #F8F8F8;
+    background-color: #330099;
+    padding: 4px 2px 4px 2px;
+    border-bottom: 2px solid #330099;
+    text-align: center;
+}
+div.data-table table {
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+	border-collapse:collapse;
+}
+div.data-table table tr {
+	padding: 0px;
+	margin: 0px;
+}
+div.data-table table th {
+	text-align:left;
+	font-size: 12px;
+	font-weight: bold;
+	padding:10px;
+	background: #D9F1FC;
+	background: #DEDEDE;
+}
+div.data-table table td {
+	text-align:left;
+	font-size: 12px;
+	font-weight: normal;
+	padding:10px;	
+	margin:0px;
+	height:18px;
+	border-bottom: solid 1px #888;
+}
+div.data-table table td.prevnext {
+	font-weight:bold;
+	text-align:right;	
+	padding-right:20px;
+}
+div.data-table table td.results {
+	font-weight:bold;
+	text-align:left;	
+	padding-left:20px;
+}
+div.data-table table td.noresults {
+	font-weight:normal;
+	text-align:left;
+	text-align:center;	
+	padding:20px;
+}
+div.data-table table tr:hover td {
+  background-color: #D9F1FC;
+}
+div.data-table table tr td.noresults:hover {
+  background-color: #FFFFFF;
+}
+div.data-table table tr:hover td {
+  background-color: #D9F1FC;
+}
+div.data-table a:link, a:visited, a:hover, a:active { 
+	color:#000000;
+	text-decoration: none;
+}
+div.data-table tr td.noresults a:link, a:visited, a:hover, a:active { 
+	color:#000000;
+	text-decoration: underline;
+}
+div.data-table table tbody tr a {
+    display: block;
+}
