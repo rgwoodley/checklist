@@ -18,5 +18,8 @@
         <property name="auditLogEnabled">
             <value>${auditlog.enabled}</value>
         </property>
+        <property name="dashboardRecentCompletedLookback">
+            <value>${dashboard.recentcompleted.lookback.days}</value>
+        </property> 
     </bean>
 </beans>

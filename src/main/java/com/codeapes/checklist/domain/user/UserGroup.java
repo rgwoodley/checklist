@@ -1,5 +1,6 @@
 package com.codeapes.checklist.domain.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -17,7 +18,6 @@ public class UserGroup extends OwnerExecutorImpl {
     private static final long serialVersionUID = 8632057779355106276L;
 
     private List<User> users;
-    private String name;
     private String description;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "groups") // NOSONAR
@@ -29,22 +29,20 @@ public class UserGroup extends OwnerExecutorImpl {
     public String getDescription() {
         return description;
     }
-
-    @Column(name = "name", length = 50, nullable = false, unique = true) // NOSONAR
-    public String getName() {
-        return name;
-    }
     
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+    
+    public void addUser(User user) {
+        if (users == null) {
+            users = new ArrayList<User>();
+        }
+        users.add(user);
     }
 
 }

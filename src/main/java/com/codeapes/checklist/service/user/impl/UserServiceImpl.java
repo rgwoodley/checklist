@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.codeapes.checklist.dao.PersistenceDAO;
 import com.codeapes.checklist.domain.user.Role;
 import com.codeapes.checklist.domain.user.User;
+import com.codeapes.checklist.domain.user.UserGroup;
 import com.codeapes.checklist.service.user.UserService;
 import com.codeapes.checklist.util.AppLogger;
 
@@ -36,7 +37,6 @@ public class UserServiceImpl implements UserService {
         @SuppressWarnings("unchecked")
         final List<User> users = (List<User>)persistenceDAO.find(userByNameQuery, username);
         if (users != null && !users.isEmpty()) {
-
             final User user = (User) users.get(0);
             logger.debug("user %s found with object key of %s", username, user.getObjectKey());
             return user;
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(propagation = Propagation.REQUIRED)
     public User createUser(final String username, final String firstName, final String lastName, final boolean active,
         final String password, final String createdBy) {
-
+        
         final User user = new User();
         user.setActive(active);
         user.setUsername(username);
@@ -64,16 +64,32 @@ public class UserServiceImpl implements UserService {
         user.setLastName(lastName);
         user.setPassword(passwordEncoder.encodePassword(password, username));
         user.addUserRole(Role.USER);
-
         createUser(user, createdBy);
-
         return user;
+    }
+    
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public UserGroup createUserGroup(final String name, final String createdBy) {
+        
+        final UserGroup userGroup = new UserGroup();
+        userGroup.setName(name);
+        createUserGroup(userGroup, createdBy);
+        return userGroup;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public User createUser(final User user, final String createdBy) {
+        
         return (User) persistenceDAO.saveObject(user, createdBy);
+    }
+    
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public UserGroup createUserGroup(final UserGroup userGroup, final String createdBy) {
+        
+        return (UserGroup) persistenceDAO.saveObject(userGroup, createdBy);
     }
 
     @Override
@@ -81,13 +97,21 @@ public class UserServiceImpl implements UserService {
     public User saveOrUpdateUser(User user, String modifiedBy) {
 
         if (user.getObjectKey() == null) {
-
             createUser(user, modifiedBy);
         }
-
         persistenceDAO.saveOrUpdate(user, modifiedBy);
-
         return user;
+    }
+    
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public UserGroup saveOrUpdateUserGroup(UserGroup userGroup, String modifiedBy) {
+
+        if (userGroup.getObjectKey() == null) {
+            createUserGroup(userGroup, modifiedBy);
+        }
+        persistenceDAO.saveOrUpdate(userGroup, modifiedBy);
+        return userGroup;
     }
 
     @Override
@@ -97,7 +121,22 @@ public class UserServiceImpl implements UserService {
         persistenceDAO.update(user, modifiedBy);
         return user;
     }
+    
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public UserGroup updateUserGroup(UserGroup userGroup, String modifiedBy) {
 
+        persistenceDAO.update(userGroup, modifiedBy);
+        return userGroup;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void deleteUserGroup(UserGroup userGroup, String deletedBy) {
+
+        persistenceDAO.delete(userGroup, deletedBy);
+    }
+    
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteUser(User user, String deletedBy) {

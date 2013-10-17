@@ -13,8 +13,10 @@ import com.codeapes.checklist.domain.job.ScheduledJob;
 import com.codeapes.checklist.domain.template.Checklist;
 import com.codeapes.checklist.domain.template.ChecklistGroup;
 import com.codeapes.checklist.domain.template.ChecklistGroupType;
+import com.codeapes.checklist.domain.user.OwnerExecutor;
 import com.codeapes.checklist.domain.user.Role;
 import com.codeapes.checklist.domain.user.User;
+import com.codeapes.checklist.domain.user.UserGroup;
 import com.codeapes.checklist.job.JobConstants;
 import com.codeapes.checklist.service.ChecklistService;
 import com.codeapes.checklist.service.PersistenceService;
@@ -44,22 +46,23 @@ public class TestDataController {
 
     @Autowired
     private ChecklistService checklistService;
-    
+
     @Autowired
     private SearchService searchService;
 
     @Autowired
     private PersistenceService persistenceService;
-    
+
     @Autowired
     private ApplicationProperties applicationProperties;
 
     @RequestMapping(method = RequestMethod.GET, value = "/generateTestData")
     public String createAllTestData(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
         if (applicationProperties.isTestMode()) {
-            final User user = createTestUsers();
+            final UserGroup userGroup = createUserGroup();
+            final User user = createTestUsers(userGroup);
             final ChecklistGroup[] groups = createTestChecklistGroups(user);
-            createTestChecklists(user, groups[0], groups[1]);
+            createTestChecklists(user, groups[0], groups[1], userGroup);
             searchService.refreshIndexSearcherBlocking();
             createSearchCacheRefreshJob();
             model.put(MODEL_MESSAGE, "Test Data Generated.  Have fun!");
@@ -70,13 +73,23 @@ public class TestDataController {
         return TARGET_VIEW;
     }
 
-    private User createTestUsers() {
+    private UserGroup createUserGroup() {
+        final UserGroup group = new UserGroup();
+        group.setName("group1");
+        userService.createUserGroup(group, MODIFIED_BY);
+        logger.info("UserGroup test data generation complete");
+        return group;
+    }
+
+    private User createTestUsers(UserGroup userGroup) {
         logger.info("Generating user test data");
         final User adminUser = userService.createUser("admin", "Admin", "Administrator", true, DEFAULT_PASSWORD,
-            MODIFIED_BY);
+                MODIFIED_BY);
         adminUser.addUserRole(Role.ADMIN);
         userService.updateUser(adminUser, MODIFIED_BY);
         final User user = userService.createUser("user", "Normal", "User", true, DEFAULT_PASSWORD, MODIFIED_BY);
+        user.addGroup(userGroup);
+        userService.updateUser(user, MODIFIED_BY);
         logger.info("User test data generation complete");
         return user;
     }
@@ -84,35 +97,40 @@ public class TestDataController {
     private ChecklistGroup[] createTestChecklistGroups(User owner) {
         logger.info("Generating checklist group data");
         final ChecklistGroup group1 = createChecklistGroup("Public Checklists", "A Public Test Group", owner,
-            ChecklistGroupType.PUBLIC);
+                ChecklistGroupType.PUBLIC);
         final ChecklistGroup group2 = createChecklistGroup("Private Checklists", "A Private Test Group", owner,
-            ChecklistGroupType.PRIVATE);
+                ChecklistGroupType.PRIVATE);
         checklistService.saveOrUpdateChecklistGroup(group1, owner.getUsername());
         checklistService.saveOrUpdateChecklistGroup(group2, owner.getUsername());
         logger.info("Checklist group test data generation complete.");
         final ChecklistGroup[] groups = new ChecklistGroup[2];
-        groups[0] = group1; 
+        groups[0] = group1;
         groups[1] = group2;
         return groups;
     }
 
-    private void createTestChecklists(User owner, ChecklistGroup publicGroup, ChecklistGroup privateGroup) {
+    private void createTestChecklists(User user, ChecklistGroup publicGroup, ChecklistGroup privateGroup,
+            UserGroup userGroup) {
 
         logger.info("Generating checklist data");
-        for (int i = 0; i < NUMBER_OF_CHECKLISTS_TO_GENERATE; i++) {
-            final Checklist checklist = createChecklist(CHECKLIST_PREFIX + (i + 1), DESCRIPTION_PREFIX + (i + 1),
-                owner, publicGroup, DEFAULT_CHECKLIST_DURATION);
-            checklistService.saveOrUpdateChecklist(checklist, owner.getUsername());
-        }
-        for (int i = NUMBER_OF_CHECKLISTS_TO_GENERATE; i < (NUMBER_OF_CHECKLISTS_TO_GENERATE * 2); i++) {
-            final Checklist checklist = createChecklist(CHECKLIST_PREFIX + (i + 1), DESCRIPTION_PREFIX + (i + 1),
-                owner, privateGroup, DEFAULT_CHECKLIST_DURATION);
-            checklistService.saveOrUpdateChecklist(checklist, owner.getUsername());
-        }
+        int count = 0;
+        createSetOfChecklists(count++, user, publicGroup, user.getUsername());
+        createSetOfChecklists(NUMBER_OF_CHECKLISTS_TO_GENERATE, user, privateGroup, user.getUsername());
+        createSetOfChecklists(NUMBER_OF_CHECKLISTS_TO_GENERATE * count++, userGroup, publicGroup, user.getUsername());
+        createSetOfChecklists(NUMBER_OF_CHECKLISTS_TO_GENERATE * count++, userGroup, privateGroup, user.getUsername());
         logger.info("Checklist test data generation complete");
     }
 
-    private ChecklistGroup createChecklistGroup(String name, String description, User owner, ChecklistGroupType type) {
+    private void createSetOfChecklists(int start, OwnerExecutor owner, ChecklistGroup group, String createdBy) {
+        for (int i = start; i < (start + NUMBER_OF_CHECKLISTS_TO_GENERATE); i++) {
+            final Checklist checklist = createChecklist(CHECKLIST_PREFIX + (i + 1), DESCRIPTION_PREFIX + (i + 1),
+                    owner, group, DEFAULT_CHECKLIST_DURATION + (i + 1));
+            checklistService.saveOrUpdateChecklist(checklist, createdBy);
+        }
+    }
+
+    private ChecklistGroup createChecklistGroup(String name, String description, OwnerExecutor owner,
+            ChecklistGroupType type) {
         final ChecklistGroup group = new ChecklistGroup();
         group.setName(name);
         group.setDescription(description);
@@ -121,7 +139,8 @@ public class TestDataController {
         return group;
     }
 
-    private Checklist createChecklist(String name, String description, User owner, ChecklistGroup grp, long duration) {
+    private Checklist createChecklist(String name, String description, OwnerExecutor owner, ChecklistGroup grp,
+            long duration) {
         final Checklist checklist = new Checklist();
         checklist.setName(name);
         checklist.setDescription(description);
@@ -131,12 +150,12 @@ public class TestDataController {
         checklist.setExpectedDurationInMinutes(duration);
         return checklist;
     }
-    
+
     private ScheduledJob createSearchCacheRefreshJob() {
         final ScheduledJob refreshJob = new ScheduledJob();
         refreshJob.setName("Lucene IndexSearcher Refresh Job");
         refreshJob.setDescription("This job refreshes the Lucene IndexSearcher "
-            + "on a periodic basis in a separate thread.");
+                + "on a periodic basis in a separate thread.");
         refreshJob.setCronInfo(REFRESH_JOB_CRON_INFO);
         refreshJob.setGroup(REFRESH_JOB_GROUP);
         refreshJob.setJobBeanName(JobConstants.SEARCH_INDEX_REFRESH_JOB);

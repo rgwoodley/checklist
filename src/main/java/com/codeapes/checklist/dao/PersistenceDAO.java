@@ -6,6 +6,8 @@ import java.util.Map;
 import org.hibernate.SessionFactory;
 
 import com.codeapes.checklist.domain.persistence.Persistent;
+import com.codeapes.checklist.util.paging.PagingQueryCriteria;
+import com.codeapes.checklist.util.paging.ResultPage;
 
 public interface PersistenceDAO {
 

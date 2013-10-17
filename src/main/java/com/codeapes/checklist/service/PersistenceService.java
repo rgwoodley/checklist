@@ -3,6 +3,8 @@ package com.codeapes.checklist.service;
 import java.util.List;
 
 import com.codeapes.checklist.domain.persistence.Persistent;
+import com.codeapes.checklist.util.paging.PagingQueryCriteria;
+import com.codeapes.checklist.util.paging.ResultPage;
 
 public interface PersistenceService {
 
@@ -15,6 +17,8 @@ public interface PersistenceService {
     void delete(Persistent persistentObj, String deletedBy);
 
     Persistent findObjectByKey(Class<? extends Persistent> objectClass, Long key);
-    
+
     List<?> fetchAllObjectsByType(Class<? extends Persistent> objectClass);
+
+    ResultPage getPageOfResults(PagingQueryCriteria pageCriteria);
 }

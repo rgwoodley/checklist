@@ -15,8 +15,10 @@ import com.codeapes.checklist.domain.user.OwnerExecutor;
 import com.codeapes.checklist.domain.user.OwnerExecutorImpl;
 
 @Entity
-@Table(name = "cl_checklist") // NOSONAR
-@Searchable(mapperClass = "com.codeapes.checklist.domain.search.lucene.mapper.ChecklistMapper") // NOSONAR
+@Table(name = "cl_checklist")
+// NOSONAR
+@Searchable(mapperClass = "com.codeapes.checklist.domain.search.lucene.mapper.ChecklistMapper")
+// NOSONAR
 public class Checklist extends PersistentImpl {
 
     private static final long serialVersionUID = 4189418186231193325L;
@@ -26,36 +28,53 @@ public class Checklist extends PersistentImpl {
     private long expectedDurationInMinutes;
     private ChecklistGroup group;
     private List<Step> steps;
+    private int numSteps;
     private OwnerExecutor owner;
 
     @ManyToOne
-    @JoinColumn(name = "group_key") // NOSONAR
+    @JoinColumn(name = "group_key")
+    // NOSONAR
     public ChecklistGroup getGroup() {
         return this.group;
     }
 
-    @OneToMany(mappedBy = "checklist") // NOSONAR
+    @OneToMany(mappedBy = "checklist")
+    // NOSONAR
     public List<Step> getSteps() {
         return steps;
     }
 
-    @Column(name = "name", length = 50, nullable = false, unique = true) // NOSONAR
+    @Column(name = "num_steps")
+    // NOSONAR
+    public int getNumSteps() {
+        return numSteps;
+    }
+
+    public void setNumSteps(int numSteps) {
+        this.numSteps = numSteps;
+    }
+
+    @Column(name = "name", length = 50, nullable = false, unique = true)
+    // NOSONAR
     public String getName() {
         return name;
     }
 
-    @Column(name = "description", length = 500) // NOSONAR
+    @Column(name = "description", length = 500)
+    // NOSONAR
     public String getDescription() {
         return description;
     }
 
-    @Column(name = "exp_duration_min", nullable = false) // NOSONAR
+    @Column(name = "exp_duration_min", nullable = false)
+    // NOSONAR
     public long getExpectedDurationInMinutes() {
         return expectedDurationInMinutes;
     }
 
     @ManyToOne(targetEntity = OwnerExecutorImpl.class)
-    @JoinColumn(name = "owner_key") // NOSONAR
+    @JoinColumn(name = "owner_key")
+    // NOSONAR
     public OwnerExecutor getOwner() {
         return owner;
     }
@@ -66,6 +85,11 @@ public class Checklist extends PersistentImpl {
 
     public void setSteps(List<Step> steps) {
         this.steps = steps;
+        int numSteps = 0;
+        if (steps != null) {
+            numSteps = steps.size();
+        }
+        setNumSteps(numSteps);
     }
 
     public void setOwner(OwnerExecutor owner) {

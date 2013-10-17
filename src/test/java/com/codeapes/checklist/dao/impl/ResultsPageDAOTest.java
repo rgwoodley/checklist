@@ -14,13 +14,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
-import com.codeapes.checklist.dao.PagingQueryCriteria;
 import com.codeapes.checklist.dao.PersistenceDAO;
-import com.codeapes.checklist.dao.ResultPage;
 import com.codeapes.checklist.domain.audit.AuditLogEntry;
 import com.codeapes.checklist.test.util.DBSessionUtility;
 import com.codeapes.checklist.test.util.TestConfiguration;
 import com.codeapes.checklist.util.AppLogger;
+import com.codeapes.checklist.util.paging.PagingQueryCriteria;
+import com.codeapes.checklist.util.paging.ResultPage;
 
 public class ResultsPageDAOTest {
 

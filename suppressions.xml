@@ -12,4 +12,6 @@
     <suppress checks="StrictDuplicateCodeCheck" files="[\\/]*.properties"/>
     <suppress checks="StrictDuplicateCodeCheck" files="[\\/]test[\\/]"/>
     <suppress checks="StrictDuplicateCodeCheck" files="[\\/]Test[\\/]"/>
+    <suppress checks="ParameterNumberCheck" files="com.codeapes.checklist.util.paging.PagingQueryCriteria"/>
+    <suppress checks="ParameterNumberCheck" files="[\\/]Controller[\\/]"/>
 </suppressions>

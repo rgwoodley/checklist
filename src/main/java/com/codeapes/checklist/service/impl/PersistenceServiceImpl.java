@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.codeapes.checklist.dao.PersistenceDAO;
 import com.codeapes.checklist.domain.persistence.Persistent;
 import com.codeapes.checklist.service.PersistenceService;
+import com.codeapes.checklist.util.paging.PagingQueryCriteria;
+import com.codeapes.checklist.util.paging.ResultPage;
 
 @Service(value = "persistenceService")
 @Transactional
@@ -40,6 +42,11 @@ public class PersistenceServiceImpl implements PersistenceService {
     public List<?> fetchAllObjectsByType(Class<? extends Persistent> objectClass) {
         final String className = objectClass.getSimpleName();
         return persistenceDAO.find("from " + className);
+    }
+
+    @Override
+    public ResultPage getPageOfResults(PagingQueryCriteria pageCriteria) {
+        return persistenceDAO.getPageOfResults(pageCriteria);
     }
 
 }

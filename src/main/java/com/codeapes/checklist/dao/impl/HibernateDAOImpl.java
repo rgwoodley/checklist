@@ -15,11 +15,12 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.codeapes.checklist.dao.PagingQueryCriteria;
 import com.codeapes.checklist.dao.PersistenceDAO;
-import com.codeapes.checklist.dao.ResultPage;
 import com.codeapes.checklist.domain.persistence.Persistent;
 import com.codeapes.checklist.util.ChecklistException;
+import com.codeapes.checklist.util.paging.PagingQueryCriteria;
+import com.codeapes.checklist.util.paging.ResultPage;
+import com.codeapes.checklist.util.paging.impl.ResultPageImpl;
 
 @Repository("hibernateDAO")
 public class HibernateDAOImpl extends AbstractHibernateDAO implements PersistenceDAO {
@@ -184,7 +185,7 @@ public class HibernateDAOImpl extends AbstractHibernateDAO implements Persistenc
                 final Query query = session.createQuery(queryString);
                 setQueryParameters(query, parameters);
                 query.setFirstResult(pageNumber * resultsPerPage);
-                query.setMaxResults(resultsPerPage);
+                query.setMaxResults(resultsPerPage);       
                 return query.list();
             }
         });

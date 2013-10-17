@@ -1,14 +1,14 @@
 package com.codeapes.checklist.util;
 
-
 public class ApplicationProperties {
 
     private static final AppLogger logger = new AppLogger(ApplicationProperties.class); // NOSONAR
-    
+
     private boolean testMode;
     private boolean searchIndexInMemory;
     private boolean auditLogEnabled;
     private String searchIndexDirectoryLocation;
+    private int dashboardRecentCompletedLookback;
 
     public boolean isTestMode() {
         return testMode;
@@ -44,6 +44,14 @@ public class ApplicationProperties {
     public void setAuditLogEnabled(boolean auditLogEnabled) {
         this.auditLogEnabled = auditLogEnabled;
         logger.info("AuditLogEnabled property set to %s", this.auditLogEnabled);
+    }
+
+    public int getDashboardRecentCompletedLookback() {
+        return dashboardRecentCompletedLookback;
+    }
+
+    public void setDashboardRecentCompletedLookback(int dashboardRecentCompletedLookback) {
+        this.dashboardRecentCompletedLookback = dashboardRecentCompletedLookback;
     }
 
 }

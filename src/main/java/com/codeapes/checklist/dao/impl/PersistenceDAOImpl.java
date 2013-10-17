@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import com.codeapes.checklist.dao.PagingQueryCriteria;
 import com.codeapes.checklist.dao.PersistenceDAO;
-import com.codeapes.checklist.dao.ResultPage;
 import com.codeapes.checklist.dao.SearchDAO;
 import com.codeapes.checklist.domain.persistence.Persistent;
+import com.codeapes.checklist.util.paging.PagingQueryCriteria;
+import com.codeapes.checklist.util.paging.ResultPage;
 
 @Repository("persistenceDAO")
 public class PersistenceDAOImpl implements PersistenceDAO {

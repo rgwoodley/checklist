@@ -15,6 +15,7 @@
    <script src="js/underscore-min.js"></script>
    <script src="js/json2.js"></script>
    <script src="js/backbone-min.js"></script>
+   <script src="js/backbone.paginator.min.js"></script>
    <script src="js/cl-common.js"></script>
 </head>
 <body>
