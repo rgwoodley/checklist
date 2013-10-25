@@ -1,5 +1,8 @@
 package com.codeapes.checklist.service.user;
 
+import java.util.List;
+
+import com.codeapes.checklist.domain.user.OwnerExecutor;
 import com.codeapes.checklist.domain.user.User;
 import com.codeapes.checklist.domain.user.UserGroup;
 
@@ -29,5 +32,7 @@ public interface UserService {
     void deleteUser(User user, String deletedBy);
 
     void deleteUserGroup(UserGroup userGroup, String deletedBy);
-
+    
+    List<OwnerExecutor> getUserAndGroups(Long userObjectKey);
+    
 }

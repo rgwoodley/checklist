@@ -2,7 +2,7 @@ package com.codeapes.checklist.web.util;
 
 import java.util.List;
 
-import com.codeapes.checklist.util.paging.ResultPage;
+import com.codeapes.checklist.util.query.ResultPage;
 
 public class SinglePageResult {
 

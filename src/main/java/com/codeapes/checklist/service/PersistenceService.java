@@ -3,8 +3,8 @@ package com.codeapes.checklist.service;
 import java.util.List;
 
 import com.codeapes.checklist.domain.persistence.Persistent;
-import com.codeapes.checklist.util.paging.PagingQueryCriteria;
-import com.codeapes.checklist.util.paging.ResultPage;
+import com.codeapes.checklist.util.query.PagingQueryCriteria;
+import com.codeapes.checklist.util.query.ResultPage;
 
 public interface PersistenceService {
 

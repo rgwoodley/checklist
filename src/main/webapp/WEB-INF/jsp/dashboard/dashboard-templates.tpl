@@ -12,7 +12,7 @@
 </script>
 
 <script type="text/template" id="active-checklist-template">
-<td id="activechecklist-view"><a href="#" id="activechecklist-view" border="0"><img src="img/<@- imageURL @>" width="16" height="16"/></a></td><td><a href="#" id="activechecklist-view"><@- name @></a></td><td><a href="#" id="activechecklist-view"><@- status @></a></td><td><a href="#" id="activechecklist-view"><@- currentStep @></a></td><td><a href="#" id="activechecklist-view"><@- ownerName @></a></td><td><a href="#" id="activechecklist-view"><@- estimatedCompletionTime @></a></td>
+<td id="activechecklist-view"><a href="#" id="activechecklist-view" border="0"><img src="img/<@- statusImageURL @>" width="16" height="16"/></a></td><td><a href="#" id="activechecklist-view"><@- name @></a></td><td><a href="#" id="activechecklist-view"><@- status @></a></td><td><a href="#" id="activechecklist-view"><@- currentStep @></a></td><td><a href="#" id="activechecklist-view"><@- ownerName @></a></td><td><a href="#" id="activechecklist-view"><@- estimatedCompletionTime @></a></td>
 </script>
  
 <script type="text/template" id="active-checklist-footer-template">
@@ -25,7 +25,7 @@
 </script>
 
 <script type="text/template" id="recent-checklist-template">
-<td id="recentchecklist-view"><a href="#" id="recentchecklist-view" border="0"><img src="img/<@- imageURL @>" width="16" height="16"/></a></td><td><a href="#" id="recentchecklist-view"><@- name @></a></td><td><a href="#" id="recentchecklist-view"><@- status @></a></td><td><a href="#" id="recentchecklist-view"><@- actualCompletionTime @></a></td>
+<td id="recentchecklist-view"><a href="#" id="recentchecklist-view" border="0"><img src="img/<@- statusImageURL @>" width="16" height="16"/></a></td><td><a href="#" id="recentchecklist-view"><@- name @></a></td><td><a href="#" id="recentchecklist-view"><@- status @></a></td><td><a href="#" id="recentchecklist-view"><@- actualCompletionTime @></a></td>
 </script>
  
 <script type="text/template" id="recent-checklist-footer-template">

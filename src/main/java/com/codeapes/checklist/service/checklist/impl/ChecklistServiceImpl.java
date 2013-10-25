@@ -1,6 +1,7 @@
-package com.codeapes.checklist.service.impl;
+package com.codeapes.checklist.service.checklist.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.codeapes.checklist.dao.PersistenceDAO;
 import com.codeapes.checklist.domain.template.Checklist;
 import com.codeapes.checklist.domain.template.ChecklistGroup;
-import com.codeapes.checklist.service.ChecklistService;
-import com.codeapes.checklist.service.SortOrder;
+import com.codeapes.checklist.domain.user.OwnerExecutor;
+import com.codeapes.checklist.service.checklist.ChecklistService;
+import com.codeapes.checklist.service.user.UserService;
 import com.codeapes.checklist.util.AppLogger;
-import com.codeapes.checklist.util.paging.PagingQueryCriteria;
-import com.codeapes.checklist.util.paging.ResultPage;
+import com.codeapes.checklist.util.constants.QueryConstants;
+import com.codeapes.checklist.util.query.PagingQueryCriteria;
+import com.codeapes.checklist.util.query.QueryUtility;
+import com.codeapes.checklist.util.query.ResultPage;
 
 @Service(value = "checklistService")
 @Transactional
@@ -25,6 +29,9 @@ public class ChecklistServiceImpl implements ChecklistService {
 
     @Autowired
     private PersistenceDAO persistenceDAO;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
@@ -36,31 +43,15 @@ public class ChecklistServiceImpl implements ChecklistService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public ResultPage getOwnedChecklists(Long userObjectKey, PagingQueryCriteria pageCriteria) {
+        
         logger.debug("finding checklists for user with object key: %d.", userObjectKey);
-        String query = ChecklistServiceQueries.FETCH_BY_OWNER_QUERY;
-        query = addOrderByToQuery(query, pageCriteria.getSortField(), pageCriteria.getSortOrder());
-        pageCriteria.setQuery(query);
-        final String countQuery = ChecklistServiceQueries.FETCH_BY_OWNER_QUERY_COUNT;
-        pageCriteria.setCountQuery(countQuery);
+        QueryUtility.setupQueries(pageCriteria, ChecklistServiceQueries.FETCH_BY_OWNER_QUERY_COUNT, 
+                ChecklistServiceQueries.FETCH_BY_OWNER_QUERY);
+        final List<OwnerExecutor> userAndGroups = userService.getUserAndGroups(userObjectKey);
         final Map<String, Object> parameters = new HashMap<String, Object>();
-        // parameters.put(ChecklistServiceQueries.OWNER_KEY_PARAM,
-        // userObjectKey);
+        parameters.put(QueryConstants.OWNER_KEY, userAndGroups);
         pageCriteria.setParameters(parameters);
         return persistenceDAO.getPageOfResults(pageCriteria);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public ResultPage getRecentlyCompletedChecklists(Long userObjectKey, PagingQueryCriteria pageCriteria) {
-        logger.debug("finding recently completed checklists for user with object key: %d.", userObjectKey);
-        return getOwnedChecklists(userObjectKey, pageCriteria);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public ResultPage getActiveChecklists(Long userObjectKey, PagingQueryCriteria pageCriteria) {
-        logger.debug("finding active checklists for user with object key: %d.", userObjectKey);
-        return getOwnedChecklists(userObjectKey, pageCriteria);
     }
 
     @Override
@@ -74,18 +65,5 @@ public class ChecklistServiceImpl implements ChecklistService {
     public ChecklistGroup saveOrUpdateChecklistGroup(ChecklistGroup checklistGroup, String modifiedBy) {
         return (ChecklistGroup) persistenceDAO.saveOrUpdate(checklistGroup, modifiedBy);
     }
-
-    private String addOrderByToQuery(String query, String sortColumn, SortOrder sortOrder) {
-        String updatedQuery = query;
-        if (sortColumn != null && sortOrder != null) {
-            final StringBuilder sb = new StringBuilder(query);
-            sb.append(" order by ");
-            sb.append(sortColumn);
-            sb.append(" ");
-            sb.append(sortOrder);
-            updatedQuery = sb.toString();
-        }
-        return updatedQuery;
-    }
-
+    
 }

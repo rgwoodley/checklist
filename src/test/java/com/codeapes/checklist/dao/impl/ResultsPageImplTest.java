@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.codeapes.checklist.util.paging.ResultPage;
-import com.codeapes.checklist.util.paging.impl.ResultPageImpl;
+import com.codeapes.checklist.util.query.ResultPage;
+import com.codeapes.checklist.util.query.impl.ResultPageImpl;
 
 public class ResultsPageImplTest {
 

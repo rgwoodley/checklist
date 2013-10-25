@@ -131,7 +131,9 @@
     <module name="TodoComment"/>
     <module name="TrailingComment"/>
     <module name="BooleanExpressionComplexity"/>
-    <module name="ClassDataAbstractionCoupling"/>
+    <module name="ClassDataAbstractionCoupling">
+      <property name="max" value="10"/>
+    </module>
     <module name="ClassFanOutComplexity"/>
     <module name="CyclomaticComplexity">
       <property name="max" value="5"/>

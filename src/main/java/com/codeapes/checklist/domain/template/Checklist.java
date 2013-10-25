@@ -54,20 +54,17 @@ public class Checklist extends PersistentImpl {
         this.numSteps = numSteps;
     }
 
-    @Column(name = "name", length = 50, nullable = false, unique = true)
-    // NOSONAR
+    @Column(name = "name", length = 30, nullable = false, unique = true) // NOSONAR
     public String getName() {
         return name;
     }
 
-    @Column(name = "description", length = 500)
-    // NOSONAR
+    @Column(name = "description", length = 500) // NOSONAR
     public String getDescription() {
         return description;
     }
 
-    @Column(name = "exp_duration_min", nullable = false)
-    // NOSONAR
+    @Column(name = "exp_duration_min", nullable = false) // NOSONAR
     public long getExpectedDurationInMinutes() {
         return expectedDurationInMinutes;
     }
@@ -85,11 +82,11 @@ public class Checklist extends PersistentImpl {
 
     public void setSteps(List<Step> steps) {
         this.steps = steps;
-        int numSteps = 0;
+        int numberOfSteps = 0;
         if (steps != null) {
-            numSteps = steps.size();
+            numberOfSteps = steps.size();
         }
-        setNumSteps(numSteps);
+        setNumSteps(numberOfSteps);
     }
 
     public void setOwner(OwnerExecutor owner) {

@@ -1,11 +1,11 @@
-package com.codeapes.checklist.util.paging.impl;
+package com.codeapes.checklist.util.query.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.codeapes.checklist.domain.persistence.Persistent;
-import com.codeapes.checklist.util.paging.ResultPage;
+import com.codeapes.checklist.util.query.ResultPage;
 
 public final class ResultPageImpl implements ResultPage, Serializable {
 

@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 import com.codeapes.checklist.dao.PersistenceDAO;
 import com.codeapes.checklist.dao.SearchDAO;
 import com.codeapes.checklist.domain.persistence.Persistent;
-import com.codeapes.checklist.util.paging.PagingQueryCriteria;
-import com.codeapes.checklist.util.paging.ResultPage;
+import com.codeapes.checklist.util.query.PagingQueryCriteria;
+import com.codeapes.checklist.util.query.ResultPage;
 
 @Repository("persistenceDAO")
 public class PersistenceDAOImpl implements PersistenceDAO {

@@ -1,4 +1,4 @@
-package com.codeapes.checklist.util.paging;
+package com.codeapes.checklist.util.query;
 
 import java.util.List;
 

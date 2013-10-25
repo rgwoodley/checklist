@@ -1,5 +1,6 @@
 package com.codeapes.checklist.domain.execution;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +11,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.codeapes.checklist.domain.persistence.PersistentImpl;
 import com.codeapes.checklist.domain.template.Checklist;
@@ -27,12 +30,15 @@ public class ExecutionChecklist extends PersistentImpl {
     private String description;
     private long expectedDurationInMinutes;
     private String comments;
-    private Date executionStart;
-    private Date executionEnd;
+    private Timestamp executionStart;
+    private Timestamp executionEnd;
     private ChecklistExecutionStatus status;
     private Checklist checklist;
     private OwnerExecutor executor;
     private List<ExecutionStep> steps;
+    private Timestamp estimatedCompletion;
+    private EstimatedCompletionStatus completionStatus;
+    private ExecutionStep currentlyExecutingStep;
 
     @Column(name = "name", length = 50, nullable = false) // NOSONAR
     public String getName() {
@@ -58,9 +64,14 @@ public class ExecutionChecklist extends PersistentImpl {
     public long getExpectedDurationInMinutes() {
         return expectedDurationInMinutes;
     }
+    
+    @Column(name = "estimated_completion", nullable = true) // NOSONAR
+    public Timestamp getEstimatedCompletion() {
+        return estimatedCompletion;
+    }
 
     @Column(name = "execution_end") // NOSONAR
-    public Date getExecutionEnd() {
+    public Timestamp getExecutionEnd() {
         return executionEnd;
     }
 
@@ -75,6 +86,12 @@ public class ExecutionChecklist extends PersistentImpl {
     public ChecklistExecutionStatus getStatus() {
         return status;
     }
+    
+    @Column(name = "completion_status", length = 25) // NOSONAR
+    @Enumerated(EnumType.STRING)
+    public EstimatedCompletionStatus getCompletionStatus() {
+        return completionStatus;
+    }
 
     @OneToMany(mappedBy = "executionChecklist") // NOSONAR
     public List<ExecutionStep> getSteps() {
@@ -85,6 +102,12 @@ public class ExecutionChecklist extends PersistentImpl {
     @JoinColumn(name = "owner_key")
     public OwnerExecutor getExecutor() {
         return executor;
+    }
+   
+    @OneToOne
+    @JoinColumn(name = "current_executing_step_key") //NOSONAR
+    public ExecutionStep getCurrentlyExecutingStep() {
+        return currentlyExecutingStep;
     }
 
     public void setExpectedDurationInMinutes(long expectedDurationInMinutes) {
@@ -103,11 +126,11 @@ public class ExecutionChecklist extends PersistentImpl {
         this.comments = comments;
     }
 
-    public void setExecutionStart(Date executionStart) {
+    public void setExecutionStart(Timestamp executionStart) {
         this.executionStart = executionStart;
     }
 
-    public void setExecutionEnd(Date executionEnd) {
+    public void setExecutionEnd(Timestamp executionEnd) {
         this.executionEnd = executionEnd;
     }
 
@@ -125,5 +148,32 @@ public class ExecutionChecklist extends PersistentImpl {
 
     public void setSteps(List<ExecutionStep> steps) {
         this.steps = steps;
+    }
+
+    public void setEstimatedCompletion(Timestamp estimatedCompletion) {
+        this.estimatedCompletion = estimatedCompletion;
+    }
+
+    public void setCompletionStatus(EstimatedCompletionStatus completionStatus) {
+        this.completionStatus = completionStatus;
+    }
+
+    public void setCurrentlyExecutingStep(ExecutionStep currentlyExecutingStep) {
+        this.currentlyExecutingStep = currentlyExecutingStep;
+    }
+    
+    @Transient
+    public String getCurrentExecutionStepDescription() {
+        String currentStepDescription = null;
+        final ExecutionStep step = this.getCurrentlyExecutingStep();
+        if (step == null) {
+            currentStepDescription  = "None";
+        } else {
+            final StringBuilder descriptionSB = new StringBuilder(step.getName());
+            descriptionSB.append(" - ");
+            descriptionSB.append(step.getExecutor().getName());
+            currentStepDescription  = descriptionSB.toString();
+        }
+        return currentStepDescription;
     }
 }

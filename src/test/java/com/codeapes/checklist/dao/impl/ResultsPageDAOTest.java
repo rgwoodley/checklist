@@ -19,8 +19,8 @@ import com.codeapes.checklist.domain.audit.AuditLogEntry;
 import com.codeapes.checklist.test.util.DBSessionUtility;
 import com.codeapes.checklist.test.util.TestConfiguration;
 import com.codeapes.checklist.util.AppLogger;
-import com.codeapes.checklist.util.paging.PagingQueryCriteria;
-import com.codeapes.checklist.util.paging.ResultPage;
+import com.codeapes.checklist.util.query.PagingQueryCriteria;
+import com.codeapes.checklist.util.query.ResultPage;
 
 public class ResultsPageDAOTest {
 

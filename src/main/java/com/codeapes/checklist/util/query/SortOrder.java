@@ -1,4 +1,4 @@
-package com.codeapes.checklist.service;
+package com.codeapes.checklist.util.query;
 
 public enum SortOrder {
     ASC, DESC;

@@ -7,7 +7,7 @@ public class DashboardChecklistViewHelper {
     private String ownerName;
     private int numSteps;
     private String duration;
-    private String imageURL;
+    private String statusImageURL;
     private String status;
     private String estimatedCompletionTime;
     private String actualCompletionTime;
@@ -53,12 +53,12 @@ public class DashboardChecklistViewHelper {
         this.duration = duration;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getStatusImageURL() {
+        return statusImageURL;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setStatusImageURL(String imageURL) {
+        this.statusImageURL = imageURL;
     }
 
     public String getStatus() {

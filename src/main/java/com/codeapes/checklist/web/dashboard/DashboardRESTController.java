@@ -14,13 +14,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.codeapes.checklist.domain.execution.ChecklistExecutionStatus;
+import com.codeapes.checklist.domain.execution.EstimatedCompletionStatus;
+import com.codeapes.checklist.domain.execution.ExecutionChecklist;
 import com.codeapes.checklist.domain.template.Checklist;
-import com.codeapes.checklist.service.ChecklistService;
-import com.codeapes.checklist.service.SortOrder;
+import com.codeapes.checklist.service.checklist.ChecklistService;
+import com.codeapes.checklist.service.checklist.ExecutionChecklistSearchService;
 import com.codeapes.checklist.util.AppLogger;
-import com.codeapes.checklist.util.paging.PagingQueryCriteria;
-import com.codeapes.checklist.util.paging.ResultPage;
+import com.codeapes.checklist.util.query.PagingQueryCriteria;
+import com.codeapes.checklist.util.query.ResultPage;
+import com.codeapes.checklist.util.query.SortOrder;
+import com.codeapes.checklist.web.util.DateFormatUtility;
 import com.codeapes.checklist.web.util.SinglePageResult;
+import com.codeapes.checklist.web.util.WebConstants;
 import com.codeapes.checklist.web.util.WebSecurityConstants;
 import com.codeapes.checklist.web.util.WebUtility;
 
@@ -31,7 +37,10 @@ public class DashboardRESTController {
 
     @Autowired
     private ChecklistService checklistService;
-
+        
+    @Autowired
+    private ExecutionChecklistSearchService executionChecklistSearchService;
+    
     @Autowired
     private WebUtility webUtility;
 
@@ -47,7 +56,7 @@ public class DashboardRESTController {
                 SortOrder.fromString(sortOrder));
         final ResultPage resultPage = checklistService.getOwnedChecklists(webUtility.getLoggedInUserKey(session),
                 pageCriteria);
-        return populateSinglePageResult(resultPage);
+        return populateSinglePageChecklistResult(resultPage);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/activeChecklists")
@@ -60,9 +69,9 @@ public class DashboardRESTController {
         logger.debug("Retrieve actively running checklists for user %s", webUtility.getLoggedInUsername());
         final PagingQueryCriteria pageCriteria = new PagingQueryCriteria(page, perPage, orderBy,
                 SortOrder.fromString(sortOrder));
-        final ResultPage resultPage = checklistService.getActiveChecklists(webUtility.getLoggedInUserKey(session),
-                pageCriteria);
-        return populateSinglePageResult(resultPage);
+        final ResultPage resultPage = executionChecklistSearchService
+                .getActiveChecklists(webUtility.getLoggedInUserKey(session), pageCriteria);
+        return populateSinglePageExecutionChecklistResult(resultPage);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/recentChecklists")
@@ -75,46 +84,93 @@ public class DashboardRESTController {
         logger.debug("Retrieve recently executed checklists for user %s", webUtility.getLoggedInUsername());
         final PagingQueryCriteria pageCriteria = new PagingQueryCriteria(page, perPage, orderBy,
                 SortOrder.fromString(sortOrder));
-        final ResultPage resultPage = checklistService
+        final ResultPage resultPage = executionChecklistSearchService
                 .getRecentlyCompletedChecklists(webUtility.getLoggedInUserKey(session), pageCriteria);
-        return populateSinglePageResult(resultPage);
+        return populateSinglePageExecutionChecklistResult(resultPage);
     }
 
     @SuppressWarnings("unchecked")
-    private SinglePageResult populateSinglePageResult(ResultPage resultPage) {
+    private SinglePageResult populateSinglePageChecklistResult(ResultPage resultPage) {
         final List<Checklist> checklists = (List<Checklist>) resultPage.getResults();
-        final List<DashboardChecklistViewHelper> viewHelpers = createViewHelpers(checklists);
+        final List<DashboardChecklistViewHelper> viewHelpers = createChecklistViewHelpers(checklists);
         resultPage.setResults(viewHelpers);
         logger.debug("Found %s checklists.", viewHelpers.size());
         return new SinglePageResult(resultPage);
     }
+    
+    @SuppressWarnings("unchecked")
+    private SinglePageResult populateSinglePageExecutionChecklistResult(ResultPage resultPage) {
+        final List<ExecutionChecklist> checklists = (List<ExecutionChecklist>) resultPage.getResults();
+        final List<DashboardChecklistViewHelper> viewHelpers = createExecutionChecklistViewHelpers(checklists);
+        resultPage.setResults(viewHelpers);
+        logger.debug("Found %s execution checklists.", viewHelpers.size());
+        return new SinglePageResult(resultPage);
+    }
 
-    private List<DashboardChecklistViewHelper> createViewHelpers(List<Checklist> checklists) {
+
+    private List<DashboardChecklistViewHelper> createChecklistViewHelpers(List<Checklist> checklists) {
         final List<DashboardChecklistViewHelper> viewHelpers = new ArrayList<DashboardChecklistViewHelper>();
         for (Checklist checklist : checklists) {
-            final DashboardChecklistViewHelper viewHelper = createViewHelper(checklist);
+            final DashboardChecklistViewHelper viewHelper = createChecklistViewHelper(checklist);
+            viewHelpers.add(viewHelper);
+        }
+        return viewHelpers;
+    }
+    
+    private List<DashboardChecklistViewHelper> createExecutionChecklistViewHelpers(
+            List<ExecutionChecklist> checklists) {
+        final List<DashboardChecklistViewHelper> viewHelpers = new ArrayList<DashboardChecklistViewHelper>();
+        for (ExecutionChecklist checklist : checklists) {
+            final DashboardChecklistViewHelper viewHelper = createExecutionChecklistViewHelper(checklist);
             viewHelpers.add(viewHelper);
         }
         return viewHelpers;
     }
 
-    private DashboardChecklistViewHelper createViewHelper(Checklist checklist) {
+    private DashboardChecklistViewHelper createChecklistViewHelper(Checklist checklist) {
         final DashboardChecklistViewHelper viewHelper = new DashboardChecklistViewHelper();
         viewHelper.setName(checklist.getName());
-        int numSteps = 0;
-        if (checklist.getSteps() != null) {
-            numSteps = checklist.getSteps().size();
-        }
-        viewHelper.setNumSteps(numSteps);
+        viewHelper.setNumSteps(checklist.getNumSteps());
         viewHelper.setObjectKey(checklist.getObjectKey());
         viewHelper.setOwnerName(checklist.getOwner().getName());
-        viewHelper.setDuration("" + checklist.getExpectedDurationInMinutes());
-        viewHelper.setImageURL("checkmark_green.png");
-        viewHelper.setCurrentStep("SAN Snap - DBA Group");
-        viewHelper.setStatus("Running");
-        viewHelper.setEstimatedCompletionTime("09/30/2013 11:59pm");
-        viewHelper.setActualCompletionTime("10/16/2013 06:00am");
+        viewHelper.setDuration(checklist.getExpectedDurationInMinutes() + " min");
         return viewHelper;
     }
-
+    
+    private DashboardChecklistViewHelper createExecutionChecklistViewHelper(ExecutionChecklist checklist) {
+        final DashboardChecklistViewHelper viewHelper = new DashboardChecklistViewHelper();
+        viewHelper.setName(checklist.getName());
+        viewHelper.setNumSteps(checklist.getChecklist().getNumSteps());
+        viewHelper.setObjectKey(checklist.getObjectKey());
+        viewHelper.setOwnerName(checklist.getExecutor().getName());
+        final ChecklistExecutionStatus status = checklist.getStatus();
+        String imageUrl = getCheckmarkImage(status);
+        if (status == ChecklistExecutionStatus.IN_PROGRESS) {
+            imageUrl = getCheckmarkImage(checklist.getCompletionStatus());
+        }
+        viewHelper.setStatusImageURL(imageUrl);
+        viewHelper.setCurrentStep(checklist.getCurrentExecutionStepDescription());
+        viewHelper.setStatus(checklist.getStatus().toString());
+        viewHelper.setEstimatedCompletionTime(DateFormatUtility.formatDate(checklist.getEstimatedCompletion()));
+        viewHelper.setActualCompletionTime(DateFormatUtility.formatDate(checklist.getExecutionEnd()));
+        return viewHelper;
+    }
+        
+    private String getCheckmarkImage(ChecklistExecutionStatus status) {
+        String imageName = WebConstants.CHECKMARK_RED_IMG;
+        if (status == ChecklistExecutionStatus.PASSED) {
+            imageName = WebConstants.CHECKMARK_GREEN_IMG;
+        }
+        return imageName;
+    }
+        
+    private String getCheckmarkImage(EstimatedCompletionStatus status) {
+        String imageName = WebConstants.CHECKMARK_RED_IMG;
+        if (status == EstimatedCompletionStatus.LATE) {
+            imageName = WebConstants.CHECKMARK_YELLOW_IMG;
+        } else if (status == EstimatedCompletionStatus.ON_TIME) {
+            imageName = WebConstants.CHECKMARK_GREEN_IMG;
+        }
+        return imageName;
+    }
 }

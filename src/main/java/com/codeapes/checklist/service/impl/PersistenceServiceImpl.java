@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.codeapes.checklist.dao.PersistenceDAO;
 import com.codeapes.checklist.domain.persistence.Persistent;
 import com.codeapes.checklist.service.PersistenceService;
-import com.codeapes.checklist.util.paging.PagingQueryCriteria;
-import com.codeapes.checklist.util.paging.ResultPage;
+import com.codeapes.checklist.util.query.PagingQueryCriteria;
+import com.codeapes.checklist.util.query.ResultPage;
 
 @Service(value = "persistenceService")
 @Transactional

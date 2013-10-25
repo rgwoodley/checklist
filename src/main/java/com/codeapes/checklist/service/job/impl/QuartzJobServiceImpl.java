@@ -26,7 +26,7 @@ import com.codeapes.checklist.domain.job.ScheduledJob;
 import com.codeapes.checklist.service.job.JobService;
 import com.codeapes.checklist.util.AppLogger;
 import com.codeapes.checklist.util.ChecklistException;
-import com.codeapes.checklist.util.PropertyConstants;
+import com.codeapes.checklist.util.constants.PropertyConstants;
 
 @Service(value = "jobService")
 @Transactional

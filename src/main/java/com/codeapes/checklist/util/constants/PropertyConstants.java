@@ -1,4 +1,4 @@
-package com.codeapes.checklist.util;
+package com.codeapes.checklist.util.constants;
 
 public final class PropertyConstants {
 

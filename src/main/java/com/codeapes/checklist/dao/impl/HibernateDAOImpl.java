@@ -18,9 +18,9 @@ import org.springframework.stereotype.Repository;
 import com.codeapes.checklist.dao.PersistenceDAO;
 import com.codeapes.checklist.domain.persistence.Persistent;
 import com.codeapes.checklist.util.ChecklistException;
-import com.codeapes.checklist.util.paging.PagingQueryCriteria;
-import com.codeapes.checklist.util.paging.ResultPage;
-import com.codeapes.checklist.util.paging.impl.ResultPageImpl;
+import com.codeapes.checklist.util.query.PagingQueryCriteria;
+import com.codeapes.checklist.util.query.ResultPage;
+import com.codeapes.checklist.util.query.impl.ResultPageImpl;
 
 @Repository("hibernateDAO")
 public class HibernateDAOImpl extends AbstractHibernateDAO implements PersistenceDAO {
@@ -172,7 +172,7 @@ public class HibernateDAOImpl extends AbstractHibernateDAO implements Persistenc
             throw new ChecklistException("total count from count query for paging must be an integer.");
         }
     }
-
+    
     private List<?> executeResultsPageQuery(PagingQueryCriteria pageCriteria) {
 
         final String queryString = pageCriteria.getQuery();
@@ -197,7 +197,11 @@ public class HibernateDAOImpl extends AbstractHibernateDAO implements Persistenc
             final Set<String> keys = parameters.keySet();
             for (String paramName : keys) {
                 final Object paramValue = parameters.get(paramName);
-                query.setParameter(paramName, paramValue);
+                if (paramValue instanceof List) {
+                    query.setParameterList(paramName, (List<?>)paramValue);
+                } else {
+                    query.setParameter(paramName, paramValue);   
+                }
             }
         }
         return query;

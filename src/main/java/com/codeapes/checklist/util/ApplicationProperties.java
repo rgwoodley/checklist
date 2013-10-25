@@ -8,7 +8,8 @@ public class ApplicationProperties {
     private boolean searchIndexInMemory;
     private boolean auditLogEnabled;
     private String searchIndexDirectoryLocation;
-    private int dashboardRecentCompletedLookback;
+    private int recentlyCompletedChecklistLookback;
+    private double percentCompleteThreshold;
 
     public boolean isTestMode() {
         return testMode;
@@ -46,12 +47,20 @@ public class ApplicationProperties {
         logger.info("AuditLogEnabled property set to %s", this.auditLogEnabled);
     }
 
-    public int getDashboardRecentCompletedLookback() {
-        return dashboardRecentCompletedLookback;
+    public int getRecentlyCompletedChecklistLookback() {
+        return recentlyCompletedChecklistLookback;
     }
 
-    public void setDashboardRecentCompletedLookback(int dashboardRecentCompletedLookback) {
-        this.dashboardRecentCompletedLookback = dashboardRecentCompletedLookback;
+    public void setRecentlyCompletedChecklistLookback(int recentlyCompletedChecklistLookback) {
+        this.recentlyCompletedChecklistLookback = recentlyCompletedChecklistLookback;
+    }
+
+    public double getPercentCompleteThreshold() {
+        return percentCompleteThreshold;
+    }
+
+    public void setPercentCompleteThreshold(double percentCompleteThreshold) {
+        this.percentCompleteThreshold = percentCompleteThreshold;
     }
 
 }

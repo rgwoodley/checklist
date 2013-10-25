@@ -1,8 +1,7 @@
-package com.codeapes.checklist.util.paging;
+package com.codeapes.checklist.util.query;
 
 import java.util.Map;
 
-import com.codeapes.checklist.service.SortOrder;
 import com.codeapes.checklist.util.ChecklistException;
 
 public class PagingQueryCriteria {

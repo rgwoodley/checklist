@@ -18,8 +18,11 @@
         <property name="auditLogEnabled">
             <value>${auditlog.enabled}</value>
         </property>
-        <property name="dashboardRecentCompletedLookback">
-            <value>${dashboard.recentcompleted.lookback.days}</value>
+        <property name="recentlyCompletedChecklistLookback">
+            <value>${checklist.recentcompleted.lookback.days}</value>
         </property> 
+        <property name="percentCompleteThreshold">
+            <value>${checklist.percentcomplete.threshold.percent}</value>
+        </property>    
     </bean>
 </beans>

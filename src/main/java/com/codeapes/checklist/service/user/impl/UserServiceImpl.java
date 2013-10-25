@@ -1,5 +1,6 @@
 package com.codeapes.checklist.service.user.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.codeapes.checklist.dao.PersistenceDAO;
+import com.codeapes.checklist.domain.user.OwnerExecutor;
 import com.codeapes.checklist.domain.user.Role;
 import com.codeapes.checklist.domain.user.User;
 import com.codeapes.checklist.domain.user.UserGroup;
@@ -143,5 +145,15 @@ public class UserServiceImpl implements UserService {
 
         persistenceDAO.delete(user, deletedBy);
     }
-
+    
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<OwnerExecutor> getUserAndGroups(Long userObjectKey) {
+        final User user = findUserByObjectKey(userObjectKey);
+        final List<OwnerExecutor> userAndGroups = new ArrayList<OwnerExecutor>();
+        userAndGroups.add(user);
+        userAndGroups.addAll(user.getGroups());
+        return userAndGroups;
+    }
+    
 }
