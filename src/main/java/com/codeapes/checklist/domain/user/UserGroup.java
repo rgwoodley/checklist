@@ -44,5 +44,4 @@ public class UserGroup extends OwnerExecutorImpl {
         }
         users.add(user);
     }
-
 }

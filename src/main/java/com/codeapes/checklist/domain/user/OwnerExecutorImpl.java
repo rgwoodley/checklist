@@ -6,12 +6,12 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
-import com.codeapes.checklist.domain.persistence.PersistentImpl;
+import com.codeapes.checklist.domain.persistence.impl.PersistentEntity;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "cl_owner_executor")  // NOSONAR
-public abstract class OwnerExecutorImpl extends PersistentImpl implements OwnerExecutor {
+public abstract class OwnerExecutorImpl extends PersistentEntity implements OwnerExecutor {
 
     private static final long serialVersionUID = 8378835944648575788L;
 

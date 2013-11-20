@@ -9,6 +9,7 @@ public final class WebConstants {
     public static final String CHECKMARK_GREEN_IMG = "checkmark_green.png";
     public static final String CHECKMARK_YELLOW_IMG = "checkmark_yellow.png";
     public static final String CHECKMARK_RED_IMG = "checkmark_red.png";
+    public static final String CHECKMARK_BLACK_IMG = "checkmark_black.png";
     
     private WebConstants() {
         super();

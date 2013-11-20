@@ -4,11 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.codeapes.checklist.domain.persistence.PersistentImpl;
+import com.codeapes.checklist.domain.persistence.impl.PersistentEntity;
 
 @Entity
 @Table(name = "cl_audit_log") // NOSONAR
-public class AuditLogEntry extends PersistentImpl {
+public class AuditLogEntry extends PersistentEntity {
 
     private static final long serialVersionUID = 1794958075167635645L;
 

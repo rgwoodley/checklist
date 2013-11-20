@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.codeapes.checklist.domain.search.SearchResult;
 import com.codeapes.checklist.service.search.SearchService;
 import com.codeapes.checklist.util.AppLogger;
+import com.codeapes.checklist.web.util.DTOUtil;
 import com.codeapes.checklist.web.util.WebSecurityConstants;
-import com.codeapes.checklist.web.viewhelper.ViewHelperUtility;
-import com.codeapes.checklist.web.viewhelper.search.SearchResultViewHelper;
 
 @Controller
 public class SearchController {
@@ -38,9 +37,9 @@ public class SearchController {
         final int resultsPerPage = 25;
         final List<SearchResult> results = searchService.search(searchText, resultsPerPage);
         @SuppressWarnings("unchecked")
-        final List<SearchResultViewHelper> resultsViewHelper = (List<SearchResultViewHelper>) ViewHelperUtility
-                .convertList(results, SearchResultViewHelper.class);
-        model.addAttribute("searchResults", resultsViewHelper);
+        final List<SearchResultDTO> resultsTO = (List<SearchResultDTO>) DTOUtil
+                .convertList(results, SearchResultDTO.class);
+        model.addAttribute("searchResults", resultsTO);
         return "searchresult";
     }
 

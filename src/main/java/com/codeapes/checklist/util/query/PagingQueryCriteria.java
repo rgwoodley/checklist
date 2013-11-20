@@ -2,7 +2,7 @@ package com.codeapes.checklist.util.query;
 
 import java.util.Map;
 
-import com.codeapes.checklist.util.ChecklistException;
+import com.codeapes.checklist.exception.ChecklistException;
 
 public class PagingQueryCriteria {
 

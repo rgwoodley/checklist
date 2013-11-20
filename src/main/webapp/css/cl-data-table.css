@@ -67,9 +67,6 @@ div.data-table table tr:hover td {
 div.data-table table tr td.noresults:hover {
   background-color: #FFFFFF;
 }
-div.data-table table tr:hover td {
-  background-color: #D9F1FC;
-}
 div.data-table a:link, a:visited, a:hover, a:active { 
 	color:#000000;
 	text-decoration: none;

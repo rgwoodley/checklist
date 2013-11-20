@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.codeapes.checklist.util.AppLogger;
 import com.codeapes.checklist.web.util.WebSecurityConstants;
-import com.codeapes.checklist.web.util.WebUtility;
+import com.codeapes.checklist.web.util.WebUtil;
 
 @Controller
 public class DashboardController {
@@ -20,7 +20,7 @@ public class DashboardController {
     private static final AppLogger logger = new AppLogger(DashboardController.class); // NOSONAR
 
     @Autowired
-    private WebUtility webUtil;
+    private WebUtil webUtil;
 
     @RequestMapping(method = RequestMethod.GET, value = "/dashboard")
     @PreAuthorize(WebSecurityConstants.USER_ROLE)

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.codeapes.checklist.dao.PersistenceDAO;
+import com.codeapes.checklist.dao.persistence.PersistenceDAO;
 import com.codeapes.checklist.domain.user.OwnerExecutor;
 import com.codeapes.checklist.domain.user.Role;
 import com.codeapes.checklist.domain.user.User;

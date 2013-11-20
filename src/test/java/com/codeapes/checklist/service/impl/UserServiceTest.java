@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.codeapes.checklist.domain.user.Role;
 import com.codeapes.checklist.domain.user.User;
 import com.codeapes.checklist.service.user.UserService;
-import com.codeapes.checklist.test.util.DBSessionUtility;
+import com.codeapes.checklist.test.util.DBSessionUtil;
 import com.codeapes.checklist.test.util.TestConfiguration;
 
 @Transactional
@@ -28,12 +28,12 @@ public class UserServiceTest {
     private static final String MODIFIED_BY = "unit_test";
 
     private UserService userService;
-    private DBSessionUtility sessionUtility;
+    private DBSessionUtil sessionUtility;
 
     @Before
     public void initializeUserService() {
         final ApplicationContext appContext = TestConfiguration.getInstance().getApplicationContext();
-        sessionUtility = new DBSessionUtility();
+        sessionUtility = new DBSessionUtil();
         sessionUtility.configureSession(appContext);
         userService = (UserService) appContext.getBean("userService");
     }

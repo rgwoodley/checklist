@@ -8,7 +8,7 @@ import org.apache.lucene.document.StringField;
 
 import com.codeapes.checklist.domain.persistence.Persistent;
 import com.codeapes.checklist.domain.search.SearchFields;
-import com.codeapes.checklist.util.ChecklistException;
+import com.codeapes.checklist.exception.ChecklistException;
 
 /**
  * This abstract class maps fields that are common to all Persistent objects.

@@ -1,17 +1,21 @@
 package com.codeapes.checklist.service.checklist;
 
-import com.codeapes.checklist.domain.template.Checklist;
-import com.codeapes.checklist.domain.template.ChecklistGroup;
-import com.codeapes.checklist.util.query.PagingQueryCriteria;
-import com.codeapes.checklist.util.query.ResultPage;
+import com.codeapes.checklist.domain.Checklist;
+import com.codeapes.checklist.domain.ChecklistGroup;
+import com.codeapes.checklist.domain.user.OwnerExecutor;
 
 public interface ChecklistService {
-
-    Checklist getChecklistByKey(Long key);
-    
-    ResultPage getOwnedChecklists(Long userObjectKey, PagingQueryCriteria pageCriteria);
         
     Checklist saveOrUpdateChecklist(Checklist checklist, String modifiedBy);
     
     ChecklistGroup saveOrUpdateChecklistGroup(ChecklistGroup checklistGroup, String modifiedBy);
+    
+    Checklist createExecutableChecklist(Checklist checklist, OwnerExecutor executor, String createdBy);
+    
+    Checklist updateChecklist(Checklist checklist, String modifiedBy);
+    
+    Checklist saveChecklist(Checklist checklist, String createdBy);
+    
+    void deleteChecklist(Checklist checklist, String deletedBy);
+
 }

@@ -14,9 +14,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
-import com.codeapes.checklist.dao.PersistenceDAO;
+import com.codeapes.checklist.dao.persistence.PersistenceDAO;
 import com.codeapes.checklist.domain.audit.AuditLogEntry;
-import com.codeapes.checklist.test.util.DBSessionUtility;
+import com.codeapes.checklist.test.util.DBSessionUtil;
 import com.codeapes.checklist.test.util.TestConfiguration;
 import com.codeapes.checklist.util.AppLogger;
 import com.codeapes.checklist.util.query.PagingQueryCriteria;
@@ -31,12 +31,12 @@ public class ResultsPageDAOTest {
     private static final String COUNT_QUERY = "select count(*) " + DATA_QUERY;
 
     private PersistenceDAO persistenceDAO;
-    private DBSessionUtility sessionUtility;
+    private DBSessionUtil sessionUtility;
 
     @Before
-    public void initializeUserService() {
+    public void initializePersistenceDAO() {
         final ApplicationContext appContext = TestConfiguration.getInstance().getApplicationContext();
-        sessionUtility = new DBSessionUtility();
+        sessionUtility = new DBSessionUtil();
         sessionUtility.configureSession(appContext);
         persistenceDAO = (PersistenceDAO) appContext.getBean("persistenceDAO");
     }

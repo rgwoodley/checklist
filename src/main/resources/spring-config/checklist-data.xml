@@ -13,15 +13,15 @@
         class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="annotatedClasses">
             <list>
-                <value>com.codeapes.checklist.domain.execution.ExecutionChecklist
+                <value>com.codeapes.checklist.domain.ChecklistGroup
                 </value>
-                <value>com.codeapes.checklist.domain.execution.ExecutionStep
+                <value>com.codeapes.checklist.domain.Checklist
                 </value>
-                <value>com.codeapes.checklist.domain.template.ChecklistGroup
+                <value>com.codeapes.checklist.domain.Step
                 </value>
-                <value>com.codeapes.checklist.domain.template.Checklist
+                <value>com.codeapes.checklist.domain.ChecklistExecutionInfo
                 </value>
-                <value>com.codeapes.checklist.domain.template.Step
+                <value>com.codeapes.checklist.domain.StepExecutionInfo
                 </value>
                 <value>com.codeapes.checklist.domain.audit.AuditLogEntry
                 </value>

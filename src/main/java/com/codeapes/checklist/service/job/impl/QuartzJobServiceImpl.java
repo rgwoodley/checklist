@@ -21,11 +21,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.codeapes.checklist.dao.PersistenceDAO;
+import com.codeapes.checklist.dao.persistence.PersistenceDAO;
 import com.codeapes.checklist.domain.job.ScheduledJob;
+import com.codeapes.checklist.exception.ChecklistException;
 import com.codeapes.checklist.service.job.JobService;
 import com.codeapes.checklist.util.AppLogger;
-import com.codeapes.checklist.util.ChecklistException;
 import com.codeapes.checklist.util.constants.PropertyConstants;
 
 @Service(value = "jobService")

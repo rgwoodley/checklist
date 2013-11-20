@@ -5,9 +5,9 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.TextField;
 
+import com.codeapes.checklist.domain.Checklist;
 import com.codeapes.checklist.domain.persistence.Persistent;
 import com.codeapes.checklist.domain.search.SearchFields;
-import com.codeapes.checklist.domain.template.Checklist;
 
 public class ChecklistMapper extends AbstractMapper {
 

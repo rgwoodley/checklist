@@ -4,11 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.codeapes.checklist.domain.persistence.PersistentImpl;
+import com.codeapes.checklist.domain.persistence.impl.PersistentEntity;
 
 @Entity
 @Table(name = "cl_scheduled_job") // NOSONAR
-public class ScheduledJob extends PersistentImpl {
+public class ScheduledJob extends PersistentEntity {
 
     private static final long serialVersionUID = 2665027165330699711L;
 

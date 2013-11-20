@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.codeapes.checklist.dao.SearchDAO;
+import com.codeapes.checklist.dao.search.SearchDAO;
 import com.codeapes.checklist.domain.search.SearchResult;
 import com.codeapes.checklist.service.search.SearchService;
 

@@ -7,16 +7,19 @@
 <suppressions>
     <suppress checks="MagicNumberCheck" files="[\\/]*Test.java"/>
     <suppress checks="MagicNumberCheck" files="[\\/]*Queries.java"/>
+    <suppress checks="MagicNumberCheck" files="[\\/]*FileLoader.java"/>
     <suppress checks="StrictDuplicateCodeCheck" files="[\\/]domain[\\/]"/>
-	<suppress checks="StrictDuplicateCodeCheck" files="[\\/]viewhelper[\\/]"/>
     <suppress checks="StrictDuplicateCodeCheck" files="[\\/]spring-config[\\/]"/>
     <suppress checks="StrictDuplicateCodeCheck" files="[\\/]*.properties"/>
     <suppress checks="StrictDuplicateCodeCheck" files="[\\/]test[\\/]"/>
     <suppress checks="StrictDuplicateCodeCheck" files="[\\/]*Test.java"/>
+    <suppress checks="StrictDuplicateCodeCheck" files="[\\/]*TO.java"/>
+    <suppress checks="StrictDuplicateCodeCheck" files="[\\/]*TransferObject.java"/>
     <suppress checks="MultipleStringLiteralsCheck" files="[\\/]*Queries.java"/>
     <suppress checks="DeclarationOrderCheck" files="[\\/]*Queries.java"/>
     <suppress checks="ParameterNumberCheck" files="com.codeapes.checklist.util.query.PagingQueryCriteria"/>
     <suppress checks="ParameterNumberCheck" files="[\\/]*Controller.java"/>
+    <suppress checks="MethodCountCheck" files="[\\/]domain[\\/]"/>
     <suppress checks="ClassDataAbstractionCouplingCheck" files="[\\/]*Service.java"/>
     <suppress checks="ClassFanOutComplexityCheck" files="com.codeapes.checklist.web.load.TestDataController.java"/>
 </suppressions>

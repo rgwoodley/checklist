@@ -11,13 +11,14 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.codeapes.checklist.domain.Checklist;
+import com.codeapes.checklist.domain.ChecklistType;
 import com.codeapes.checklist.domain.search.SearchResult;
-import com.codeapes.checklist.domain.template.Checklist;
 import com.codeapes.checklist.domain.user.User;
 import com.codeapes.checklist.service.PersistenceService;
 import com.codeapes.checklist.service.search.SearchService;
 import com.codeapes.checklist.service.user.UserService;
-import com.codeapes.checklist.test.util.DBSessionUtility;
+import com.codeapes.checklist.test.util.DBSessionUtil;
 import com.codeapes.checklist.test.util.TestConfiguration;
 
 @Transactional
@@ -28,12 +29,12 @@ public class SearchServiceTest {
     private PersistenceService persistenceService;
     private SearchService searchService;
     private UserService userService;
-    private DBSessionUtility sessionUtility;
+    private DBSessionUtil sessionUtility;
 
     @Before
     public void initializeSearchService() {
         final ApplicationContext appContext = TestConfiguration.getInstance().getApplicationContext();
-        sessionUtility = new DBSessionUtility();
+        sessionUtility = new DBSessionUtil();
         sessionUtility.configureSession(appContext);
         persistenceService = (PersistenceService) appContext.getBean("persistenceService");
         searchService = (SearchService) appContext.getBean("searchService");
@@ -116,7 +117,7 @@ public class SearchServiceTest {
     }
 
     private Checklist createChecklist(String id) {
-        final Checklist checklist = new Checklist();
+        final Checklist checklist = new Checklist(ChecklistType.TEMPLATE);
         checklist.setName(generateChecklistName(id));
         checklist.setDescription(generateChecklistDescription(id));
         checklist.setOwner(createUserIfNotExists());

@@ -16,6 +16,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 @Entity
 @Table(name = "cl_user")  // NOSONAR
@@ -128,6 +130,23 @@ public class User extends OwnerExecutorImpl {
             groups = new ArrayList<UserGroup>();
         }
         groups.add(group);
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof User) {
+            final User other = (User) obj;
+            return new EqualsBuilder()
+                .append(username, other.getUsername())
+                .isEquals();
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {   
+        return new HashCodeBuilder().append(username).toHashCode();
     }
 
 }
