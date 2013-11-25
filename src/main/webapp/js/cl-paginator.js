@@ -43,7 +43,7 @@ var CLFooterView = Backbone.View.extend({
 		this.render();
 	},
 	render : function() {
-		this.$el.addClass("table-data-footer");
+		this.$el.addClass("data-table-footer");
 		this.$el.html(this.entryTpl(this.model.toJSON()));
 	},
 });

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import com.codeapes.checklist.dao.persistence.PersistenceDAO;
 import com.codeapes.checklist.domain.persistence.Persistent;
 import com.codeapes.checklist.exception.ChecklistException;
+import com.codeapes.checklist.util.AppLogger;
 import com.codeapes.checklist.util.query.PagingQueryCriteria;
 import com.codeapes.checklist.util.query.ResultPage;
 import com.codeapes.checklist.util.query.impl.ResultPageImpl;
@@ -31,6 +32,7 @@ import com.codeapes.checklist.util.query.impl.ResultPageImpl;
 @Repository("hibernateDAO")
 public class HibernateDAO extends AbstractHibernateDAO implements PersistenceDAO {
 
+    private static final AppLogger logger = new AppLogger(HibernateDAO.class); // NOSONAR
     private static final String FIND_METHOD_VALIDATION_ERROR_MSG = "Query/Parameters cannot be null, "
             + "and parameters must not be empty.";
 
@@ -157,6 +159,7 @@ public class HibernateDAO extends AbstractHibernateDAO implements PersistenceDAO
     }
 
     private long executeQueryForTotalRowCount(PagingQueryCriteria pageCriteria) {
+        logger.debug("count query: %s", pageCriteria.getCountQuery());
         List<?> queryResult = null;
         final Map<String, Object> parameters = pageCriteria.getParameters();
         if (parameters == null || parameters.isEmpty()) {
@@ -179,12 +182,11 @@ public class HibernateDAO extends AbstractHibernateDAO implements PersistenceDAO
     }
     
     private List<?> executeResultsPageQuery(PagingQueryCriteria pageCriteria) {
-
-        final String queryString = pageCriteria.getQuery();
+        final String queryString = pageCriteria.getQueryWithSortOrder();
         final int pageNumber = pageCriteria.getPageNumber();
         final int resultsPerPage = pageCriteria.getResultsPerPage();
         final Map<String, Object> parameters = pageCriteria.getParameters();
-
+        logger.debug("query: %s", queryString);
         final List<?> results = getHibernateTemplate().executeFind(new HibernateCallback<List<?>>() {
             public List<?> doInHibernate(Session session) throws SQLException {
                 final Query query = session.createQuery(queryString);

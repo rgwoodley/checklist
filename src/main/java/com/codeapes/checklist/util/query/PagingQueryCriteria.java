@@ -2,6 +2,8 @@ package com.codeapes.checklist.util.query;
 
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.codeapes.checklist.exception.ChecklistException;
 
 public class PagingQueryCriteria {
@@ -134,4 +136,14 @@ public class PagingQueryCriteria {
         this.sortOrder = sortOrder;
     }
 
+    public String getQueryWithSortOrder() {
+        final StringBuilder queryWithSort = new StringBuilder(query);
+        if (!StringUtils.isBlank(sortField)) {
+            queryWithSort.append(" order by ");
+            queryWithSort.append(sortField);
+            queryWithSort.append(" ");
+            queryWithSort.append(sortOrder.toString());
+        }
+        return queryWithSort.toString();
+    }
 }

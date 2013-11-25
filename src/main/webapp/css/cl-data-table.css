@@ -61,12 +61,7 @@ div.data-table table td.noresults {
 	text-align:center;	
 	padding:20px;
 }
-div.data-table table tr:hover td {
-  background-color: #D9F1FC;
-}
-div.data-table table tr td.noresults:hover {
-  background-color: #FFFFFF;
-}
+
 div.data-table a:link, a:visited, a:hover, a:active { 
 	color:#000000;
 	text-decoration: none;
@@ -77,4 +72,10 @@ div.data-table tr td.noresults a:link, a:visited, a:hover, a:active {
 }
 div.data-table table tbody tr a {
     display: block;
+}
+div.data-table table tbody tr:hover td {
+  background-color: #D9F1FC;
+}
+div.data-table table tbody tr:hover td.noresults {
+  background-color: #FFFFFF;
 }
