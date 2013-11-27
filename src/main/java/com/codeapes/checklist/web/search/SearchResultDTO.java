@@ -1,15 +1,24 @@
 package com.codeapes.checklist.web.search;
 
+import com.googlecode.jmapper.annotations.JMap;
 
 public class SearchResultDTO {
 
+    @JMap
     private Long objectKey;
+    @JMap
     private String objectType;
+    @JMap
     private String name;
+    @JMap
     private String description;
+    @JMap
     private String createdBy;
+    @JMap
     private String modifiedBy;
+    @JMap
     private String dateCreated;
+    @JMap
     private String dateModified;
 
     public Long getObjectKey() {

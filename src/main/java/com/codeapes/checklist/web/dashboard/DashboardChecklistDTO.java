@@ -1,6 +1,6 @@
 package com.codeapes.checklist.web.dashboard;
 
-public class DashboardChecklistDTO {
+public class DashboardChecklistDTO { //NOSONAR
 
     private Long objectKey;
     private String name;

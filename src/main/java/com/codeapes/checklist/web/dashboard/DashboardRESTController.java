@@ -127,18 +127,18 @@ public class DashboardRESTController {
     }
 
     protected DashboardChecklistDTO createChecklistViewHelper(Checklist checklist) {
-        final DashboardChecklistDTO viewHelper = new DashboardChecklistDTO();
+        final DashboardChecklistDTO checklistDTO = new DashboardChecklistDTO();
         if (checklist != null) {
-            viewHelper.setName(checklist.getName());
-            viewHelper.setNumSteps(checklist.getNumSteps());
-            viewHelper.setObjectKey(checklist.getObjectKey());
-            viewHelper.setOwnerName(checklist.getOwner().getName());
-            viewHelper.setDuration(checklist.getExpectedDurationInMinutes() + " min");
+            checklistDTO.setName(checklist.getName());
+            checklistDTO.setNumSteps(checklist.getNumSteps());
+            checklistDTO.setObjectKey(checklist.getObjectKey());
+            checklistDTO.setOwnerName(checklist.getOwner().getName());
+            checklistDTO.setDuration(checklist.getExpectedDurationInMinutes() + " min");
             if (checklist.getExecutionInfo() != null) {
-                populateExecutionInfo(checklist, viewHelper);
+                populateExecutionInfo(checklist, checklistDTO);
             }
         }
-        return viewHelper;
+        return checklistDTO;
     }
     
     protected void populateExecutionInfo(Checklist checklist, DashboardChecklistDTO viewHelper) {
